@@ -169,7 +169,7 @@ export default function EditProfilePage() {
       setSubmitState({
         isSubmitting: false,
         success: null,
-        error: 'تم منع التحديث بواسطة سياسات الأمان الحالية في Supabase.',
+        error: 'تم منع التحديث بواسطة سياسات الأمان الحالية في Firebase.',
       })
       return
     }

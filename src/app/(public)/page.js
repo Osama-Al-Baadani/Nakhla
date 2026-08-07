@@ -147,25 +147,23 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Role Switcher Demo Buttons */}
+          {/* Role Register Action Buttons */}
           <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
             <Link
-              href="/seeker/dashboard"
-              onClick={() => setDevAuthPreviewRole('seeker')}
-              className="group flex items-center gap-2 rounded-2xl border border-teal-200 bg-white px-4 py-2.5 text-xs font-bold text-teal-800 shadow-sm hover:border-teal-400 hover:shadow-md transition-all active:scale-95"
+              href="/register?role=seeker"
+              className="group flex items-center gap-2 rounded-2xl border border-teal-200 bg-white px-5 py-3 text-xs font-extrabold text-teal-800 shadow-sm hover:border-teal-400 hover:shadow-md transition-all active:scale-95"
             >
               <UserCheck size={16} className="text-teal-600 group-hover:scale-110 transition-transform" />
-              <span>معاينة لوحة الباحث</span>
+              <span>تسجيل كباحث عن عمل</span>
               <ArrowLeft size={14} className="text-teal-500 group-hover:-translate-x-1 transition-transform" />
             </Link>
 
             <Link
-              href="/company/dashboard"
-              onClick={() => setDevAuthPreviewRole('company')}
-              className="group flex items-center gap-2 rounded-2xl border border-amber-200 bg-white px-4 py-2.5 text-xs font-bold text-amber-900 shadow-sm hover:border-amber-400 hover:shadow-md transition-all active:scale-95"
+              href="/register?role=company"
+              className="group flex items-center gap-2 rounded-2xl border border-amber-200 bg-white px-5 py-3 text-xs font-extrabold text-amber-900 shadow-sm hover:border-amber-400 hover:shadow-md transition-all active:scale-95"
             >
               <Building2 size={16} className="text-amber-600 group-hover:scale-110 transition-transform" />
-              <span>معاينة لوحة الشركة</span>
+              <span>تسجيل كشركة / منشأة</span>
               <ArrowLeft size={14} className="text-amber-500 group-hover:-translate-x-1 transition-transform" />
             </Link>
           </div>

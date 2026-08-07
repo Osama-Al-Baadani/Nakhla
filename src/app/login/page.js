@@ -79,7 +79,7 @@ export default function LoginPage() {
       <AuthShell
         eyebrow="تسجيل الدخول"
         title="الدخول إلى حسابك في نخلة"
-        description="استخدم حسابك الحالي للوصول إلى لوحة التحكم والوظائف والملف الشخصي عبر مصادقة Supabase الحقيقية."
+        description="استخدم حسابك الحالي للوصول إلى لوحة التحكم والوظائف والملف الشخصي عبر مصادقة Firebase الحقيقية."
         footer={
           <div className="flex flex-wrap items-center justify-between gap-3 text-sm">
             <Link className="text-[var(--brand)] font-medium hover:text-[var(--brand-strong)]" href="/register">

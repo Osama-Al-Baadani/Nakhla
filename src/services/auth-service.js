@@ -6,7 +6,8 @@ import {
   signOut as firebaseSignOut,
   onAuthStateChanged,
 } from 'firebase/auth'
-import { auth } from '../lib/firebase'
+import { doc, setDoc } from 'firebase/firestore'
+import { auth, db } from '../lib/firebase'
 import { getDevAuthBypassSession, isDevAuthBypassEnabled } from '../lib/dev-auth'
 
 export const authService = {
@@ -53,10 +54,34 @@ export const authService = {
     }
   },
 
-  async signUp(email, password) {
+  async signUp(email, password, role = 'seeker') {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password)
       const user = userCredential.user
+
+      try {
+        // 1) إنشاء وثيقة في مجموعة users
+        await setDoc(doc(db, 'users', user.uid), {
+          email: user.email,
+          role: role,
+          created_at: new Date().toISOString(),
+        })
+
+        // 2) إنشاء ملف profile مبدئي في مجموعة profiles
+        await setDoc(doc(db, 'profiles', user.uid), {
+          full_name: user.displayName || null,
+          avatar_url: null,
+          headline: '',
+          bio: '',
+          role: role,
+          updated_at: new Date().toISOString(),
+          created_at: new Date().toISOString(),
+        })
+        console.log('Successfully created Firestore user and profile for UID:', user.uid)
+      } catch (fsError) {
+        console.error('Firestore write error in signUp:', fsError)
+      }
+
       return {
         data: {
           user: {

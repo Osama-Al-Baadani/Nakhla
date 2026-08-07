@@ -1,5 +1,5 @@
 import { doc, getDoc, setDoc } from 'firebase/firestore'
-import { db } from '../lib/firebase'
+import { auth, db } from '../lib/firebase'
 
 export const profileService = {
   async getOwnProfile(userId) {
@@ -12,9 +12,22 @@ export const profileService = {
       const profileSnap = await getDoc(profileRef)
 
       if (!profileSnap.exists()) {
+        const initialProfileData = {
+          full_name: auth.currentUser?.displayName || null,
+          avatar_url: null,
+          headline: '',
+          bio: '',
+          role: 'seeker',
+          updated_at: new Date().toISOString(),
+          created_at: new Date().toISOString(),
+        }
+        await setDoc(profileRef, initialProfileData, { merge: true })
         return {
           kind: 'success',
-          profile: null,
+          profile: {
+            id: userId,
+            ...initialProfileData,
+          },
         }
       }
 

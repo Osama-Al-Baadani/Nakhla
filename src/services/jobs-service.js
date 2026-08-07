@@ -15,32 +15,39 @@ export const jobsService = {
   async listJobs(filters = {}, page = 0, pageSize = 10) {
     try {
       const jobsRef = collection(db, 'jobs')
-      const constraints = []
+      let querySnapshot
 
-      if (filters.companyId) {
-        constraints.push(where('company_id', '==', filters.companyId))
+      try {
+        const constraints = []
+        if (filters.companyId) constraints.push(where('company_id', '==', filters.companyId))
+        if (filters.type) constraints.push(where('type', '==', filters.type))
+        if (filters.status) constraints.push(where('status', '==', filters.status))
+        constraints.push(orderBy('posted_at', 'desc'))
+
+        const q = query(jobsRef, ...constraints)
+        querySnapshot = await getDocs(q)
+      } catch {
+        const simpleQ = query(jobsRef)
+        querySnapshot = await getDocs(simpleQ)
       }
-
-      if (filters.type) {
-        constraints.push(where('type', '==', filters.type))
-      }
-
-      if (filters.status) {
-        constraints.push(where('status', '==', filters.status))
-      }
-
-      // Default sorting by posted_at descending
-      constraints.push(orderBy('posted_at', 'desc'))
-
-      const q = query(jobsRef, ...constraints)
-      const querySnapshot = await getDocs(q)
 
       let jobs = querySnapshot.docs.map((docSnap) => ({
         id: docSnap.id,
         ...docSnap.data(),
       }))
 
-      // In-memory filter for search or location if specified
+      jobs.sort((a, b) => new Date(b.posted_at || 0) - new Date(a.posted_at || 0))
+
+      if (filters.companyId) {
+        jobs = jobs.filter((j) => j.company_id === filters.companyId)
+      }
+      if (filters.type) {
+        jobs = jobs.filter((j) => j.type === filters.type)
+      }
+      if (filters.status) {
+        jobs = jobs.filter((j) => j.status === filters.status)
+      }
+
       if (filters.location) {
         const locTerm = filters.location.toLowerCase()
         jobs = jobs.filter(

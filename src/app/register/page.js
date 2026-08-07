@@ -78,7 +78,7 @@ function RegisterForm() {
 
     setIsSubmitting(true)
 
-    const { error } = await authService.signUp(email.trim(), password)
+    const { error } = await authService.signUp(email.trim(), password, role || 'seeker')
 
     setIsSubmitting(false)
 
@@ -103,13 +103,13 @@ function RegisterForm() {
     <AuthShell
       eyebrow="إنشاء حساب"
       title="ابدأ رحلتك مع نخلة"
-      description="أنشئ حسابًا جديدًا عبر Supabase للوصول إلى الوظائف أو إدارة حساب الشركة ضمن تجربة عربية واضحة."
+      description="أنشئ حسابًا جديدًا عبر Firebase للوصول إلى الوظائف أو إدارة حساب الشركة ضمن تجربة عربية واضحة."
       footer={
         <div className="flex items-center justify-between gap-3 text-sm">
           <Link className="text-[var(--brand)] font-medium hover:text-[var(--brand-strong)]" href="/login">
             لديك حساب بالفعل؟
           </Link>
-          <Badge tone="neutral">Supabase Auth</Badge>
+          <Badge tone="neutral">Firebase Auth</Badge>
         </div>
       }
     >

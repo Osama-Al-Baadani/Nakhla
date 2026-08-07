@@ -8,7 +8,6 @@ import {
   query,
   where,
   orderBy,
-  documentId,
 } from 'firebase/firestore'
 import { db } from '../lib/firebase'
 
@@ -16,17 +15,26 @@ export const applicationsService = {
   async listMyApplications(applicantId) {
     try {
       const appsRef = collection(db, 'applications')
-      const q = query(
-        appsRef,
-        where('applicant_id', '==', applicantId),
-        orderBy('applied_at', 'desc'),
-      )
+      let querySnapshot
 
-      const querySnapshot = await getDocs(q)
+      try {
+        const q = query(
+          appsRef,
+          where('applicant_id', '==', applicantId),
+          orderBy('applied_at', 'desc'),
+        )
+        querySnapshot = await getDocs(q)
+      } catch {
+        const q = query(appsRef, where('applicant_id', '==', applicantId))
+        querySnapshot = await getDocs(q)
+      }
+
       const apps = querySnapshot.docs.map((docSnap) => ({
         id: docSnap.id,
         ...docSnap.data(),
       }))
+
+      apps.sort((a, b) => new Date(b.applied_at || 0) - new Date(a.applied_at || 0))
 
       return {
         kind: 'success',
@@ -117,17 +125,26 @@ export const applicationsService = {
   async listCompanyJobApplications(jobId) {
     try {
       const appsRef = collection(db, 'applications')
-      const q = query(
-        appsRef,
-        where('job_id', '==', jobId),
-        orderBy('applied_at', 'desc'),
-      )
+      let querySnapshot
 
-      const querySnapshot = await getDocs(q)
+      try {
+        const q = query(
+          appsRef,
+          where('job_id', '==', jobId),
+          orderBy('applied_at', 'desc'),
+        )
+        querySnapshot = await getDocs(q)
+      } catch {
+        const q = query(appsRef, where('job_id', '==', jobId))
+        querySnapshot = await getDocs(q)
+      }
+
       const apps = querySnapshot.docs.map((docSnap) => ({
         id: docSnap.id,
         ...docSnap.data(),
       }))
+
+      apps.sort((a, b) => new Date(b.applied_at || 0) - new Date(a.applied_at || 0))
 
       return {
         kind: 'success',
@@ -163,7 +180,6 @@ export const applicationsService = {
 
     try {
       const jobs = []
-      // Fetch in chunks of 10 for Firestore field limit if necessary, or individual getDocs
       for (const jobId of jobIds) {
         const docRef = doc(db, 'jobs', jobId)
         const snap = await getDoc(docRef)

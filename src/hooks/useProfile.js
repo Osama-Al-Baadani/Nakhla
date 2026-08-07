@@ -48,7 +48,7 @@ export function useProfile(userId) {
         setState({
           isLoading: false,
           profile: null,
-          error: 'تم حظر الوصول إلى بيانات الملف الشخصي بواسطة سياسات الأمان الحالية في Supabase.',
+          error: 'تم حظر الوصول إلى بيانات الملف الشخصي بواسطة سياسات الأمان الحالية في Firebase.',
           isRlsBlocked: true,
         })
         return
