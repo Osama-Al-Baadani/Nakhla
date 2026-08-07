@@ -1,5 +1,13 @@
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
+  updatePassword as firebaseUpdatePassword,
+  signOut as firebaseSignOut,
+  onAuthStateChanged,
+} from 'firebase/auth'
+import { auth } from '../lib/firebase'
 import { getDevAuthBypassSession, isDevAuthBypassEnabled } from '../lib/dev-auth'
-import { supabase } from '../lib/supabase'
 
 export const authService = {
   async getSession() {
@@ -7,44 +15,80 @@ export const authService = {
       return getDevAuthBypassSession()
     }
 
-    const { data, error } = await supabase.auth.getSession()
+    const user = auth.currentUser
+    if (!user) return null
 
-    if (error) {
-      return null
+    return {
+      user: {
+        id: user.uid,
+        email: user.email,
+        user_metadata: {
+          full_name: user.displayName,
+        },
+      },
     }
-
-    return data.session
   },
 
   async signIn(email, password) {
-    return supabase.auth.signInWithPassword({
-      email,
-      password,
-    })
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password)
+      const user = userCredential.user
+      return {
+        data: {
+          user: {
+            id: user.uid,
+            email: user.email,
+          },
+          session: {
+            user: {
+              id: user.uid,
+              email: user.email,
+            },
+          },
+        },
+        error: null,
+      }
+    } catch (error) {
+      return { data: { user: null, session: null }, error }
+    }
   },
 
   async signUp(email, password) {
-    const origin = typeof window !== 'undefined' ? window.location.origin : ''
-    return supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: `${origin}/reset-password`,
-      },
-    })
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password)
+      const user = userCredential.user
+      return {
+        data: {
+          user: {
+            id: user.uid,
+            email: user.email,
+          },
+        },
+        error: null,
+      }
+    } catch (error) {
+      return { data: { user: null }, error }
+    }
   },
 
   async sendPasswordReset(email) {
-    const origin = typeof window !== 'undefined' ? window.location.origin : ''
-    return supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${origin}/reset-password`,
-    })
+    try {
+      await sendPasswordResetEmail(auth, email)
+      return { data: {}, error: null }
+    } catch (error) {
+      return { data: null, error }
+    }
   },
 
   async updatePassword(password) {
-    return supabase.auth.updateUser({
-      password,
-    })
+    try {
+      const user = auth.currentUser
+      if (!user) throw new Error('No user currently signed in')
+      await firebaseUpdatePassword(user, password)
+      return { data: {}, error: null }
+    } catch (error) {
+      return { data: null, error }
+    }
   },
 
   async signOut() {
@@ -52,7 +96,12 @@ export const authService = {
       return { error: null }
     }
 
-    return supabase.auth.signOut()
+    try {
+      await firebaseSignOut(auth)
+      return { error: null }
+    } catch (error) {
+      return { error }
+    }
   },
 
   onAuthStateChange(callback) {
@@ -68,8 +117,29 @@ export const authService = {
       }
     }
 
-    return supabase.auth.onAuthStateChange((event, session) => {
-      callback(session, event)
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const session = {
+          user: {
+            id: user.uid,
+            email: user.email,
+            user_metadata: {
+              full_name: user.displayName,
+            },
+          },
+        }
+        callback(session, 'SIGNED_IN')
+      } else {
+        callback(null, 'SIGNED_OUT')
+      }
     })
+
+    return {
+      data: {
+        subscription: {
+          unsubscribe,
+        },
+      },
+    }
   },
 }

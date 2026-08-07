@@ -1,142 +1,158 @@
-import { supabase } from '../lib/supabase'
-
-const APPLICATION_SELECT =
-  'id, job_id, applicant_id, status, match_score, ai_feedback, applied_at'
-const JOB_SELECT =
-  'id, company_id, company_name, title, location, salary_range, type, description, skills_required, status, posted_at'
-const PROFILE_SELECT =
-  'id, role, full_name, avatar_url, headline, bio, github_url, skills, experience_years, completion_score, wallet_balance, created_at, updated_at'
-const USER_SELECT = 'id, email, display_name, proficiency_level, created_at'
-
-function isRlsBlocked(error) {
-  if (!error) return false
-  const message = `${error.message} ${error.details ?? ''} ${error.hint ?? ''}`.toLowerCase()
-
-  return (
-    error.code === '42501' ||
-    message.includes('permission denied') ||
-    message.includes('not allowed') ||
-    message.includes('row-level security') ||
-    message.includes('rls')
-  )
-}
-
-function mapError(error) {
-  if (isRlsBlocked(error)) {
-    return { kind: 'rls_blocked', error }
-  }
-
-  return { kind: 'error', error }
-}
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  addDoc,
+  updateDoc,
+  query,
+  where,
+  orderBy,
+  documentId,
+} from 'firebase/firestore'
+import { db } from '../lib/firebase'
 
 export const applicationsService = {
   async listMyApplications(applicantId) {
-    const { data, error, count } = await supabase
-      .from('applications')
-      .select(APPLICATION_SELECT, { count: 'exact' })
-      .eq('applicant_id', applicantId)
-      .order('applied_at', { ascending: false, nullsFirst: false })
+    try {
+      const appsRef = collection(db, 'applications')
+      const q = query(
+        appsRef,
+        where('applicant_id', '==', applicantId),
+        orderBy('applied_at', 'desc'),
+      )
 
-    if (error) {
-      return mapError(error)
-    }
+      const querySnapshot = await getDocs(q)
+      const apps = querySnapshot.docs.map((docSnap) => ({
+        id: docSnap.id,
+        ...docSnap.data(),
+      }))
 
-    return {
-      kind: 'success',
-      data: {
-        applications: data ?? [],
-        count: count ?? 0,
-      },
+      return {
+        kind: 'success',
+        data: {
+          applications: apps,
+          count: apps.length,
+        },
+      }
+    } catch (error) {
+      return { kind: 'error', error }
     }
   },
 
   async getApplication(applicationId) {
-    const { data, error } = await supabase
-      .from('applications')
-      .select(APPLICATION_SELECT)
-      .eq('id', applicationId)
-      .maybeSingle()
+    try {
+      if (!applicationId) {
+        return { kind: 'success', data: null }
+      }
 
-    if (error) {
-      return mapError(error)
-    }
+      const appRef = doc(db, 'applications', applicationId)
+      const appSnap = await getDoc(appRef)
 
-    return {
-      kind: 'success',
-      data: data ?? null,
+      if (!appSnap.exists()) {
+        return { kind: 'success', data: null }
+      }
+
+      return {
+        kind: 'success',
+        data: {
+          id: appSnap.id,
+          ...appSnap.data(),
+        },
+      }
+    } catch (error) {
+      return { kind: 'error', error }
     }
   },
 
   async getApplicationByJobAndApplicant(jobId, applicantId) {
-    const { data, error } = await supabase
-      .from('applications')
-      .select(APPLICATION_SELECT)
-      .eq('job_id', jobId)
-      .eq('applicant_id', applicantId)
-      .maybeSingle()
+    try {
+      const appsRef = collection(db, 'applications')
+      const q = query(
+        appsRef,
+        where('job_id', '==', jobId),
+        where('applicant_id', '==', applicantId),
+      )
 
-    if (error) {
-      return mapError(error)
-    }
+      const querySnapshot = await getDocs(q)
+      if (querySnapshot.empty) {
+        return { kind: 'success', data: null }
+      }
 
-    return {
-      kind: 'success',
-      data: data ?? null,
+      const firstDoc = querySnapshot.docs[0]
+      return {
+        kind: 'success',
+        data: {
+          id: firstDoc.id,
+          ...firstDoc.data(),
+        },
+      }
+    } catch (error) {
+      return { kind: 'error', error }
     }
   },
 
   async createApplication(jobId, applicantId) {
-    const { data, error } = await supabase
-      .from('applications')
-      .insert({
+    try {
+      const payload = {
         job_id: jobId,
         applicant_id: applicantId,
-      })
-      .select(APPLICATION_SELECT)
-      .single()
+        status: 'pending',
+        applied_at: new Date().toISOString(),
+      }
 
-    if (error) {
-      return mapError(error)
-    }
-
-    return {
-      kind: 'success',
-      data: data,
+      const docRef = await addDoc(collection(db, 'applications'), payload)
+      return {
+        kind: 'success',
+        data: {
+          id: docRef.id,
+          ...payload,
+        },
+      }
+    } catch (error) {
+      return { kind: 'error', error }
     }
   },
 
   async listCompanyJobApplications(jobId) {
-    const { data, error } = await supabase
-      .from('applications')
-      .select(APPLICATION_SELECT)
-      .eq('job_id', jobId)
-      .order('applied_at', { ascending: false, nullsFirst: false })
+    try {
+      const appsRef = collection(db, 'applications')
+      const q = query(
+        appsRef,
+        where('job_id', '==', jobId),
+        orderBy('applied_at', 'desc'),
+      )
 
-    if (error) {
-      return mapError(error)
-    }
+      const querySnapshot = await getDocs(q)
+      const apps = querySnapshot.docs.map((docSnap) => ({
+        id: docSnap.id,
+        ...docSnap.data(),
+      }))
 
-    return {
-      kind: 'success',
-      data: data ?? [],
+      return {
+        kind: 'success',
+        data: apps,
+      }
+    } catch (error) {
+      return { kind: 'error', error }
     }
   },
 
   async updateApplicationStatus(applicationId, status) {
-    const { data, error } = await supabase
-      .from('applications')
-      .update({ status })
-      .eq('id', applicationId)
-      .select(APPLICATION_SELECT)
-      .single()
+    try {
+      const appRef = doc(db, 'applications', applicationId)
+      await updateDoc(appRef, { status })
 
-    if (error) {
-      return mapError(error)
-    }
-
-    return {
-      kind: 'success',
-      data: data,
+      const updatedSnap = await getDoc(appRef)
+      return {
+        kind: 'success',
+        data: {
+          id: updatedSnap.id,
+          ...updatedSnap.data(),
+        },
+      }
+    } catch (error) {
+      return { kind: 'error', error }
     }
   },
 
@@ -145,16 +161,20 @@ export const applicationsService = {
       return { kind: 'success', data: [] }
     }
 
-    const { data, error } = await supabase
-      .from('jobs')
-      .select(JOB_SELECT)
-      .in('id', jobIds)
-
-    if (error) {
-      return mapError(error)
+    try {
+      const jobs = []
+      // Fetch in chunks of 10 for Firestore field limit if necessary, or individual getDocs
+      for (const jobId of jobIds) {
+        const docRef = doc(db, 'jobs', jobId)
+        const snap = await getDoc(docRef)
+        if (snap.exists()) {
+          jobs.push({ id: snap.id, ...snap.data() })
+        }
+      }
+      return { kind: 'success', data: jobs }
+    } catch (error) {
+      return { kind: 'error', error }
     }
-
-    return { kind: 'success', data: data ?? [] }
   },
 
   async getProfilesByIds(profileIds) {
@@ -162,16 +182,19 @@ export const applicationsService = {
       return { kind: 'success', data: [] }
     }
 
-    const { data, error } = await supabase
-      .from('profiles')
-      .select(PROFILE_SELECT)
-      .in('id', profileIds)
-
-    if (error) {
-      return mapError(error)
+    try {
+      const profiles = []
+      for (const profileId of profileIds) {
+        const docRef = doc(db, 'profiles', profileId)
+        const snap = await getDoc(docRef)
+        if (snap.exists()) {
+          profiles.push({ id: snap.id, ...snap.data() })
+        }
+      }
+      return { kind: 'success', data: profiles }
+    } catch (error) {
+      return { kind: 'error', error }
     }
-
-    return { kind: 'success', data: data ?? [] }
   },
 
   async getUsersByIds(userIds) {
@@ -179,16 +202,19 @@ export const applicationsService = {
       return { kind: 'success', data: [] }
     }
 
-    const { data, error } = await supabase
-      .from('users')
-      .select(USER_SELECT)
-      .in('id', userIds)
-
-    if (error) {
-      return mapError(error)
+    try {
+      const users = []
+      for (const userId of userIds) {
+        const docRef = doc(db, 'users', userId)
+        const snap = await getDoc(docRef)
+        if (snap.exists()) {
+          users.push({ id: snap.id, ...snap.data() })
+        }
+      }
+      return { kind: 'success', data: users }
+    } catch (error) {
+      return { kind: 'error', error }
     }
-
-    return { kind: 'success', data: data ?? [] }
   },
 }
 

@@ -1,79 +1,107 @@
-import { supabase } from '../lib/supabase'
-
-const JOB_SELECT =
-  'id, company_id, company_name, title, location, salary_range, type, description, skills_required, status, posted_at'
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  addDoc,
+  updateDoc,
+  query,
+  where,
+  orderBy,
+} from 'firebase/firestore'
+import { db } from '../lib/firebase'
 
 export const jobsService = {
   async listJobs(filters = {}, page = 0, pageSize = 10) {
-    const from = page * pageSize
-    const to = from + pageSize - 1
+    try {
+      const jobsRef = collection(db, 'jobs')
+      const constraints = []
 
-    let query = supabase
-      .from('jobs')
-      .select(JOB_SELECT, { count: 'exact' })
-      .order('posted_at', { ascending: false, nullsFirst: false })
+      if (filters.companyId) {
+        constraints.push(where('company_id', '==', filters.companyId))
+      }
 
-    if (filters.companyId) {
-      query = query.eq('company_id', filters.companyId)
-    }
+      if (filters.type) {
+        constraints.push(where('type', '==', filters.type))
+      }
 
-    if (filters.location) {
-      query = query.ilike('location', `%${filters.location}%`)
-    }
+      if (filters.status) {
+        constraints.push(where('status', '==', filters.status))
+      }
 
-    if (filters.type) {
-      query = query.eq('type', filters.type)
-    }
+      // Default sorting by posted_at descending
+      constraints.push(orderBy('posted_at', 'desc'))
 
-    if (filters.status) {
-      query = query.eq('status', filters.status)
-    }
+      const q = query(jobsRef, ...constraints)
+      const querySnapshot = await getDocs(q)
 
-    if (filters.search && filters.search.trim()) {
-      const term = filters.search.trim()
-      query = query.or(
-        `title.ilike.%${term}%,company_name.ilike.%${term}%,description.ilike.%${term}%`,
-      )
-    }
+      let jobs = querySnapshot.docs.map((docSnap) => ({
+        id: docSnap.id,
+        ...docSnap.data(),
+      }))
 
-    query = query.range(from, to)
+      // In-memory filter for search or location if specified
+      if (filters.location) {
+        const locTerm = filters.location.toLowerCase()
+        jobs = jobs.filter(
+          (j) => j.location && j.location.toLowerCase().includes(locTerm),
+        )
+      }
 
-    const { data, error, count } = await query
+      if (filters.search && filters.search.trim()) {
+        const term = filters.search.trim().toLowerCase()
+        jobs = jobs.filter(
+          (j) =>
+            (j.title && j.title.toLowerCase().includes(term)) ||
+            (j.company_name && j.company_name.toLowerCase().includes(term)) ||
+            (j.description && j.description.toLowerCase().includes(term)),
+        )
+      }
 
-    if (error) {
+      const totalCount = jobs.length
+      const from = page * pageSize
+      const paginatedJobs = jobs.slice(from, from + pageSize)
+
+      return {
+        kind: 'success',
+        data: {
+          jobs: paginatedJobs,
+          count: totalCount,
+        },
+      }
+    } catch (error) {
       return { kind: 'error', error }
-    }
-
-    return {
-      kind: 'success',
-      data: {
-        jobs: data ?? [],
-        count: count ?? 0,
-      },
     }
   },
 
   async getJob(jobId) {
-    const { data, error } = await supabase
-      .from('jobs')
-      .select(JOB_SELECT)
-      .eq('id', jobId)
-      .maybeSingle()
+    try {
+      if (!jobId) {
+        return { kind: 'success', job: null }
+      }
 
-    if (error) {
+      const jobRef = doc(db, 'jobs', jobId)
+      const jobSnap = await getDoc(jobRef)
+
+      if (!jobSnap.exists()) {
+        return { kind: 'success', job: null }
+      }
+
+      return {
+        kind: 'success',
+        job: {
+          id: jobSnap.id,
+          ...jobSnap.data(),
+        },
+      }
+    } catch (error) {
       return { kind: 'error', error }
-    }
-
-    return {
-      kind: 'success',
-      job: data ?? null,
     }
   },
 
   async createJob(companyId, companyName, payload) {
-    const { data, error } = await supabase
-      .from('jobs')
-      .insert({
+    try {
+      const jobData = {
         company_id: companyId,
         company_name: companyName,
         title: payload.title,
@@ -84,29 +112,36 @@ export const jobsService = {
         skills_required: payload.skills_required,
         status: payload.status || 'open',
         posted_at: new Date().toISOString(),
-      })
-      .select(JOB_SELECT)
-      .single()
+      }
 
-    if (error) {
+      const docRef = await addDoc(collection(db, 'jobs'), jobData)
+      return {
+        kind: 'success',
+        job: {
+          id: docRef.id,
+          ...jobData,
+        },
+      }
+    } catch (error) {
       return { kind: 'error', error }
     }
-
-    return { kind: 'success', job: data }
   },
 
   async updateJob(jobId, payload) {
-    const { data, error } = await supabase
-      .from('jobs')
-      .update(payload)
-      .eq('id', jobId)
-      .select(JOB_SELECT)
-      .single()
+    try {
+      const jobRef = doc(db, 'jobs', jobId)
+      await updateDoc(jobRef, payload)
 
-    if (error) {
+      const updatedSnap = await getDoc(jobRef)
+      return {
+        kind: 'success',
+        job: {
+          id: updatedSnap.id,
+          ...updatedSnap.data(),
+        },
+      }
+    } catch (error) {
       return { kind: 'error', error }
     }
-
-    return { kind: 'success', job: data }
   },
 }

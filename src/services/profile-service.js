@@ -1,68 +1,71 @@
-import { supabase } from '../lib/supabase'
-
-function isRlsBlocked(error) {
-  if (!error) return false
-  const message = `${error.message} ${error.details ?? ''} ${error.hint ?? ''}`.toLowerCase()
-
-  return (
-    error.code === '42501' ||
-    message.includes('permission denied') ||
-    message.includes('not allowed') ||
-    message.includes('row-level security') ||
-    message.includes('rls')
-  )
-}
-
-const SELECT_FIELDS =
-  'id, role, full_name, avatar_url, headline, bio, github_url, skills, experience_years, completion_score, wallet_balance, created_at, updated_at'
+import { doc, getDoc, setDoc } from 'firebase/firestore'
+import { db } from '../lib/firebase'
 
 export const profileService = {
   async getOwnProfile(userId) {
-    const { data, error } = await supabase
-      .from('profiles')
-      .select(SELECT_FIELDS)
-      .eq('id', userId)
-      .maybeSingle()
-
-    if (error) {
-      if (isRlsBlocked(error)) {
-        return { kind: 'rls_blocked', error }
+    try {
+      if (!userId) {
+        return { kind: 'success', profile: null }
       }
 
-      return { kind: 'error', error }
-    }
+      const profileRef = doc(db, 'profiles', userId)
+      const profileSnap = await getDoc(profileRef)
 
-    return {
-      kind: 'success',
-      profile: data ?? null,
+      if (!profileSnap.exists()) {
+        return {
+          kind: 'success',
+          profile: null,
+        }
+      }
+
+      return {
+        kind: 'success',
+        profile: {
+          id: profileSnap.id,
+          ...profileSnap.data(),
+        },
+      }
+    } catch (error) {
+      return { kind: 'error', error }
     }
   },
 
   async getPublicProfile(profileId) {
-    const { data, error } = await supabase
-      .from('profiles')
-      .select(SELECT_FIELDS)
-      .eq('id', profileId)
-      .maybeSingle()
-
-    if (error) {
-      if (isRlsBlocked(error)) {
-        return { kind: 'rls_blocked', error }
+    try {
+      if (!profileId) {
+        return { kind: 'success', profile: null }
       }
 
-      return { kind: 'error', error }
-    }
+      const profileRef = doc(db, 'profiles', profileId)
+      const profileSnap = await getDoc(profileRef)
 
-    return {
-      kind: 'success',
-      profile: data ?? null,
+      if (!profileSnap.exists()) {
+        return {
+          kind: 'success',
+          profile: null,
+        }
+      }
+
+      return {
+        kind: 'success',
+        profile: {
+          id: profileSnap.id,
+          ...profileSnap.data(),
+        },
+      }
+    } catch (error) {
+      return { kind: 'error', error }
     }
   },
 
   async updateOwnProfile(userId, input) {
-    const { data, error } = await supabase
-      .from('profiles')
-      .update({
+    try {
+      if (!userId) {
+        return { kind: 'error', error: new Error('Missing userId') }
+      }
+
+      const profileRef = doc(db, 'profiles', userId)
+      const payload = {
         full_name: input.full_name || null,
         avatar_url: input.avatar_url || null,
         headline: input.headline || null,
@@ -70,46 +73,48 @@ export const profileService = {
         github_url: input.github_url || null,
         skills: input.skills && input.skills.length > 0 ? input.skills : null,
         experience_years: input.experience_years ?? 0,
-      })
-      .eq('id', userId)
-      .select(SELECT_FIELDS)
-      .maybeSingle()
-
-    if (error) {
-      if (isRlsBlocked(error)) {
-        return { kind: 'rls_blocked', error }
+        updated_at: new Date().toISOString(),
       }
 
-      return { kind: 'error', error }
-    }
+      await setDoc(profileRef, payload, { merge: true })
 
-    return {
-      kind: 'success',
-      profile: data ?? null,
+      const updatedSnap = await getDoc(profileRef)
+      return {
+        kind: 'success',
+        profile: {
+          id: updatedSnap.id,
+          ...updatedSnap.data(),
+        },
+      }
+    } catch (error) {
+      return { kind: 'error', error }
     }
   },
 
   async updateOwnRole(userId, role) {
-    const { data, error } = await supabase
-      .from('profiles')
-      .update({
-        role,
-      })
-      .eq('id', userId)
-      .select(SELECT_FIELDS)
-      .maybeSingle()
-
-    if (error) {
-      if (isRlsBlocked(error)) {
-        return { kind: 'rls_blocked', error }
+    try {
+      if (!userId) {
+        return { kind: 'error', error: new Error('Missing userId') }
       }
 
-      return { kind: 'error', error }
-    }
+      const profileRef = doc(db, 'profiles', userId)
+      const payload = {
+        role,
+        updated_at: new Date().toISOString(),
+      }
 
-    return {
-      kind: 'success',
-      profile: data ?? null,
+      await setDoc(profileRef, payload, { merge: true })
+
+      const updatedSnap = await getDoc(profileRef)
+      return {
+        kind: 'success',
+        profile: {
+          id: updatedSnap.id,
+          ...updatedSnap.data(),
+        },
+      }
+    } catch (error) {
+      return { kind: 'error', error }
     }
   },
 }

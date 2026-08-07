@@ -1,36 +1,32 @@
-import { supabase } from '../lib/supabase'
-
-function isRlsBlocked(error) {
-  if (!error) return false
-  const message = `${error.message} ${error.details ?? ''} ${error.hint ?? ''}`.toLowerCase()
-
-  return (
-    error.code === '42501' ||
-    message.includes('permission denied') ||
-    message.includes('row-level security') ||
-    message.includes('rls')
-  )
-}
+import { doc, getDoc } from 'firebase/firestore'
+import { db } from '../lib/firebase'
 
 export const userService = {
   async getOwnUser(userId) {
-    const { data, error } = await supabase
-      .from('users')
-      .select('id, email, display_name, proficiency_level, created_at')
-      .eq('id', userId)
-      .maybeSingle()
-
-    if (error) {
-      if (isRlsBlocked(error)) {
-        return { kind: 'rls_blocked', error }
+    try {
+      if (!userId) {
+        return { kind: 'success', user: null }
       }
 
-      return { kind: 'error', error }
-    }
+      const userRef = doc(db, 'users', userId)
+      const userSnap = await getDoc(userRef)
 
-    return {
-      kind: 'success',
-      user: data ?? null,
+      if (!userSnap.exists()) {
+        return {
+          kind: 'success',
+          user: null,
+        }
+      }
+
+      return {
+        kind: 'success',
+        user: {
+          id: userSnap.id,
+          ...userSnap.data(),
+        },
+      }
+    } catch (error) {
+      return { kind: 'error', error }
     }
   },
 }
