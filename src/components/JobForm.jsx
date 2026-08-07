@@ -1,6 +1,5 @@
 'use client'
 
-import { Badge } from './Badge'
 import { Button } from './Button'
 import { Card } from './Card'
 import { Input } from './Input'
@@ -18,7 +17,7 @@ const typeOptions = [
 
 const statusOptions = [
   { label: 'اختر الحالة', value: '' },
-  { label: 'نشطة', value: 'active' },
+  { label: 'نشطة', value: 'open' },
   { label: 'مسودة', value: 'draft' },
   { label: 'مغلقة', value: 'closed' },
 ]
@@ -30,7 +29,8 @@ export function JobForm({
   errors = {},
   onChange,
   onSubmit,
-  submitLabel,
+  submitLabel = 'حفظ الوظيفة',
+  isSubmitting = false,
   submitUnavailableReason,
 }) {
   return (
@@ -45,18 +45,18 @@ export function JobForm({
             placeholder="اسم الشركة"
           />
           <Input
-            label="عنوان الوظيفة"
+            label="عنوان الوظيفة *"
             value={values.title}
             onChange={(event) => onChange('title', event.target.value)}
             error={errors.title}
-            placeholder="مثال: مسؤول تشغيل"
+            placeholder="مثال: مهندس برمجيات"
           />
           <Input
             label="الموقع"
             value={values.location}
             onChange={(event) => onChange('location', event.target.value)}
             error={errors.location}
-            placeholder="المدينة أو الدولة"
+            placeholder="الرياض / جدة / عن بُعد"
           />
           <Input
             label="الراتب"
@@ -66,7 +66,7 @@ export function JobForm({
             placeholder="مثال: 8000 - 12000"
           />
           <Select
-            label="نوع الوظيفة"
+            label="نوع الوظيفة *"
             value={values.type}
             onChange={(event) => onChange('type', event.target.value)}
             error={errors.type}
@@ -78,17 +78,17 @@ export function JobForm({
             onChange={(event) => onChange('status', event.target.value)}
             error={errors.status}
             options={statusOptions}
-            hint="يمكن استخدام هذه الحالة لإظهار الوظيفة كنشطة أو مسودة أو مغلقة عند اكتمال الربط الخلفي."
+            hint="اختر نشطة لإظهار الوظيفة فوراً للباحثين."
           />
         </div>
 
         <Textarea
-          label="الوصف"
+          label="الوصف *"
           value={values.description}
           onChange={(event) => onChange('description', event.target.value)}
           error={errors.description}
           rows={6}
-          placeholder="أدخل وصف الوظيفة"
+          placeholder="أدخل وصف الوظيفة والمهام المطلوبة"
         />
 
         <Textarea
@@ -97,19 +97,20 @@ export function JobForm({
           onChange={(event) => onChange('skills_required', event.target.value)}
           error={errors.skills_required}
           rows={4}
-          hint="أدخل المهارات مفصولة بفواصل. ستُستخدم لاحقًا في الفرز والبحث الذكي عند اكتمال الربط."
+          hint="أدخل المهارات مفصولة بفواصل (مثال: React, JavaScript, SQL)."
           placeholder="React, JavaScript, SQL"
         />
 
-        <div className="rounded-[20px] border border-dashed border-[var(--line-strong)] bg-[var(--surface-muted)] p-4 text-sm leading-7 text-[var(--text-soft)]">
-          {submitUnavailableReason}
-        </div>
+        {submitUnavailableReason && (
+          <div className="rounded-[20px] border border-dashed border-amber-300 bg-amber-50 p-4 text-sm leading-7 text-amber-800">
+            {submitUnavailableReason}
+          </div>
+        )}
 
-        <div className="flex flex-wrap items-center gap-3">
-          <Button type="submit" disabled className="w-full sm:w-auto">
+        <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-100">
+          <Button type="submit" isLoading={isSubmitting} className="w-full sm:w-auto">
             {submitLabel}
           </Button>
-          <Badge tone="warning">الحفظ الفعلي بانتظار الباك اند</Badge>
         </div>
       </form>
     </Card>
