@@ -2,7 +2,6 @@
 
 import { useMemo, useState } from 'react'
 import {
-  ArrowLeftRight,
   Bell,
   BriefcaseBusiness,
   Building2,
@@ -27,7 +26,6 @@ import { Button } from '../components/Button'
 import { useAuth } from '../hooks/useAuth'
 import { cn } from '../lib/cn'
 import { getRoleLabel } from '../lib/roles'
-import { setDevAuthPreviewRole } from '../lib/dev-auth'
 import { authService } from '../services/auth-service'
 
 export function DashboardLayout({ children }) {
@@ -45,11 +43,8 @@ export function DashboardLayout({ children }) {
         { label: 'استعراض المرشحين', icon: Users, to: '/company/candidates', match: '/company/candidates' },
         { label: 'متابعة الأداء', icon: ShieldCheck, to: '/company/performance', match: '/company/performance' },
         { label: 'الإشعارات', icon: Bell, to: '/company/notifications', match: '/company/notifications' },
-        { label: 'متابعة الحضور', icon: Bell, to: '/company/attendance', match: '/company/attendance' },
         { label: 'الرسائل', icon: Mail, to: '/company/messages', match: '/company/messages' },
         { label: 'التعهيد الخارجي', icon: BriefcaseBusiness, to: '/company/outsourcing-requests', match: '/company/outsourcing-requests' },
-        { label: 'الإدارة والاشتراكات', icon: Settings2, to: '/company/admin/users', match: '/company/admin' },
-        { label: 'المقابلات', icon: FileCheck2, to: '/interviews', match: '/interviews' },
         { label: 'الملف الشخصي', icon: UserCircle2, to: '/profile', match: '/profile' },
         { label: 'الإعدادات', icon: Settings2, to: '/settings', match: '/settings' },
       ]
@@ -92,15 +87,6 @@ export function DashboardLayout({ children }) {
     router.push('/login')
   }
 
-  function handleSwitchRole(newRole) {
-    setDevAuthPreviewRole(newRole)
-    if (newRole === 'company') {
-      router.push('/company/dashboard')
-    } else {
-      router.push('/seeker/dashboard')
-    }
-  }
-
   const dashboardLabel = role === 'company' ? 'مساحة الشركة' : 'مساحة الباحث'
 
   return (
@@ -136,7 +122,7 @@ export function DashboardLayout({ children }) {
             </Button>
           </div>
 
-          {/* Account Profile & Role Switcher Tile */}
+          {/* Account Profile Tile */}
           <div className="mt-4 rounded-2xl border border-slate-100 bg-gradient-to-br from-slate-50 to-teal-50/40 p-4 shadow-sm space-y-3">
             <div className="flex items-center gap-3">
               <Avatar name={user?.email ?? 'المستخدم'} size="md" />
@@ -152,18 +138,6 @@ export function DashboardLayout({ children }) {
               <Badge tone={role === 'company' ? 'brand' : 'warning'}>
                 {getRoleLabel(role)}
               </Badge>
-              
-              <button
-                type="button"
-                onClick={() => {
-                  setMobileNavOpen(false)
-                  handleSwitchRole(role === 'company' ? 'seeker' : 'company')
-                }}
-                className="inline-flex items-center gap-1.5 text-[11px] font-bold text-teal-700 bg-teal-50 hover:bg-teal-100 active:scale-95 px-3 py-1.5 rounded-xl border border-teal-200 transition-all shadow-xs"
-              >
-                <ArrowLeftRight size={13} />
-                <span>التبديل إلى {role === 'company' ? 'باحث' : 'شركة'}</span>
-              </button>
             </div>
           </div>
 
@@ -237,20 +211,9 @@ export function DashboardLayout({ children }) {
               </div>
             </div>
 
-            {/* Left Side: Role Switcher & Actions */}
+            {/* Left Side: Actions & Profile */}
             <div className="flex items-center gap-2">
-              
-              {/* Quick Role Switcher pill */}
-              <button
-                type="button"
-                onClick={() => handleSwitchRole(role === 'company' ? 'seeker' : 'company')}
-                className="inline-flex items-center gap-1.5 rounded-xl border border-teal-200 bg-teal-50 px-2.5 py-1.5 sm:px-3 sm:py-2 text-[11px] sm:text-xs font-bold text-teal-700 hover:bg-teal-100 active:scale-95 transition-all shadow-xs"
-              >
-                <ArrowLeftRight size={13} />
-                <span>{role === 'company' ? 'باحث' : 'شركة'}</span>
-              </button>
-
-              <Link href="/company/notifications" className="relative">
+              <Link href={role === 'company' ? '/company/notifications' : '/interviews'} className="relative">
                 <button
                   type="button"
                   className="grid h-9 w-9 sm:h-10 sm:w-10 place-items-center rounded-xl border border-slate-200 bg-slate-50 text-slate-600 hover:bg-white active:scale-95 transition-all"
@@ -279,22 +242,10 @@ export function DashboardLayout({ children }) {
                       <p className="text-slate-500 text-[11px] mt-0.5">{getRoleLabel(role)}</p>
                     </div>
 
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setUserMenuOpen(false)
-                        handleSwitchRole(role === 'company' ? 'seeker' : 'company')
-                      }}
-                      className="w-full flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-bold text-teal-700 bg-teal-50 hover:bg-teal-100 transition-colors my-1"
-                    >
-                      <ArrowLeftRight size={16} />
-                      التبديل إلى {role === 'company' ? 'لوحة الباحث' : 'لوحة الشركة'}
-                    </button>
-
                     <Link
                       href="/profile"
                       onClick={() => setUserMenuOpen(false)}
-                      className="flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors"
+                      className="flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors mt-1"
                     >
                       <UserCircle2 size={16} />
                       الملف الشخصي
