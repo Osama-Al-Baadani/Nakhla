@@ -1,0 +1,117 @@
+export const demoConversationsByRole = {
+  seeker: [
+    {
+      id: 'conv-seeker-1',
+      participantName: 'شركة آفاق التقنية',
+      participantRole: 'company',
+      participantTitle: 'فريق التوظيف',
+      relatedContext: 'وظيفة: مطور واجهات أمامية',
+      lastMessageAt: '2026-07-27T10:30:00Z',
+      unreadCount: 1,
+      status: 'active',
+      messages: [
+        {
+          id: 'msg-1',
+          senderRole: 'company',
+          senderName: 'شركة آفاق التقنية',
+          text: 'مرحبًا، اطلعنا على طلبك ونود استكمال بعض التفاصيل قبل الانتقال للمرحلة التالية.',
+          sentAt: '2026-07-26T09:15:00Z',
+        },
+        {
+          id: 'msg-2',
+          senderRole: 'seeker',
+          senderName: 'أنت',
+          text: 'أهلًا، يسعدني ذلك. ما المعلومات المطلوبة؟',
+          sentAt: '2026-07-26T09:30:00Z',
+        },
+        {
+          id: 'msg-3',
+          senderRole: 'company',
+          senderName: 'شركة آفاق التقنية',
+          text: 'نحتاج تأكيد توفرك للعمل الحضوري ثلاثة أيام أسبوعيًا، وأرفقنا لك وصف المرحلة القادمة.',
+          sentAt: '2026-07-27T10:30:00Z',
+          attachments: [
+            { id: 'att-1', name: 'تفاصيل_المقابلة.pdf', kind: 'document', sizeLabel: '1.2 MB' },
+          ],
+        },
+      ],
+    },
+    {
+      id: 'conv-seeker-2',
+      participantName: 'شركة نخبة الأعمال',
+      participantRole: 'company',
+      participantTitle: 'مسؤول التوظيف',
+      relatedContext: 'وظيفة: أخصائي دعم تشغيلي',
+      lastMessageAt: '2026-07-24T12:00:00Z',
+      unreadCount: 0,
+      status: 'pending',
+      messages: [
+        {
+          id: 'msg-4',
+          senderRole: 'company',
+          senderName: 'شركة نخبة الأعمال',
+          text: 'تم استلام طلبك، وسيتم التواصل معك بعد مراجعة الملف.',
+          sentAt: '2026-07-24T12:00:00Z',
+        },
+      ],
+    },
+  ],
+  company: [
+    {
+      id: 'conv-company-1',
+      participantName: 'سارة القحطاني',
+      participantRole: 'seeker',
+      participantTitle: 'مرشحة لوظيفة منسق موارد بشرية',
+      relatedContext: 'وظيفة: منسق موارد بشرية',
+      lastMessageAt: '2026-07-27T11:15:00Z',
+      unreadCount: 2,
+      status: 'active',
+      messages: [
+        {
+          id: 'msg-5',
+          senderRole: 'company',
+          senderName: 'أنت',
+          text: 'مرحبًا سارة، نشكرك على التقديم. هل يمكنك مشاركة وقت مناسب لمقابلة تعريفية قصيرة؟',
+          sentAt: '2026-07-26T08:45:00Z',
+        },
+        {
+          id: 'msg-6',
+          senderRole: 'seeker',
+          senderName: 'سارة القحطاني',
+          text: 'مرحبًا، متاحة غدًا من الساعة 11 صباحًا وحتى 2 ظهرًا.',
+          sentAt: '2026-07-27T09:20:00Z',
+        },
+        {
+          id: 'msg-7',
+          senderRole: 'seeker',
+          senderName: 'سارة القحطاني',
+          text: 'كما أرفقت لكم سيرتي الذاتية ونسخة من بعض الأعمال السابقة.',
+          sentAt: '2026-07-27T11:15:00Z',
+          attachments: [
+            { id: 'att-2', name: 'Sarah-CV.pdf', kind: 'document', sizeLabel: '820 KB' },
+            { id: 'att-3', name: 'واجهة-مشروع.png', kind: 'image', sizeLabel: '2.4 MB' },
+          ],
+        },
+      ],
+    },
+    {
+      id: 'conv-company-2',
+      participantName: 'عبدالله الشهري',
+      participantRole: 'seeker',
+      participantTitle: 'مرشح لوظيفة مسؤول تشغيل',
+      relatedContext: 'وظيفة: مسؤول تشغيل',
+      lastMessageAt: '2026-07-25T15:10:00Z',
+      unreadCount: 0,
+      status: 'archived',
+      messages: [
+        {
+          id: 'msg-8',
+          senderRole: 'company',
+          senderName: 'أنت',
+          text: 'نشكر لك اهتمامك، وقد تم إغلاق هذه المرحلة حاليًا. سنحتفظ ببياناتك للفرص القادمة.',
+          sentAt: '2026-07-25T15:10:00Z',
+        },
+      ],
+    },
+  ],
+}

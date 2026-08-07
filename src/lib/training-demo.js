@@ -1,0 +1,81 @@
+export const trainingOverview = {
+  learnerName: 'المتدرب',
+  overallProgress: 64,
+  completedAssets: 11,
+  remainingAssets: 6,
+  completedQuizzes: 4,
+  certificateStatus: 'قريب من الاستحقاق',
+}
+
+export const trainingStages = [
+  {
+    id: 'foundation',
+    title: 'التهيئة والبداية',
+    level: 'الأسبوع الأول',
+    description: 'فهم المسار التدريبي وبناء الأساس المهني والمهاري قبل الانتقال للمستويات التالية.',
+    progress: 100,
+    status: 'completed',
+    certificateEligible: false,
+    assets: [
+      { id: 'v1', title: 'فيديو التعريف بالبرنامج', kind: 'video', duration: '12 دقيقة', status: 'completed' },
+      { id: 'p1', title: 'دليل المتدرب PDF', kind: 'pdf', duration: '8 صفحات', status: 'completed' },
+      { id: 'q1', title: 'اختبار التهيئة', kind: 'quiz', duration: '10 أسئلة', status: 'completed' },
+    ],
+  },
+  {
+    id: 'skills',
+    title: 'بناء المهارات',
+    level: 'الأسبوع الثاني',
+    description: 'التركيز على المهارات العملية والجاهزية اليومية وسلوكيات العمل الأساسية.',
+    progress: 82,
+    status: 'completed',
+    certificateEligible: false,
+    assets: [
+      { id: 'v2', title: 'مهارات التواصل المهني', kind: 'video', duration: '18 دقيقة', status: 'completed' },
+      { id: 'p2', title: 'ملف أنشطة التدريب', kind: 'pdf', duration: '11 صفحة', status: 'completed' },
+      { id: 'q2', title: 'اختبار بناء المهارات', kind: 'quiz', duration: '12 سؤال', status: 'completed' },
+    ],
+  },
+  {
+    id: 'practice',
+    title: 'التطبيق العملي',
+    level: 'الأسبوع الثالث',
+    description: 'تحويل التعلم إلى مخرجات عملية من خلال مهام تطبيقية وقياس جودة التنفيذ.',
+    progress: 64,
+    status: 'in_progress',
+    certificateEligible: false,
+    assets: [
+      { id: 'v3', title: 'شرح المهمة العملية', kind: 'video', duration: '16 دقيقة', status: 'completed' },
+      { id: 'p3', title: 'نموذج التقييم العملي', kind: 'pdf', duration: '6 صفحات', status: 'in_progress' },
+      { id: 'q3', title: 'اختبار التطبيق', kind: 'quiz', duration: '15 سؤال', status: 'in_progress' },
+    ],
+  },
+  {
+    id: 'readiness',
+    title: 'الجاهزية للتوظيف',
+    level: 'الأسبوع الرابع',
+    description: 'الانتقال من التدريب إلى الجاهزية الوظيفية من خلال تحسين العرض الشخصي والاستعداد للمقابلات.',
+    progress: 28,
+    status: 'in_progress',
+    certificateEligible: false,
+    assets: [
+      { id: 'v4', title: 'الاستعداد للمقابلة', kind: 'video', duration: '20 دقيقة', status: 'in_progress' },
+      { id: 'p4', title: 'ملف الاستعداد الوظيفي', kind: 'pdf', duration: '9 صفحات', status: 'locked' },
+      { id: 'q4', title: 'اختبار الجاهزية', kind: 'quiz', duration: '8 أسئلة', status: 'locked' },
+    ],
+  },
+  {
+    id: 'professional',
+    title: 'المستوى الاحترافي',
+    level: 'الأسبوع الخامس',
+    description: 'المرحلة النهائية قبل الشهادة، وفيها مراجعة شاملة وتقييم الاستعداد النهائي.',
+    progress: 0,
+    status: 'locked',
+    certificateEligible: true,
+    assets: [
+      { id: 'v5', title: 'مراجعة نهائية', kind: 'video', duration: '14 دقيقة', status: 'locked' },
+      { id: 'p5', title: 'ملف متطلبات الشهادة', kind: 'pdf', duration: '5 صفحات', status: 'locked' },
+      { id: 'q5', title: 'الاختبار النهائي', kind: 'quiz', duration: '20 سؤال', status: 'locked' },
+    ],
+  },
+]
