@@ -21,6 +21,12 @@ export default function JobDetailsPage({ params }) {
   const { isLoading, job, error } = useJob(jobId)
   const applicationState = useApplicationStatus(jobId, user?.id)
 
+  const skillsList = Array.isArray(job?.skills_required)
+    ? job.skills_required
+    : typeof job?.skills_required === 'string'
+      ? job.skills_required.split(',').map((s) => s.trim()).filter(Boolean)
+      : []
+
   return (
     <section className="space-y-5">
       <Card className="bg-[linear-gradient(140deg,_rgba(255,255,255,0.96),_rgba(244,248,252,0.92))]">
@@ -107,11 +113,11 @@ export default function JobDetailsPage({ params }) {
               </p>
             </div>
 
-            {job.skills_required && job.skills_required.length > 0 ? (
+            {skillsList.length > 0 ? (
               <div className="rounded-[22px] bg-[var(--surface-muted)] p-5">
                 <p className="text-sm font-medium text-[var(--text)]">المهارات المطلوبة</p>
                 <div className="mt-3 flex flex-wrap gap-2">
-                  {job.skills_required.map((skill) => (
+                  {skillsList.map((skill) => (
                     <Badge key={skill} tone="brand">
                       {skill}
                     </Badge>
@@ -122,7 +128,7 @@ export default function JobDetailsPage({ params }) {
 
             <div className="flex flex-wrap gap-3">
               {job.company_id ? (
-                <Link href={`/companies/${job.company_id}/jobs`}>
+                <Link href={`/company/jobs`}>
                   <Button variant="secondary">وظائف الشركة</Button>
                 </Link>
               ) : null}

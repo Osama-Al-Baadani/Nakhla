@@ -7,6 +7,12 @@ import { Button } from './Button'
 import { Card } from './Card'
 
 export function JobCard({ job }) {
+  const skillsList = Array.isArray(job.skills_required)
+    ? job.skills_required
+    : typeof job.skills_required === 'string'
+      ? job.skills_required.split(',').map((s) => s.trim()).filter(Boolean)
+      : []
+
   return (
     <Card className="h-full bg-white p-5">
       <div className="flex h-full flex-col">
@@ -55,9 +61,9 @@ export function JobCard({ job }) {
           </p>
         )}
 
-        {job.skills_required && job.skills_required.length > 0 ? (
+        {skillsList.length > 0 ? (
           <div className="mt-4 flex flex-wrap gap-2">
-            {job.skills_required.slice(0, 4).map((skill) => (
+            {skillsList.slice(0, 4).map((skill) => (
               <Badge key={skill} tone="neutral">
                 {skill}
               </Badge>
