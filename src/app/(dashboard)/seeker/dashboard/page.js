@@ -1,5 +1,7 @@
 'use client'
 
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import {
   ArrowLeft,
   BriefcaseBusiness,
@@ -30,9 +32,17 @@ const emptyFilters = {
 }
 
 export default function SeekerDashboardPage() {
-  const { user, profile, isProfileLoading, profileError } = useAuth()
+  const router = useRouter()
+  const { user, profile, isProfileLoading, profileError, role, isLoading } = useAuth()
   const jobsState = useJobs(emptyFilters)
   const applicationsState = useMyApplications(user?.id)
+
+  // Role Guard: Redirect company users to company dashboard
+  useEffect(() => {
+    if (!isLoading && role === 'company') {
+      router.replace('/company/dashboard')
+    }
+  }, [role, isLoading, router])
 
   return (
     <section className="space-y-6 animate-slide-up">
