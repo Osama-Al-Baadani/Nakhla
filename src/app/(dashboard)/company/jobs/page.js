@@ -1,5 +1,6 @@
 'use client'
 
+import { useMemo } from 'react'
 import { Building2, Eye, FilePenLine, Plus } from 'lucide-react'
 import Link from 'next/link'
 import { Button } from '../../../../components/Button'
@@ -14,14 +15,19 @@ import { useJobs } from '../../../../hooks/useJobs'
 
 export default function CompanyJobsPage() {
   const { user } = useAuth()
-  const { isLoading, isLoadingMore, jobs, totalCount, error, hasMore, loadMore } =
-    useJobs({
+
+  const filters = useMemo(
+    () => ({
       search: '',
       location: '',
       type: '',
       status: '',
       companyId: user?.id,
-    })
+    }),
+    [user?.id],
+  )
+
+  const { isLoading, isLoadingMore, jobs, totalCount, error, hasMore, loadMore } = useJobs(filters)
 
   const companyName = jobs[0]?.company_name ?? 'وظائف الشركة'
 
@@ -31,10 +37,10 @@ export default function CompanyJobsPage() {
         <PageHeader
           eyebrow="وظائف الشركة"
           title={companyName}
-          description="عرض جميع الوظائف المرتبطة بمعرف الشركة الحالي في company_id من جدول jobs، مع مسارات إدارة جاهزة من جهة الواجهة."
+          description="عرض وتعديل جميع الوظائف المرتبطة بحساب الشركة الحالي والمخزنة في Firestore."
           actions={
             <div className="flex flex-wrap gap-3">
-              <Link href="/company/jobs/create">
+              <Link href="/jobs/create">
                 <Button leadingIcon={<Plus size={16} aria-hidden="true" />}>إنشاء وظيفة</Button>
               </Link>
               <Link href="/company/dashboard">
@@ -64,13 +70,18 @@ export default function CompanyJobsPage() {
         ) : jobs.length === 0 ? (
           <EmptyState
             title="لا توجد وظائف لهذه الشركة"
-            description="لم يتم العثور على وظائف مرتبطة بمعرف الشركة الحالي في جدول jobs."
+            description="لم يتم العثور على وظائف مرتبطة بحساب الشركة الحالي."
+            action={
+              <Link href="/jobs/create">
+                <Button leadingIcon={<Plus size={16} aria-hidden="true" />}>إنشاء أول وظيفة للشركة</Button>
+              </Link>
+            }
           />
         ) : (
           <div className="space-y-5">
             <div className="rounded-[20px] bg-[var(--surface-muted)] p-4 text-sm text-[var(--text-soft)]">
-              <div className="flex items-center gap-2">
-                <Building2 size={16} aria-hidden="true" />
+              <div className="flex items-center gap-2 font-bold text-slate-800">
+                <Building2 size={16} aria-hidden="true" className="text-teal-600" />
                 {companyName}
               </div>
             </div>
@@ -81,7 +92,7 @@ export default function CompanyJobsPage() {
                   <div className="flex flex-wrap gap-2">
                     <Link href={`/jobs/${job.id}`}>
                       <Button variant="secondary" leadingIcon={<Eye size={16} aria-hidden="true" />}>
-                        عرض داخلي
+                        عرض التفاصيل
                       </Button>
                     </Link>
                     <Link href={`/jobs/${job.id}/edit`}>

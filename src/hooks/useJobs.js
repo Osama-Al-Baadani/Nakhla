@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import { getUserFacingErrorMessage } from '../lib/error-messages'
 import { jobsService } from '../services/jobs-service'
 
@@ -17,6 +17,8 @@ export function useJobs(filters = {}) {
   const [state, setState] = useState(initialState)
   const [page, setPage] = useState(0)
 
+  const filterKey = useMemo(() => JSON.stringify(filters), [filters])
+
   useEffect(() => {
     let isMounted = true
 
@@ -24,7 +26,8 @@ export function useJobs(filters = {}) {
       setState(initialState)
       setPage(0)
 
-      const result = await jobsService.listJobs(filters, 0, PAGE_SIZE)
+      const parsedFilters = JSON.parse(filterKey)
+      const result = await jobsService.listJobs(parsedFilters, 0, PAGE_SIZE)
 
       if (!isMounted) {
         return
@@ -59,7 +62,7 @@ export function useJobs(filters = {}) {
     return () => {
       isMounted = false
     }
-  }, [filters])
+  }, [filterKey])
 
   async function loadMore() {
     const nextPage = page + 1
@@ -69,7 +72,8 @@ export function useJobs(filters = {}) {
       isLoadingMore: true,
     }))
 
-    const result = await jobsService.listJobs(filters, nextPage, PAGE_SIZE)
+    const parsedFilters = JSON.parse(filterKey)
+    const result = await jobsService.listJobs(parsedFilters, nextPage, PAGE_SIZE)
 
     if (result.kind === 'error') {
       setState((current) => ({
