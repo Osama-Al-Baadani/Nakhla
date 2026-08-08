@@ -46,17 +46,11 @@ export function PublicLayout({ children }) {
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
           
           {/* Brand Identity */}
-          <Link href="/" className="flex items-center gap-3 group">
+          <Link href="/" className="flex items-center gap-2.5 group">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-emerald-800 via-emerald-700 to-teal-600 text-white font-black text-xl shadow-md shadow-emerald-700/20 group-hover:scale-105 transition-transform">
               <span>ن</span>
             </div>
-            <div>
-              <div className="flex items-center gap-1.5">
-                <h1 className="font-serif text-xl sm:text-2xl font-black text-slate-900 leading-none">نخلة</h1>
-                <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-extrabold text-emerald-800 border border-emerald-200/60">سعودية 🇸🇦</span>
-              </div>
-              <p className="text-[10px] font-extrabold tracking-widest text-emerald-700 uppercase mt-0.5">منصة التوظيف والتأهيل</p>
-            </div>
+            <span className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">نخلة</span>
           </Link>
 
           {/* Desktop Navigation Links */}
