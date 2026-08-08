@@ -88,34 +88,13 @@ export default function HomePage() {
   return (
     <div className="space-y-10 sm:space-y-16 animate-slide-up">
       
-      {/* Sleek Announcement Ribbon */}
-      <div className="mx-auto max-w-4xl rounded-2xl border border-amber-200/80 bg-gradient-to-r from-amber-50 via-amber-50/80 to-emerald-50/60 p-2.5 sm:p-3 shadow-2xs backdrop-blur-md">
-        <div className="flex items-center gap-2.5 text-xs sm:text-sm font-bold text-amber-950">
-          <span className="flex h-2 w-2 rounded-full bg-amber-500 shrink-0" />
-          <span className="rounded-lg bg-gradient-to-r from-amber-600 to-amber-500 px-2 py-0.5 text-[10px] font-black text-white shrink-0 shadow-xs">
-            جديد المنصة
-          </span>
-          <p className="truncate font-semibold text-slate-700 text-xs sm:text-sm">
-            منصة نخلة تجمع بين التوظيف المباشر، التأهيل المهني، وحلول التعهيد الذكي للكوادر الوطنية
-          </p>
-        </div>
-      </div>
-
       {/* Hero Section */}
-      <section className="relative rounded-3xl border border-slate-200/80 bg-gradient-to-br from-white via-emerald-50/30 to-amber-50/20 p-5 sm:p-10 lg:p-14 shadow-lg overflow-hidden">
+      <section className="relative rounded-3xl border border-slate-200/80 bg-gradient-to-br from-white via-emerald-50/30 to-amber-50/20 p-6 sm:p-10 lg:p-14 shadow-lg overflow-hidden">
         <div className="pointer-events-none absolute -top-32 -left-32 h-80 w-80 rounded-full bg-emerald-500/10 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-32 -right-32 h-80 w-80 rounded-full bg-amber-500/10 blur-3xl" />
 
         <div className="relative z-10 mx-auto max-w-4xl text-center space-y-5 sm:space-y-7">
           
-          {/* Saudi Vision Badge */}
-          <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-200/80 bg-white/95 px-4 py-1.5 text-xs font-black text-emerald-900 shadow-xs backdrop-blur-md">
-              <Sparkles size={14} className="text-amber-500 shrink-0" />
-              <span>منظومة توظيف سعودية متكاملة لـ رؤية 2030 🇸🇦</span>
-            </div>
-          </div>
-
           {/* Main Headline */}
           <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black text-slate-900 leading-snug sm:leading-tight tracking-tight">
             مستقبل التوظيف والتأهيل وتعهيد الكوادر بين يديك
