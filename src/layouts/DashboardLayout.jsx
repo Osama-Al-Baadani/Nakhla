@@ -31,7 +31,7 @@ import { authService } from '../services/auth-service'
 export function DashboardLayout({ children }) {
   const router = useRouter()
   const pathname = usePathname()
-  const { user, role } = useAuth()
+  const { user, role, profile } = useAuth()
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
   const [userMenuOpen, setUserMenuOpen] = useState(false)
 
