@@ -389,23 +389,23 @@ export function PublicLayout({ children }) {
                 </h4>
               </div>
               <ul className="space-y-2.5 text-xs sm:text-sm font-semibold text-slate-100">
-                <li className="flex items-center gap-2.5">
-                  <div className="flex h-7 w-7 items-center justify-center rounded-xl bg-emerald-900/90 text-amber-300 border border-emerald-600/60 shadow-xs shrink-0">
+                <li className="flex items-start gap-2.5">
+                  <div className="flex h-7 w-7 items-center justify-center rounded-xl bg-emerald-900/90 text-amber-300 border border-emerald-600/60 shadow-xs shrink-0 mt-0.5">
                     <MapPin size={14} />
                   </div>
-                  <span className="truncate">الرياض، المملكة العربية السعودية</span>
+                  <span className="leading-tight">الرياض، المملكة العربية السعودية</span>
                 </li>
                 <li className="flex items-center gap-2.5">
                   <div className="flex h-7 w-7 items-center justify-center rounded-xl bg-emerald-900/90 text-amber-300 border border-emerald-600/60 shadow-xs shrink-0">
                     <Mail size={14} />
                   </div>
-                  <span className="font-sans text-xs sm:text-sm tracking-wide">support@nakhlah.sa</span>
+                  <span className="font-sans text-xs sm:text-sm tracking-tight break-all sm:break-normal">support@nakhlah.sa</span>
                 </li>
                 <li className="flex items-center gap-2.5">
                   <div className="flex h-7 w-7 items-center justify-center rounded-xl bg-emerald-900/90 text-emerald-300 border border-emerald-600/60 shadow-xs shrink-0">
                     <Globe2 size={14} />
                   </div>
-                  <span className="font-sans text-xs sm:text-sm tracking-wide">www.nakhlah.sa</span>
+                  <span className="font-sans text-xs sm:text-sm tracking-tight break-all sm:break-normal">www.nakhlah.sa</span>
                 </li>
               </ul>
             </div>
