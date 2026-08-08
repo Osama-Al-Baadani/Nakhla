@@ -100,33 +100,15 @@ export function PublicLayout({ children }) {
                   <Building2 size={15} className="text-amber-600" />
                   <span>لوحة الشركة</span>
                 </Link>
-
-                <Link href="/login">
-                  <Button variant="ghost" size="md" className="font-bold text-slate-700">
-                    دخول
-                  </Button>
-                </Link>
-
-                <Link href="/register">
-                  <Button size="md" className="font-bold shadow-md shadow-emerald-700/20">
-                    إنشاء حساب
-                  </Button>
-                </Link>
               </>
             )}
           </div>
 
           {/* Mobile Actions */}
           <div className="flex items-center gap-2 lg:hidden">
-            <Link href={isAuthenticated ? dashboardTarget : '/register'}>
-              <Button size="sm" className="h-9 px-3 text-xs font-bold">
-                {isAuthenticated ? 'لوحتي' : 'حساب جديد'}
-              </Button>
-            </Link>
-
             <button
               type="button"
-              className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-700 active:scale-95 transition-all"
+              className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 active:scale-95 transition-all shadow-xs"
               aria-label={mobileOpen ? 'إغلاق القائمة' : 'فتح القائمة'}
               onClick={() => setMobileOpen((value) => !value)}
             >
