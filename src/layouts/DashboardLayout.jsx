@@ -95,6 +95,20 @@ export function DashboardLayout({ children }) {
 
   const roleTitle = activeRole === 'company' ? 'قطاع الأعمال والشركات' : 'الباحث عن عمل والتأهيل'
 
+  const displayEmail = useMemo(() => {
+    if (activeRole === 'company') {
+      return role === 'company' && user?.email ? user.email : 'company@nakhlah.sa'
+    }
+    return role === 'seeker' && user?.email ? user.email : (user?.email || 'seeker@nakhlah.sa')
+  }, [activeRole, role, user?.email])
+
+  const displayName = useMemo(() => {
+    if (activeRole === 'company') {
+      return role === 'company' && profile?.full_name ? profile.full_name : (displayEmail.split('@')[0] || 'منشأة نخلة')
+    }
+    return role === 'seeker' && profile?.full_name ? profile.full_name : (displayEmail.split('@')[0] || 'الباحث عن عمل')
+  }, [activeRole, role, profile?.full_name, displayEmail])
+
   return (
     <div className="min-h-screen bg-[#f8fafc] text-slate-800 pb-24 lg:pb-8 font-sans antialiased">
       
@@ -123,7 +137,7 @@ export function DashboardLayout({ children }) {
           {/* Center Section: Quick Link Chips (Desktop) */}
           <div className="hidden md:flex items-center gap-2">
             <Link
-              href={role === 'company' ? '/company/dashboard' : '/seeker/dashboard'}
+              href={activeRole === 'company' ? '/company/dashboard' : '/seeker/dashboard'}
               className="flex items-center gap-1.5 rounded-full bg-slate-100/80 px-3.5 py-1.5 text-xs font-bold text-slate-700 hover:bg-slate-200/80 transition-colors"
             >
               <LayoutGrid size={14} className="text-emerald-700" />
@@ -138,7 +152,7 @@ export function DashboardLayout({ children }) {
               <span>سوق الوظائف</span>
             </Link>
 
-            {role === 'company' ? (
+            {activeRole === 'company' ? (
               <Link
                 href="/jobs/create"
                 className="flex items-center gap-1.5 rounded-full bg-emerald-50 px-3.5 py-1.5 text-xs font-bold text-emerald-900 border border-emerald-200/80 hover:bg-emerald-100/80 transition-colors"
@@ -160,7 +174,7 @@ export function DashboardLayout({ children }) {
           {/* Left Section: Notifications + User Account Profile */}
           <div className="flex items-center gap-2.5">
             <Link
-              href={role === 'company' ? '/company/notifications' : '/interviews'}
+              href={activeRole === 'company' ? '/company/notifications' : '/interviews'}
               className="relative flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 hover:text-slate-900 active:scale-95 transition-all shadow-2xs"
               aria-label="الإشعارات والتنبيهات"
             >
@@ -175,12 +189,12 @@ export function DashboardLayout({ children }) {
                 onClick={() => setUserMenuOpen((prev) => !prev)}
                 className="flex items-center gap-2 rounded-xl border border-slate-200/90 bg-white p-1.5 pl-3 hover:border-slate-300 active:scale-95 transition-all focus:outline-none shadow-2xs"
               >
-                <Avatar name={user?.email ?? 'مستخدم'} size="sm" />
+                <Avatar name={displayName} size="sm" />
                 <div className="hidden sm:block text-right">
                   <p className="text-xs font-bold text-slate-800 truncate max-w-[120px]">
-                    {user?.email ? user.email.split('@')[0] : 'المستخدم'}
+                    {displayName}
                   </p>
-                  <p className="text-[10px] text-slate-500 font-semibold">{getRoleLabel(role)}</p>
+                  <p className="text-[10px] text-slate-500 font-semibold">{getRoleLabel(activeRole)}</p>
                 </div>
                 <ChevronDown size={14} className="text-slate-400" />
               </button>
@@ -188,10 +202,10 @@ export function DashboardLayout({ children }) {
               {userMenuOpen && (
                 <div className="absolute left-0 mt-2 w-60 rounded-2xl border border-slate-200 bg-white p-2.5 shadow-xl animate-slide-up z-50">
                   <div className="border-b border-slate-100 px-3 py-2.5 text-xs">
-                    <p className="font-extrabold text-slate-900 truncate">{user?.email}</p>
+                    <p className="font-extrabold text-slate-900 truncate">{displayEmail}</p>
                     <div className="mt-1 flex items-center justify-between">
-                      <span className="text-[11px] font-bold text-slate-500">{getRoleLabel(role)}</span>
-                      <Badge tone={role === 'company' ? 'brand' : 'gold'}>نشط</Badge>
+                      <span className="text-[11px] font-bold text-slate-500">{getRoleLabel(activeRole)}</span>
+                      <Badge tone={activeRole === 'company' ? 'brand' : 'gold'}>نشط</Badge>
                     </div>
                   </div>
 
@@ -261,12 +275,12 @@ export function DashboardLayout({ children }) {
             {/* User Quick Info Box */}
             <div className="rounded-xl border border-amber-200/80 bg-gradient-to-br from-[#fffdfa] via-[#fffdf5] to-[#fef9eb] p-3.5 mb-4 shadow-2xs">
               <div className="flex items-center gap-3">
-                <Avatar name={user?.email ?? 'مستخدم'} size="md" />
+                <Avatar name={displayName} size="md" />
                 <div className="min-w-0 flex-1">
                   <p className="text-xs font-black text-slate-900 truncate">
-                    {user?.email ? user.email.split('@')[0] : 'المستخدم'}
+                    {displayName}
                   </p>
-                  <p className="text-[11px] font-semibold text-amber-900 mt-0.5">{getRoleLabel(role)}</p>
+                  <p className="text-[11px] font-semibold text-amber-900 mt-0.5">{getRoleLabel(activeRole)}</p>
                 </div>
               </div>
             </div>
