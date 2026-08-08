@@ -37,13 +37,6 @@ export default function SeekerDashboardPage() {
   const jobsState = useJobs(emptyFilters)
   const applicationsState = useMyApplications(user?.id)
 
-  // Role Guard: Redirect company users to company dashboard
-  useEffect(() => {
-    if (!isLoading && role === 'company') {
-      router.replace('/company/dashboard')
-    }
-  }, [role, isLoading, router])
-
   return (
     <section className="space-y-6 animate-slide-up">
       

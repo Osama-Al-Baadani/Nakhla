@@ -89,13 +89,6 @@ export default function CompanyDashboardPage() {
     companyId: user?.id,
   })
 
-  // Role Guard: Redirect seeker users to seeker dashboard
-  useEffect(() => {
-    if (!isLoading && role === 'seeker') {
-      router.replace('/seeker/dashboard')
-    }
-  }, [role, isLoading, router])
-
   const companyName = profile?.full_name ?? user?.email ?? 'حساب الشركة'
   const jobsRoute = user?.id ? `/company/jobs` : '/jobs'
 
