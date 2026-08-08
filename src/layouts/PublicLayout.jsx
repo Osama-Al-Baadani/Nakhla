@@ -77,36 +77,50 @@ export function PublicLayout({ children }) {
 
           {/* Desktop Actions */}
           <div className="hidden items-center gap-2.5 lg:flex">
-            <Link
-              href="/seeker/dashboard"
-              onClick={() => setDevAuthPreviewRole('seeker')}
-              className="inline-flex items-center gap-1.5 rounded-xl border border-emerald-200/80 bg-emerald-50/70 px-3.5 py-2 text-xs font-black text-emerald-800 hover:bg-emerald-100/80 active:scale-95 transition-all shadow-2xs"
-            >
-              <UserCheck size={15} className="text-emerald-700" />
-              <span>لوحة الباحث</span>
-            </Link>
+            {isAuthenticated ? (
+              <Link href={dashboardTarget}>
+                <Button size="md" className="font-bold shadow-md shadow-emerald-700/20" leadingIcon={<Sparkles size={16} />}>
+                  لوحة التحكم
+                </Button>
+              </Link>
+            ) : (
+              <>
+                <Link
+                  href="/seeker/dashboard"
+                  className="inline-flex items-center gap-1.5 rounded-xl border border-emerald-200/80 bg-emerald-50/70 px-3.5 py-2 text-xs font-black text-emerald-800 hover:bg-emerald-100/80 active:scale-95 transition-all shadow-2xs"
+                >
+                  <UserCheck size={15} className="text-emerald-700" />
+                  <span>لوحة الباحث</span>
+                </Link>
 
-            <Link
-              href="/company/dashboard"
-              onClick={() => setDevAuthPreviewRole('company')}
-              className="inline-flex items-center gap-1.5 rounded-xl border border-amber-200/80 bg-amber-50/70 px-3.5 py-2 text-xs font-black text-amber-900 hover:bg-amber-100/80 active:scale-95 transition-all shadow-2xs"
-            >
-              <Building2 size={15} className="text-amber-600" />
-              <span>لوحة الشركة</span>
-            </Link>
+                <Link
+                  href="/company/dashboard"
+                  className="inline-flex items-center gap-1.5 rounded-xl border border-amber-200/80 bg-amber-50/70 px-3.5 py-2 text-xs font-black text-amber-900 hover:bg-amber-100/80 active:scale-95 transition-all shadow-2xs"
+                >
+                  <Building2 size={15} className="text-amber-600" />
+                  <span>لوحة الشركة</span>
+                </Link>
 
-            <Link href={dashboardTarget}>
-              <Button size="md" className="font-bold shadow-md shadow-emerald-700/20" leadingIcon={<Sparkles size={16} />}>
-                {isAuthenticated ? 'لوحة التحكم' : 'دخول'}
-              </Button>
-            </Link>
+                <Link href="/login">
+                  <Button variant="ghost" size="md" className="font-bold text-slate-700">
+                    دخول
+                  </Button>
+                </Link>
+
+                <Link href="/register">
+                  <Button size="md" className="font-bold shadow-md shadow-emerald-700/20">
+                    إنشاء حساب
+                  </Button>
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile Actions */}
           <div className="flex items-center gap-2 lg:hidden">
-            <Link href={dashboardTarget}>
+            <Link href={isAuthenticated ? dashboardTarget : '/register'}>
               <Button size="sm" className="h-9 px-3 text-xs font-bold">
-                {isAuthenticated ? 'لوحتي' : 'دخول'}
+                {isAuthenticated ? 'لوحتي' : 'حساب جديد'}
               </Button>
             </Link>
 
@@ -129,10 +143,7 @@ export function PublicLayout({ children }) {
               <div className="grid grid-cols-2 gap-2.5 mb-2 pb-3 border-b border-slate-100">
                 <Link
                   href="/seeker/dashboard"
-                  onClick={() => {
-                    setDevAuthPreviewRole('seeker')
-                    setMobileOpen(false)
-                  }}
+                  onClick={() => setMobileOpen(false)}
                   className="flex items-center justify-center gap-1.5 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2.5 text-xs font-black text-emerald-800 active:scale-95 transition-all"
                 >
                   <UserCheck size={16} />
@@ -141,10 +152,7 @@ export function PublicLayout({ children }) {
 
                 <Link
                   href="/company/dashboard"
-                  onClick={() => {
-                    setDevAuthPreviewRole('company')
-                    setMobileOpen(false)
-                  }}
+                  onClick={() => setMobileOpen(false)}
                   className="flex items-center justify-center gap-1.5 rounded-xl border border-amber-200 bg-amber-50 px-3 py-2.5 text-xs font-black text-amber-900 active:scale-95 transition-all"
                 >
                   <Building2 size={16} />
@@ -171,9 +179,20 @@ export function PublicLayout({ children }) {
               })}
 
               <div className="flex flex-col gap-2 pt-3 border-t border-slate-100 mt-2">
-                <Link href={dashboardTarget} onClick={() => setMobileOpen(false)}>
-                  <Button className="w-full font-bold">دخول اللوحة الرئيسية</Button>
-                </Link>
+                {isAuthenticated ? (
+                  <Link href={dashboardTarget} onClick={() => setMobileOpen(false)}>
+                    <Button className="w-full font-bold">دخول لوحة التحكم</Button>
+                  </Link>
+                ) : (
+                  <div className="grid grid-cols-2 gap-2">
+                    <Link href="/login" onClick={() => setMobileOpen(false)}>
+                      <Button variant="secondary" className="w-full font-bold text-xs">تسجيل الدخول</Button>
+                    </Link>
+                    <Link href="/register" onClick={() => setMobileOpen(false)}>
+                      <Button className="w-full font-bold text-xs">إنشاء حساب</Button>
+                    </Link>
+                  </div>
+                )}
               </div>
             </div>
           </div>

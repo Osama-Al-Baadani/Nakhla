@@ -6,27 +6,25 @@ import { useAuth } from '../hooks/useAuth'
 
 export function ProtectedRoute({ children }) {
   const router = useRouter()
-  const { isLoading, isAuthenticated, isDevAuthBypassEnabled } = useAuth()
-  const hasDevPreview = typeof window !== 'undefined' && Boolean(window.sessionStorage.getItem('nakhlah_dev_auth_role'))
-  const canAccess = isAuthenticated || isDevAuthBypassEnabled || hasDevPreview
+  const { isLoading, isAuthenticated } = useAuth()
 
   useEffect(() => {
-    if (!isLoading && !canAccess) {
-      router.replace('/login')
+    if (!isLoading && !isAuthenticated) {
+      router.replace('/register')
     }
-  }, [isLoading, canAccess, router])
+  }, [isLoading, isAuthenticated, router])
 
   if (isLoading) {
     return (
       <div className="flex min-h-[40vh] items-center justify-center">
         <div className="rounded-full border border-slate-200 bg-white px-5 py-3 text-xs font-semibold text-slate-600 shadow-sm animate-pulse">
-          جارٍ تحميل الجلسة...
+          جارٍ التحقق من الجلسة والحساب...
         </div>
       </div>
     )
   }
 
-  if (!canAccess) {
+  if (!isAuthenticated) {
     return null
   }
 

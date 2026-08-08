@@ -36,7 +36,7 @@ export default function SeekerDashboardPage() {
   const { user, profile, isProfileLoading, profileError, role, isLoading } = useAuth()
   const jobsState = useJobs(emptyFilters)
   const applicationsState = useMyApplications(user?.id)
-  const seekerName = profile?.full_name ?? (user?.user_metadata?.full_name || (user?.email && !user.email.includes('nakhlah') && !user.email.includes('dev-auth') ? user.email.split('@')[0] : 'سارة المحمدي'))
+  const seekerName = profile?.full_name || (user?.email ? user.email.split('@')[0] : 'المستخدم')
 
   return (
     <section className="space-y-6 animate-slide-up">

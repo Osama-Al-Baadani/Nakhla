@@ -95,19 +95,8 @@ export function DashboardLayout({ children }) {
 
   const roleTitle = activeRole === 'company' ? 'قطاع الأعمال والشركات' : 'الباحث عن عمل والتأهيل'
 
-  const displayEmail = useMemo(() => {
-    if (activeRole === 'company') {
-      return role === 'company' && user?.email ? user.email : 'company@nakhlah.sa'
-    }
-    return role === 'seeker' && user?.email ? user.email : (user?.email || 'seeker@nakhlah.sa')
-  }, [activeRole, role, user?.email])
-
-  const displayName = useMemo(() => {
-    if (activeRole === 'company') {
-      return role === 'company' && profile?.full_name ? profile.full_name : (displayEmail.split('@')[0] || 'منشأة نخلة')
-    }
-    return role === 'seeker' && profile?.full_name ? profile.full_name : (displayEmail.split('@')[0] || 'الباحث عن عمل')
-  }, [activeRole, role, profile?.full_name, displayEmail])
+  const displayEmail = user?.email || ''
+  const displayName = profile?.full_name || (user?.email ? user.email.split('@')[0] : 'المستخدم')
 
   return (
     <div className="min-h-screen bg-[#f8fafc] text-slate-800 pb-24 lg:pb-8 font-sans antialiased">
