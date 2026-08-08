@@ -240,16 +240,16 @@ export function PublicLayout({ children }) {
         {/* Main Footer Topics & Brand Row */}
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
           
-          {/* Brand Header Row */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 pb-8 mb-8 border-b border-emerald-700/50">
-            <div className="flex items-center gap-3.5">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-tr from-amber-400 via-amber-500 to-amber-300 text-slate-950 font-black text-2xl shadow-lg shadow-amber-500/20 border border-amber-300/40">
+          {/* Cohesive Luxury Brand Header Card */}
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 sm:p-5 rounded-2xl bg-white/[0.03] border border-emerald-500/25 backdrop-blur-md mb-8 shadow-md">
+            <div className="flex flex-col sm:flex-row items-center gap-3.5 text-center sm:text-right">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-tr from-amber-400 via-amber-500 to-amber-300 text-slate-950 font-black text-2xl shadow-lg shadow-amber-500/25 border border-amber-300/40 shrink-0">
                 ن
               </div>
-              <div className="space-y-0.5">
-                <div className="flex items-center gap-2">
-                  <span className="text-2xl font-black text-white tracking-tight">نخلة</span>
-                  <span className="rounded-full bg-emerald-500/25 px-2.5 py-0.5 text-[10px] font-black text-emerald-300 border border-emerald-400/40 shadow-xs">
+              <div className="space-y-1">
+                <div className="flex items-center justify-center sm:justify-start gap-2">
+                  <span className="text-2xl font-black text-white tracking-tight font-sans">نخلة</span>
+                  <span className="rounded-full bg-emerald-500/20 px-2.5 py-0.5 text-[10px] font-black text-emerald-300 border border-emerald-400/30 shadow-xs">
                     سعودية 🇸🇦
                   </span>
                 </div>
@@ -257,13 +257,13 @@ export function PublicLayout({ children }) {
               </div>
             </div>
 
-            <div className="flex flex-wrap items-center gap-2.5">
-              <div className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-900/80 px-3 py-1.5 text-xs font-bold text-emerald-100 border border-emerald-600/60 shadow-sm backdrop-blur-md">
-                <ShieldCheck size={15} className="text-amber-400" />
+            <div className="flex flex-wrap items-center justify-center gap-2">
+              <div className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-950/80 px-3 py-1.5 text-xs font-bold text-emerald-100 border border-emerald-600/50 shadow-xs backdrop-blur-md">
+                <ShieldCheck size={14} className="text-amber-400" />
                 <span>مرخصة وموثقة 🇸🇦</span>
               </div>
-              <div className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-900/80 px-3 py-1.5 text-xs font-bold text-emerald-100 border border-emerald-600/60 shadow-sm backdrop-blur-md">
-                <CheckCircle2 size={15} className="text-emerald-400" />
+              <div className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-950/80 px-3 py-1.5 text-xs font-bold text-emerald-100 border border-emerald-600/50 shadow-xs backdrop-blur-md">
+                <CheckCircle2 size={14} className="text-emerald-400" />
                 <span>معتمدة رسمياً</span>
               </div>
             </div>
