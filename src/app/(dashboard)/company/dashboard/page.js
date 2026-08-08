@@ -97,19 +97,19 @@ export default function CompanyDashboardPage() {
   }, [role, isLoading, router])
 
   const companyName = profile?.full_name ?? user?.email ?? 'حساب الشركة'
-  const jobsRoute = user?.id ? `/companies/${user.id}/jobs` : '/jobs'
+  const jobsRoute = user?.id ? `/company/jobs` : '/jobs'
 
   return (
     <section className="space-y-6 animate-slide-up">
       
-      {/* Header Banner */}
-      <Card className="border border-teal-200/80 bg-gradient-to-br from-white via-teal-50/40 to-amber-50/30 p-6 sm:p-8">
+      {/* Luxury Soft Cream Gold Banner (Matching attached image style!) */}
+      <div className="luxury-cream-banner p-6 sm:p-8">
         <PageHeader
           eyebrow="لوحة التحكم للأعمال"
           title={`مساحة عمل: ${companyName}`}
           description="مركز الإدارة والتشغيل الشامل للشركة: استقطاب الكوادر، متابعة المرشحين، التعهيد الخارجي، وإدارة الصلاحيات."
           actions={
-            <div className="flex flex-wrap gap-2.5">
+            <div className="flex flex-wrap gap-3">
               <Link href="/jobs/create">
                 <Button leadingIcon={<PlusCircle size={18} />}>
                   نشر وظيفة جديدة
@@ -123,7 +123,7 @@ export default function CompanyDashboardPage() {
             </div>
           }
         />
-      </Card>
+      </div>
 
       {/* Metrics Row */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -164,18 +164,18 @@ export default function CompanyDashboardPage() {
                 <Link
                   key={item.title}
                   href={to}
-                  className="group relative rounded-2xl border border-slate-200 bg-white p-4 hover:border-teal-300 hover:shadow-md transition-all duration-200 block"
+                  className="group relative rounded-[24px] border border-slate-200/90 bg-white p-4.5 hover:border-amber-300 hover:shadow-md hover:bg-gradient-to-b hover:from-white hover:to-amber-50/30 transition-all duration-200 block"
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="grid h-10 w-10 place-items-center rounded-xl bg-slate-100 group-hover:bg-teal-600 group-hover:text-white text-slate-600 transition-colors">
+                      <div className="grid h-11 w-11 place-items-center rounded-2xl bg-slate-100 group-hover:bg-amber-500 group-hover:text-white text-slate-600 transition-colors shadow-2xs">
                         <Icon size={20} />
                       </div>
-                      <h3 className="text-xs sm:text-sm font-bold text-slate-800 group-hover:text-teal-600 transition-colors">{item.title}</h3>
+                      <h3 className="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-amber-800 transition-colors">{item.title}</h3>
                     </div>
-                    {item.badge && <Badge tone="brand">{item.badge}</Badge>}
+                    {item.badge && <Badge tone="gold">{item.badge}</Badge>}
                   </div>
-                  <p className="mt-2.5 text-xs text-slate-500 leading-relaxed">{item.description}</p>
+                  <p className="mt-3 text-xs text-slate-500 leading-relaxed font-medium">{item.description}</p>
                 </Link>
               )
             })}
@@ -192,15 +192,15 @@ export default function CompanyDashboardPage() {
                 <Link
                   key={item.to}
                   href={item.to}
-                  className="group flex items-center justify-between rounded-xl border border-slate-100 bg-slate-50/70 p-3 hover:bg-white hover:border-slate-200 hover:shadow-sm transition-all"
+                  className="group flex items-center justify-between rounded-2xl border border-slate-200/70 bg-slate-50/60 p-3.5 hover:bg-white hover:border-amber-300 hover:shadow-2xs transition-all"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="grid h-9 w-9 place-items-center rounded-lg bg-white text-teal-600 border border-slate-200/60 shadow-xs">
+                    <div className="grid h-9 w-9 place-items-center rounded-xl bg-white text-teal-600 border border-slate-200/60 shadow-2xs">
                       <Icon size={18} />
                     </div>
-                    <span className="text-xs font-bold text-slate-700 group-hover:text-teal-700">{item.title}</span>
+                    <span className="text-xs font-bold text-slate-800 group-hover:text-amber-800">{item.title}</span>
                   </div>
-                  <ChevronLeft size={16} className="text-slate-400 group-hover:text-teal-600 transition-colors" />
+                  <ChevronLeft size={16} className="text-slate-400 group-hover:text-amber-600 transition-colors" />
                 </Link>
               )
             })}
@@ -225,24 +225,24 @@ export default function CompanyDashboardPage() {
 function MetricCard({ icon, label, value, trend, tone = 'teal' }) {
   const toneClasses = {
     teal: 'bg-teal-50 border-teal-100 text-teal-700',
-    amber: 'bg-amber-50 border-amber-100 text-amber-700',
+    amber: 'bg-gradient-to-br from-amber-50 to-amber-100/60 border-amber-200 text-amber-800',
     blue: 'bg-blue-50 border-blue-100 text-blue-700',
   }
 
   return (
-    <div className="rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm hover:shadow-md transition-shadow">
+    <div className="rounded-[24px] border border-slate-200/80 bg-white p-5 shadow-2xs hover:shadow-md hover:border-amber-200 transition-all duration-300">
       <div className="flex items-center justify-between">
-        <span className="text-xs font-semibold text-slate-500">{label}</span>
-        <div className={`grid h-10 w-10 place-items-center rounded-xl border ${toneClasses[tone] || toneClasses.teal}`}>
+        <span className="text-xs font-bold text-slate-500">{label}</span>
+        <div className={`grid h-11 w-11 place-items-center rounded-2xl border ${toneClasses[tone] || toneClasses.teal}`}>
           {icon}
         </div>
       </div>
-      <div className="mt-3 flex items-baseline justify-between">
+      <div className="mt-4 flex items-baseline justify-between">
         <p className="font-serif text-2xl sm:text-3xl font-extrabold text-slate-900">{value}</p>
         {trend && (
-          <span className="text-[10px] font-bold text-teal-600 bg-teal-50 px-2 py-0.5 rounded-full border border-teal-100">
+          <Badge tone={tone === 'amber' ? 'gold' : 'brand'}>
             {trend}
-          </span>
+          </Badge>
         )}
       </div>
     </div>
@@ -251,7 +251,7 @@ function MetricCard({ icon, label, value, trend, tone = 'teal' }) {
 
 function InfoItem({ label, value }) {
   return (
-    <div className="rounded-xl border border-slate-100 bg-slate-50/70 p-3.5">
+    <div className="rounded-2xl border border-slate-100 bg-slate-50/70 p-4">
       <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{label}</p>
       <p className="mt-1 text-xs font-bold text-slate-800 truncate">{value}</p>
     </div>

@@ -97,19 +97,19 @@ export function DashboardLayout({ children }) {
         {/* Desktop Sidebar / Mobile Off-canvas Sheet */}
         <aside
           className={cn(
-            'fixed inset-y-0 right-0 z-50 w-80 transform bg-white/95 p-5 shadow-2xl backdrop-blur-2xl transition-transform duration-300 ease-in-out lg:static lg:z-auto lg:w-auto lg:transform-none lg:rounded-[28px] lg:border lg:border-slate-200/80 lg:shadow-sm',
+            'fixed inset-y-0 right-0 z-50 w-80 transform bg-white/96 p-5 shadow-2xl backdrop-blur-2xl transition-transform duration-300 ease-in-out lg:static lg:z-auto lg:w-auto lg:transform-none lg:rounded-[28px] lg:border lg:border-slate-200/80 lg:shadow-2xs',
             mobileNavOpen ? 'translate-x-0' : 'translate-x-full lg:translate-x-0'
           )}
         >
           {/* Drawer Header */}
-          <div className="flex items-center justify-between border-b border-slate-100 pb-4">
+          <div className="flex items-center justify-between border-b border-slate-100/90 pb-4">
             <Link href="/" className="flex items-center gap-3" onClick={() => setMobileNavOpen(false)}>
-              <div className="grid h-10 w-10 place-items-center rounded-2xl bg-teal-600 text-white font-bold text-lg shadow-md shadow-teal-600/20">
+              <div className="grid h-10 w-10 place-items-center rounded-2xl bg-gradient-to-br from-teal-600 to-teal-700 text-white font-bold text-lg shadow-md shadow-teal-600/20">
                 ن
               </div>
               <div>
-                <p className="text-[10px] font-bold tracking-[0.2em] text-teal-600 uppercase">منصة نخلة</p>
-                <h1 className="font-serif text-xl font-bold text-slate-800">{dashboardLabel}</h1>
+                <p className="text-[10px] font-extrabold tracking-[0.2em] text-teal-600 uppercase">منصة نخلة</p>
+                <h1 className="font-serif text-xl font-extrabold text-slate-900 tracking-tight">{dashboardLabel}</h1>
               </div>
             </Link>
             <Button
@@ -122,20 +122,20 @@ export function DashboardLayout({ children }) {
             </Button>
           </div>
 
-          {/* Account Profile Tile */}
-          <div className="mt-4 rounded-2xl border border-slate-100 bg-gradient-to-br from-slate-50 to-teal-50/40 p-4 shadow-sm space-y-3">
+          {/* Account Profile Luxury Soft Cream Pill Tile */}
+          <div className="mt-4 luxury-cream-pill p-4 space-y-3">
             <div className="flex items-center gap-3">
               <Avatar name={user?.email ?? 'المستخدم'} size="md" />
               <div className="min-w-0 flex-1">
-                <p className="text-xs font-bold text-slate-900 truncate">
+                <p className="text-xs font-extrabold text-slate-900 truncate">
                   {user?.email ? user.email.split('@')[0] : 'المستخدم'}
                 </p>
-                <p className="text-[11px] text-slate-500 truncate">{user?.email ?? 'حساب معتمد'}</p>
+                <p className="text-[11px] font-medium text-slate-600 truncate">{user?.email ?? 'حساب معتمد'}</p>
               </div>
             </div>
             
-            <div className="flex items-center justify-between pt-2.5 border-t border-slate-200/60">
-              <Badge tone={role === 'company' ? 'brand' : 'warning'}>
+            <div className="flex items-center justify-between pt-2.5 border-t border-amber-200/60">
+              <Badge tone={role === 'company' ? 'brand' : 'gold'}>
                 {getRoleLabel(role)}
               </Badge>
             </div>
@@ -153,10 +153,10 @@ export function DashboardLayout({ children }) {
                   href={item.to}
                   onClick={() => setMobileNavOpen(false)}
                   className={cn(
-                    'group flex items-center justify-between rounded-2xl px-4 py-3 text-xs font-semibold transition-all duration-200 active:scale-[0.98]',
+                    'group flex items-center justify-between rounded-full px-4 py-3 text-xs font-bold transition-all duration-200 active:scale-[0.98]',
                     isActive
-                      ? 'bg-teal-600 text-white shadow-md shadow-teal-600/25'
-                      : 'text-slate-600 hover:bg-slate-100/80 hover:text-slate-900'
+                      ? 'bg-gradient-to-r from-teal-600 to-teal-700 text-white shadow-md shadow-teal-600/25'
+                      : 'text-slate-600 hover:bg-amber-50/60 hover:text-slate-900'
                   )}
                 >
                   <div className="flex items-center gap-3">
@@ -165,13 +165,13 @@ export function DashboardLayout({ children }) {
                       aria-hidden="true"
                       className={cn(
                         'transition-transform duration-200 group-hover:scale-110',
-                        isActive ? 'text-white' : 'text-slate-400 group-hover:text-teal-600'
+                        isActive ? 'text-white' : 'text-slate-400 group-hover:text-amber-600'
                       )}
                     />
                     <span>{item.label}</span>
                   </div>
                   {isActive && (
-                    <span className="h-2 w-2 rounded-full bg-white shadow-sm" />
+                    <span className="h-2 w-2 rounded-full bg-white shadow-xs" />
                   )}
                 </Link>
               )
@@ -191,21 +191,21 @@ export function DashboardLayout({ children }) {
         <div className="flex flex-col gap-4 sm:gap-6 min-w-0">
           
           {/* App Top Header Bar */}
-          <header className="sticky top-2 sm:top-3 z-30 flex items-center justify-between gap-3 rounded-2xl border border-slate-200/80 bg-white/90 px-3.5 py-2.5 sm:px-5 sm:py-3 shadow-sm backdrop-blur-xl">
+          <header className="sticky top-2 sm:top-3 z-30 flex items-center justify-between gap-3 rounded-full border border-slate-200/80 bg-white/92 px-4 py-2.5 sm:px-6 sm:py-3 shadow-2xs backdrop-blur-xl">
             
             {/* Right Side: Mobile menu drawer trigger & page indicator */}
             <div className="flex items-center gap-2.5 sm:gap-3">
               <button
                 type="button"
-                className="grid h-10 w-10 place-items-center rounded-xl border border-slate-200 bg-slate-50 text-slate-700 active:scale-95 transition-all lg:hidden"
+                className="grid h-10 w-10 place-items-center rounded-full border border-slate-200 bg-slate-50 text-slate-700 active:scale-95 transition-all lg:hidden"
                 onClick={() => setMobileNavOpen(true)}
                 aria-label="فتح القائمة"
               >
                 <Menu size={20} aria-hidden="true" />
               </button>
               <div>
-                <p className="text-[10px] font-bold text-teal-600 tracking-wider uppercase hidden sm:block">منصة نخلة الرقمية</p>
-                <h2 className="font-serif text-base sm:text-xl font-bold text-slate-800 tracking-tight">
+                <p className="text-[10px] font-extrabold text-teal-600 tracking-wider uppercase hidden sm:block">منصة نخلة الرقمية</p>
+                <h2 className="font-serif text-base sm:text-xl font-bold text-slate-900 tracking-tight">
                   {role === 'company' ? 'مساحة قطاع الأعمال' : 'لوحة التوظيف والتأهيل'}
                 </h2>
               </div>
@@ -216,7 +216,7 @@ export function DashboardLayout({ children }) {
               <Link href={role === 'company' ? '/company/notifications' : '/interviews'} className="relative">
                 <button
                   type="button"
-                  className="grid h-9 w-9 sm:h-10 sm:w-10 place-items-center rounded-xl border border-slate-200 bg-slate-50 text-slate-600 hover:bg-white active:scale-95 transition-all"
+                  className="grid h-9 w-9 sm:h-10 sm:w-10 place-items-center rounded-full border border-slate-200 bg-slate-50 text-slate-600 hover:bg-white active:scale-95 transition-all"
                   aria-label="الإشعارات"
                 >
                   <Bell size={18} aria-hidden="true" />
@@ -229,23 +229,23 @@ export function DashboardLayout({ children }) {
                 <button
                   type="button"
                   onClick={() => setUserMenuOpen((prev) => !prev)}
-                  className="flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white p-1 pl-2.5 active:scale-95 transition-all focus:outline-none"
+                  className="flex items-center gap-2 rounded-full border border-slate-200 bg-white p-1.5 pl-3 active:scale-95 transition-all focus:outline-none shadow-2xs hover:border-amber-300"
                 >
                   <Avatar name={user?.email ?? 'مستخدم'} size="sm" />
                   <ChevronDown size={14} className="text-slate-400" />
                 </button>
 
                 {userMenuOpen && (
-                  <div className="absolute left-0 mt-2 w-56 rounded-2xl border border-slate-200 bg-white p-2 shadow-xl animate-slide-up z-50">
+                  <div className="absolute left-0 mt-2 w-56 rounded-3xl border border-slate-200 bg-white p-2.5 shadow-xl animate-slide-up z-50">
                     <div className="border-b border-slate-100 px-3 py-2 text-xs">
-                      <p className="font-bold text-slate-800 truncate">{user?.email}</p>
-                      <p className="text-slate-500 text-[11px] mt-0.5">{getRoleLabel(role)}</p>
+                      <p className="font-extrabold text-slate-900 truncate">{user?.email}</p>
+                      <p className="text-slate-500 font-bold text-[11px] mt-0.5">{getRoleLabel(role)}</p>
                     </div>
 
                     <Link
                       href="/profile"
                       onClick={() => setUserMenuOpen(false)}
-                      className="flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors mt-1"
+                      className="flex items-center gap-2 rounded-2xl px-3 py-2 text-xs font-bold text-slate-700 hover:bg-amber-50/60 hover:text-slate-900 transition-colors mt-1"
                     >
                       <UserCircle2 size={16} />
                       الملف الشخصي
@@ -253,7 +253,7 @@ export function DashboardLayout({ children }) {
                     <Link
                       href="/settings"
                       onClick={() => setUserMenuOpen(false)}
-                      className="flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors"
+                      className="flex items-center gap-2 rounded-2xl px-3 py-2 text-xs font-bold text-slate-700 hover:bg-amber-50/60 hover:text-slate-900 transition-colors"
                     >
                       <Settings2 size={16} />
                       الإعدادات
@@ -263,7 +263,7 @@ export function DashboardLayout({ children }) {
                         setUserMenuOpen(false)
                         void handleSignOut()
                       }}
-                      className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-xs font-medium text-rose-600 hover:bg-rose-50 transition-colors"
+                      className="flex w-full items-center gap-2 rounded-2xl px-3 py-2 text-xs font-bold text-rose-600 hover:bg-rose-50 transition-colors"
                     >
                       <LogOut size={16} />
                       تسجيل الخروج
@@ -281,7 +281,7 @@ export function DashboardLayout({ children }) {
 
       {/* Floating Island App Dock for Mobile (Ultra-modern iOS style) */}
       <nav className="fixed bottom-3 left-3 right-3 z-40 lg:hidden">
-        <div className="mx-auto max-w-md rounded-2xl border border-slate-200/90 bg-white/92 px-2 py-1.5 shadow-[0_16px_40px_rgba(15,23,42,0.18)] backdrop-blur-2xl">
+        <div className="mx-auto max-w-md rounded-full border border-amber-200/80 bg-white/94 px-3 py-2 shadow-[0_16px_40px_rgba(15,23,42,0.18)] backdrop-blur-2xl">
           <div className="flex items-center justify-around">
             {mobileBottomItems.map((item) => {
               const Icon = item.icon
@@ -292,10 +292,10 @@ export function DashboardLayout({ children }) {
                   key={item.to}
                   href={item.to}
                   className={cn(
-                    'flex flex-col items-center gap-0.5 rounded-xl px-3 py-1.5 text-[10px] font-bold transition-all active:scale-95',
+                    'flex flex-col items-center gap-0.5 rounded-full px-3.5 py-1.5 text-[10px] font-extrabold transition-all active:scale-95',
                     isActive
-                      ? 'bg-teal-600 text-white shadow-md shadow-teal-600/30'
-                      : 'text-slate-500 hover:text-slate-900 hover:bg-slate-100/60'
+                      ? 'bg-gradient-to-r from-teal-600 to-teal-700 text-white shadow-md shadow-teal-600/30'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-amber-50/60'
                   )}
                 >
                   <Icon size={19} className={isActive ? 'text-white' : 'text-slate-400'} />

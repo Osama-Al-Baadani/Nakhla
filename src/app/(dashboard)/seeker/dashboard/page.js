@@ -47,14 +47,14 @@ export default function SeekerDashboardPage() {
   return (
     <section className="space-y-6 animate-slide-up">
       
-      {/* Header Banner */}
-      <Card className="border border-teal-200/80 bg-gradient-to-br from-white via-teal-50/50 to-amber-50/30 p-6 sm:p-8">
+      {/* Luxury Soft Cream Gold Banner (Matching attached image style!) */}
+      <div className="luxury-cream-banner p-6 sm:p-8">
         <PageHeader
           eyebrow="لوحة التحكم الرئيسية"
           title={`مرحباً بك${profile?.full_name ? `، ${profile.full_name}` : ''} 👋`}
-          description="تابِع تقدمك التدريبي، تصفح الفرص الوظيفية الشاغرة، وإدارتك المتكاملة لطلبات التقديم والملف الشخصي."
+          description="تابِع تقدمك المهني وتصفح أهم الفرص الشاغرة والمسارات التدريبية المخصصة لحسابك."
           actions={
-            <div className="flex flex-wrap gap-2.5">
+            <div className="flex flex-wrap gap-3">
               <Link href="/seeker/training">
                 <Button leadingIcon={<GraduationCap size={18} />}>
                   المسار التدريبي
@@ -68,12 +68,12 @@ export default function SeekerDashboardPage() {
             </div>
           }
         />
-      </Card>
+      </div>
 
       {/* Metrics Row */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <MetricCard
-          icon={<Sparkles size={22} className="text-amber-500" />}
+          icon={<Sparkles size={22} className="text-amber-600" />}
           label="اكتمال الملف الشخصي"
           value={
             isProfileLoading
@@ -82,7 +82,7 @@ export default function SeekerDashboardPage() {
                 ? `${profile.completion_score}%`
                 : '85%'
           }
-          trend="مستوى ممتاّز"
+          trend="مستوى ممتاز"
           tone="amber"
         />
         <MetricCard
@@ -207,25 +207,25 @@ export default function SeekerDashboardPage() {
 function MetricCard({ icon, label, value, trend, tone = 'teal' }) {
   const toneClasses = {
     teal: 'bg-teal-50 border-teal-100 text-teal-700',
-    amber: 'bg-amber-50 border-amber-100 text-amber-700',
+    amber: 'bg-gradient-to-br from-amber-50 to-amber-100/60 border-amber-200 text-amber-800',
     blue: 'bg-blue-50 border-blue-100 text-blue-700',
     emerald: 'bg-emerald-50 border-emerald-100 text-emerald-700',
   }
 
   return (
-    <div className="rounded-2xl border border-slate-200/80 bg-white p-4 shadow-sm hover:shadow-md transition-shadow">
+    <div className="rounded-[24px] border border-slate-200/80 bg-white p-5 shadow-2xs hover:shadow-md hover:border-amber-200 transition-all duration-300">
       <div className="flex items-center justify-between">
-        <span className="text-xs font-semibold text-slate-500">{label}</span>
-        <div className={`grid h-10 w-10 place-items-center rounded-xl border ${toneClasses[tone] || toneClasses.teal}`}>
+        <span className="text-xs font-bold text-slate-500">{label}</span>
+        <div className={`grid h-11 w-11 place-items-center rounded-2xl border ${toneClasses[tone] || toneClasses.teal}`}>
           {icon}
         </div>
       </div>
-      <div className="mt-3 flex items-baseline justify-between">
+      <div className="mt-4 flex items-baseline justify-between">
         <p className="font-serif text-2xl sm:text-3xl font-extrabold text-slate-900">{value}</p>
         {trend && (
-          <span className="text-[10px] font-bold text-teal-600 bg-teal-50 px-2 py-0.5 rounded-full border border-teal-100">
+          <Badge tone={tone === 'amber' ? 'gold' : 'brand'}>
             {trend}
-          </span>
+          </Badge>
         )}
       </div>
     </div>
@@ -236,38 +236,38 @@ function ActionLink({ href, title, description, icon: Icon, badge }) {
   return (
     <Link
       href={href}
-      className="group relative rounded-2xl border border-slate-200 bg-white p-4 hover:border-teal-300 hover:shadow-md transition-all duration-200 block"
+      className="group relative rounded-[24px] border border-slate-200/90 bg-white p-4.5 hover:border-amber-300 hover:shadow-md hover:bg-gradient-to-b hover:from-white hover:to-amber-50/30 transition-all duration-200 block"
     >
       <div className="flex items-start justify-between">
         <div className="flex items-center gap-3">
-          <div className="grid h-10 w-10 place-items-center rounded-xl bg-slate-100 group-hover:bg-teal-600 group-hover:text-white text-slate-600 transition-colors">
+          <div className="grid h-11 w-11 place-items-center rounded-2xl bg-slate-100 group-hover:bg-amber-500 group-hover:text-white text-slate-600 transition-colors shadow-2xs">
             <Icon size={20} />
           </div>
           <div>
-            <h3 className="text-xs sm:text-sm font-bold text-slate-800 group-hover:text-teal-600 transition-colors">{title}</h3>
+            <h3 className="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-amber-800 transition-colors">{title}</h3>
             {badge && (
-              <span className="text-[10px] font-bold text-teal-700 bg-teal-50 px-2 py-0.5 rounded-md border border-teal-100 inline-block mt-0.5">
+              <Badge tone="gold" className="mt-1">
                 {badge}
-              </span>
+              </Badge>
             )}
           </div>
         </div>
-        <ChevronLeft size={18} className="text-slate-400 group-hover:text-teal-600 transition-colors" />
+        <ChevronLeft size={18} className="text-slate-400 group-hover:text-amber-600 transition-colors" />
       </div>
-      <p className="mt-2.5 text-xs text-slate-500 leading-relaxed">{description}</p>
+      <p className="mt-3 text-xs text-slate-500 leading-relaxed font-medium">{description}</p>
     </Link>
   )
 }
 
 function FeatureRow({ label, available, description }) {
   return (
-    <div className="rounded-xl border border-slate-200/80 bg-white p-3.5 flex items-start justify-between gap-3">
+    <div className="rounded-2xl border border-slate-200/70 bg-slate-50/50 p-4 flex items-start justify-between gap-3 hover:bg-white hover:border-amber-200 transition-all">
       <div className="space-y-1">
         <div className="flex items-center gap-2">
           <CheckCircle2 size={16} className={available ? 'text-teal-600' : 'text-slate-400'} />
           <span className="text-xs font-bold text-slate-800">{label}</span>
         </div>
-        <p className="text-[11px] text-slate-500 leading-relaxed">{description}</p>
+        <p className="text-[11px] text-slate-500 leading-relaxed font-medium">{description}</p>
       </div>
       <Badge tone={available ? 'brand' : 'neutral'}>
         {available ? 'نشط' : 'قريباً'}
@@ -278,7 +278,7 @@ function FeatureRow({ label, available, description }) {
 
 function InfoItem({ label, value }) {
   return (
-    <div className="rounded-xl border border-slate-100 bg-slate-50/70 p-3.5">
+    <div className="rounded-2xl border border-slate-100 bg-slate-50/70 p-4">
       <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{label}</p>
       <p className="mt-1 text-xs font-bold text-slate-800 truncate">{value}</p>
     </div>
