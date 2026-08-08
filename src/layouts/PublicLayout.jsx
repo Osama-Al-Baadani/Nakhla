@@ -2,14 +2,19 @@
 
 import { useState } from 'react'
 import {
+  ArrowLeft,
   Briefcase,
   Building2,
-  ChevronRight,
+  CheckCircle2,
+  ChevronLeft,
   Globe2,
+  GraduationCap,
+  Headphones,
   Mail,
   MapPin,
   Menu,
-  PhoneCall,
+  MessageCircle,
+  Phone,
   ShieldCheck,
   Sparkles,
   UserCheck,
@@ -36,9 +41,9 @@ export function PublicLayout({ children }) {
   return (
     <div className="min-h-screen bg-[#fafafc] text-slate-800 flex flex-col font-sans antialiased">
       
-      {/* Modern Header */}
+      {/* Modern Top Header */}
       <header className="sticky top-0 z-40 border-b border-slate-200/80 bg-white/90 backdrop-blur-xl transition-all shadow-xs">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
           
           {/* Brand Identity */}
           <Link href="/" className="flex items-center gap-3 group">
@@ -182,119 +187,189 @@ export function PublicLayout({ children }) {
       </header>
 
       {/* Main Page Container */}
-      <main className="flex-1 mx-auto max-w-7xl w-full px-4 py-6 sm:px-6 sm:py-10 animate-slide-up">
+      <main className="flex-1 mx-auto max-w-7xl w-full px-4 py-6 sm:px-6 lg:px-8 sm:py-10 animate-slide-up">
         {children}
       </main>
 
-      {/* Full-Width Luxury Saudi Footer */}
-      <footer className="w-full border-t border-slate-200/90 bg-gradient-to-b from-white via-slate-50/70 to-emerald-50/20 text-slate-800 mt-auto pb-28 pt-12 sm:pb-10 sm:pt-16 shadow-xs">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          
+      {/* Ultra-Luxury Saudi Royal Footer Section */}
+      <footer className="relative w-full bg-[#051c17] text-white mt-auto overflow-hidden">
+        
+        {/* Ambient Glows */}
+        <div className="pointer-events-none absolute -top-40 right-1/4 h-96 w-96 rounded-full bg-emerald-600/15 blur-3xl" />
+        <div className="pointer-events-none absolute bottom-0 left-1/4 h-80 w-80 rounded-full bg-amber-500/10 blur-3xl" />
+
+        {/* Top VIP Pre-Footer Call to Action Banner */}
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-12 sm:pt-16 pb-8">
+          <div className="relative rounded-3xl border border-emerald-500/30 bg-gradient-to-r from-emerald-900/90 via-[#0a352c] to-emerald-950/95 p-6 sm:p-10 shadow-2xl backdrop-blur-xl">
+            
+            <div className="flex flex-col lg:flex-row items-center justify-between gap-6 text-center lg:text-right">
+              <div className="space-y-2 max-w-2xl">
+                <div className="inline-flex items-center gap-2 rounded-full bg-amber-400/15 px-3 py-1 text-xs font-black text-amber-300 border border-amber-400/30">
+                  <Sparkles size={14} className="text-amber-400" />
+                  <span>انضم إلى مجتمع نخلة المهني</span>
+                </div>
+                <h3 className="font-serif text-xl sm:text-3xl font-black text-white tracking-tight">
+                  جاهز للانطلاق نحو فرصتك الوظيفية القادمة؟
+                </h3>
+                <p className="text-xs sm:text-sm text-emerald-100/80 leading-relaxed">
+                  سواء كنت باحثاً طموحاً أو منشأة تبحث عن كوادر استثنائية، نخلة توفر لك الحل المتكامل بأسلوب سعودي مبتكر.
+                </p>
+              </div>
+
+              <div className="flex flex-wrap items-center justify-center gap-3 sm:shrink-0">
+                <Link href="/register" onClick={() => setDevAuthPreviewRole('seeker')}>
+                  <Button
+                    size="lg"
+                    className="bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black shadow-lg shadow-amber-500/20"
+                    trailingIcon={<ArrowLeft size={16} />}
+                  >
+                    تسجيل باحث عن عمل
+                  </Button>
+                </Link>
+
+                <Link href="/register" onClick={() => setDevAuthPreviewRole('company')}>
+                  <Button
+                    size="lg"
+                    variant="secondary"
+                    className="border-emerald-400/40 bg-emerald-950/60 text-emerald-100 hover:bg-emerald-900 hover:text-white"
+                  >
+                    تسجيل منشأة أعمال
+                  </Button>
+                </Link>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        {/* Main Footer Links & Info Grid */}
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10 sm:py-12 border-t border-emerald-800/40">
           <div className="grid gap-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1.2fr]">
             
-            {/* Column 1: Brand Info */}
+            {/* Column 1: Brand & Mission */}
             <div className="space-y-4">
               <div className="flex items-center gap-3">
-                <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-tr from-emerald-800 via-emerald-700 to-teal-600 text-white font-black text-xl shadow-md shadow-emerald-700/20">
+                <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-tr from-amber-400 to-emerald-400 text-slate-950 font-black text-xl shadow-lg shadow-emerald-500/20">
                   ن
                 </div>
                 <div>
-                  <div className="flex items-center gap-1.5">
-                    <h2 className="font-serif text-2xl font-black text-slate-900 leading-none">نخلة</h2>
-                    <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-extrabold text-emerald-800 border border-emerald-200/60">سعودية 🇸🇦</span>
+                  <div className="flex items-center gap-2">
+                    <h2 className="font-serif text-2xl font-black text-white tracking-wide">نخلة</h2>
+                    <span className="rounded-full bg-emerald-500/20 px-2 py-0.5 text-[10px] font-black text-emerald-300 border border-emerald-400/30">
+                      سعودية 🇸🇦
+                    </span>
                   </div>
-                  <p className="text-[10px] font-extrabold tracking-widest text-emerald-700 uppercase mt-0.5">المنصة المهنية للتوظيف</p>
+                  <p className="text-[10px] font-extrabold tracking-widest text-amber-300 uppercase mt-0.5">
+                    المنصة الوطنية للتوظيف والتأهيل
+                  </p>
                 </div>
               </div>
 
-              <p className="text-xs sm:text-sm leading-relaxed text-slate-600 max-w-sm font-medium">
-                المنصة الرقمية السعودية المبتكرة للتوظيف والتأهيل والعمل عن بُعد والتعهيد المهني وفق أفضل المعايير.
+              <p className="text-xs sm:text-sm leading-relaxed text-emerald-100/70 max-w-sm">
+                المنظومة الرقمية الرائدة لربط الكفاءات الوطنية بالمنشآت المعتمدة، مع حلول متقدمة للعمل عن بُعد والتعهيد المهني.
               </p>
 
-              <div className="inline-flex items-center gap-2 rounded-xl bg-emerald-50/90 px-3 py-1.5 border border-emerald-200/80 text-[11px] font-extrabold text-emerald-800 shadow-2xs">
-                <ShieldCheck size={15} className="text-emerald-700" />
-                <span>منصة سعودية مرخصة وموثوقة 🇸🇦</span>
+              {/* Trust Badges */}
+              <div className="flex flex-wrap gap-2 pt-1">
+                <div className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-900/60 px-3 py-1.5 border border-emerald-700/50 text-[11px] font-bold text-emerald-200 shadow-xs">
+                  <ShieldCheck size={14} className="text-amber-400" />
+                  <span>منصة سعودية موثقة 🇸🇦</span>
+                </div>
+                <div className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-900/60 px-3 py-1.5 border border-emerald-700/50 text-[11px] font-bold text-emerald-200 shadow-xs">
+                  <CheckCircle2 size={14} className="text-emerald-400" />
+                  <span>متوافقة مع الأنظمة</span>
+                </div>
               </div>
             </div>
 
             {/* Column 2: Dashboard Links */}
-            <div className="space-y-3.5">
-              <h3 className="text-xs font-black text-slate-900 uppercase tracking-wider border-b border-slate-200/80 pb-2">
+            <div className="space-y-3">
+              <h4 className="text-xs font-black uppercase tracking-wider text-amber-300 border-b border-emerald-800/60 pb-2">
                 لوحات التحكم
-              </h3>
-              <ul className="space-y-2.5 text-xs text-slate-600 font-bold">
+              </h4>
+              <ul className="space-y-2 text-xs text-emerald-100/80 font-bold">
                 <li>
-                  <Link href="/seeker/dashboard" onClick={() => setDevAuthPreviewRole('seeker')} className="hover:text-emerald-700 transition-colors block">
-                    لوحة الباحث عن عمل
+                  <Link href="/seeker/dashboard" onClick={() => setDevAuthPreviewRole('seeker')} className="flex items-center gap-1.5 hover:text-amber-300 transition-colors py-1">
+                    <ChevronLeft size={14} className="text-emerald-500" />
+                    <span>لوحة الباحث عن عمل</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/company/dashboard" onClick={() => setDevAuthPreviewRole('company')} className="hover:text-amber-600 transition-colors block">
-                    لوحة قطاع الأعمال
+                  <Link href="/company/dashboard" onClick={() => setDevAuthPreviewRole('company')} className="flex items-center gap-1.5 hover:text-amber-300 transition-colors py-1">
+                    <ChevronLeft size={14} className="text-emerald-500" />
+                    <span>لوحة قطاع الأعمال</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/jobs" className="hover:text-emerald-700 transition-colors block">
-                    استعراض الوظائف
+                  <Link href="/jobs" className="flex items-center gap-1.5 hover:text-amber-300 transition-colors py-1">
+                    <ChevronLeft size={14} className="text-emerald-500" />
+                    <span>سوق الوظائف الشاغرة</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/seeker/training" className="hover:text-emerald-700 transition-colors block">
-                    المسار التدريبي
+                  <Link href="/seeker/training" className="flex items-center gap-1.5 hover:text-amber-300 transition-colors py-1">
+                    <ChevronLeft size={14} className="text-emerald-500" />
+                    <span>المسار التدريبي والتأهيل</span>
                   </Link>
                 </li>
               </ul>
             </div>
 
             {/* Column 3: Platform Info */}
-            <div className="space-y-3.5">
-              <h3 className="text-xs font-black text-slate-900 uppercase tracking-wider border-b border-slate-200/80 pb-2">
-                معلومات المنصة
-              </h3>
-              <ul className="space-y-2.5 text-xs text-slate-600 font-bold">
+            <div className="space-y-3">
+              <h4 className="text-xs font-black uppercase tracking-wider text-amber-300 border-b border-emerald-800/60 pb-2">
+                خدمات المنصة
+              </h4>
+              <ul className="space-y-2 text-xs text-emerald-100/80 font-bold">
                 <li>
-                  <Link href="/pricing" className="hover:text-emerald-700 transition-colors block">
-                    الأسعار والاشتراكات
+                  <Link href="/pricing" className="flex items-center gap-1.5 hover:text-amber-300 transition-colors py-1">
+                    <ChevronLeft size={14} className="text-emerald-500" />
+                    <span>باقات الاشتراك والأسعار</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/faq" className="hover:text-emerald-700 transition-colors block">
-                    الأسئلة الشائعة
+                  <Link href="/faq" className="flex items-center gap-1.5 hover:text-amber-300 transition-colors py-1">
+                    <ChevronLeft size={14} className="text-emerald-500" />
+                    <span>الأسئلة الأكثر شيوعاً</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/legal/privacy" className="hover:text-emerald-700 transition-colors block">
-                    سياسة الخصوصية
+                  <Link href="/legal/privacy" className="flex items-center gap-1.5 hover:text-amber-300 transition-colors py-1">
+                    <ChevronLeft size={14} className="text-emerald-500" />
+                    <span>سياسة الخصوصية وحماية البيانات</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/legal/terms" className="hover:text-emerald-700 transition-colors block">
-                    الشروط والأحكام
+                  <Link href="/legal/terms" className="flex items-center gap-1.5 hover:text-amber-300 transition-colors py-1">
+                    <ChevronLeft size={14} className="text-emerald-500" />
+                    <span>الشروط والأحكام العامة</span>
                   </Link>
                 </li>
               </ul>
             </div>
 
-            {/* Column 4: Contact Info */}
-            <div className="space-y-3.5">
-              <h3 className="text-xs font-black text-slate-900 uppercase tracking-wider border-b border-slate-200/80 pb-2">
-                التواصل والدعم
-              </h3>
-              <div className="space-y-2.5 text-xs text-slate-600 font-bold">
-                <div className="flex items-center gap-2.5">
-                  <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-50 text-emerald-700">
+            {/* Column 4: Contact & Direct Support */}
+            <div className="space-y-3">
+              <h4 className="text-xs font-black uppercase tracking-wider text-amber-300 border-b border-emerald-800/60 pb-2">
+                التواصل والدعم المباشر
+              </h4>
+              <div className="space-y-3 text-xs text-emerald-100/80 font-bold">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-emerald-800/80 text-amber-300 border border-emerald-700/50 shrink-0">
                     <MapPin size={15} />
                   </div>
                   <span>الرياض، المملكة العربية السعودية</span>
                 </div>
-                <div className="flex items-center gap-2.5">
-                  <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-amber-50 text-amber-600">
+
+                <div className="flex items-center gap-3">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-emerald-800/80 text-amber-300 border border-emerald-700/50 shrink-0">
                     <Mail size={15} />
                   </div>
                   <span>support@nakhlah.sa</span>
                 </div>
-                <div className="flex items-center gap-2.5">
-                  <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-50 text-emerald-700">
+
+                <div className="flex items-center gap-3">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-emerald-800/80 text-emerald-400 border border-emerald-700/50 shrink-0">
                     <Globe2 size={15} />
                   </div>
                   <span>www.nakhlah.sa</span>
@@ -304,12 +379,14 @@ export function PublicLayout({ children }) {
 
           </div>
 
-          {/* Bottom Footer Bar */}
-          <div className="mt-12 pt-6 border-t border-slate-200/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-right text-xs text-slate-500 font-medium">
-            <p>جميع الحقوق محفوظة © {new Date().getFullYear()} منصة نخلة للتوظيف والتأهيل.</p>
-            <span className="text-[11px] font-extrabold text-emerald-800 bg-white px-3.5 py-1 rounded-full border border-slate-200 shadow-2xs">
-              صُنعت بإتقان في المملكة العربية السعودية 🇸🇦
-            </span>
+          {/* Bottom Copyright and Saudi Flag Ribbon */}
+          <div className="mt-12 pt-6 border-t border-emerald-800/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-right text-xs text-emerald-200/60 font-medium">
+            <p>جميع الحقوق محفوظة © {new Date().getFullYear()} منصة نخلة للتوظيف والتأهيل المهني.</p>
+            <div className="flex items-center gap-2">
+              <span className="text-[11px] font-black text-amber-300 bg-emerald-950/80 px-4 py-1.5 rounded-full border border-emerald-700/60 shadow-inner">
+                صُنعت بكل فخر وإتقان في المملكة العربية السعودية 🇸🇦
+              </span>
+            </div>
           </div>
 
         </div>
