@@ -36,6 +36,7 @@ export default function SeekerDashboardPage() {
   const { user, profile, isProfileLoading, profileError, role, isLoading } = useAuth()
   const jobsState = useJobs(emptyFilters)
   const applicationsState = useMyApplications(user?.id)
+  const seekerName = profile?.full_name ?? (user?.user_metadata?.full_name || (user?.email && !user.email.includes('nakhlah') && !user.email.includes('dev-auth') ? user.email.split('@')[0] : 'سارة المحمدي'))
 
   return (
     <section className="space-y-6 animate-slide-up">
@@ -44,7 +45,7 @@ export default function SeekerDashboardPage() {
       <div className="luxury-cream-banner p-6 sm:p-8">
         <PageHeader
           eyebrow="لوحة التحكم الرئيسية"
-          title={`مرحباً بك${profile?.full_name ? `، ${profile.full_name}` : ''} 👋`}
+          title={`مرحباً بك${seekerName ? `، ${seekerName}` : ''} 👋`}
           description="تابِع تقدمك المهني وتصفح أهم الفرص الشاغرة والمسارات التدريبية المخصصة لحسابك."
           actions={
             <div className="flex flex-wrap gap-3">

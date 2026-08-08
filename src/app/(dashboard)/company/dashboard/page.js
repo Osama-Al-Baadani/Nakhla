@@ -89,7 +89,7 @@ export default function CompanyDashboardPage() {
     companyId: user?.id,
   })
 
-  const companyName = profile?.full_name ?? user?.email ?? 'حساب الشركة'
+  const companyName = profile?.full_name ?? (user?.user_metadata?.full_name || (user?.email && !user.email.includes('nakhlah') && !user.email.includes('dev-auth') ? user.email.split('@')[0] : 'شركة نخلة لحلول التقنية'))
   const jobsRoute = user?.id ? `/company/jobs` : '/jobs'
 
   return (

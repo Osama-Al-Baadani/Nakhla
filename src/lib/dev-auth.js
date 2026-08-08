@@ -32,6 +32,7 @@ export function setDevAuthPreviewRole(role) {
 
 export function getDevAuthBypassSession() {
   const role = getDevAuthRole()
+  const isCompany = role === 'company'
 
   return {
     access_token: 'dev-auth-bypass-token',
@@ -40,10 +41,10 @@ export function getDevAuthBypassSession() {
     expires_at: Math.floor(Date.now() / 1000) + 3600,
     token_type: 'bearer',
     user: {
-      id: '00000000-0000-4000-8000-000000000001',
+      id: isCompany ? 'company-preview-id-001' : 'seeker-preview-id-001',
       aud: 'authenticated',
       role: 'authenticated',
-      email: 'dev-auth@nakhlah.local',
+      email: isCompany ? 'company.demo@nakhlah.sa' : 'seeker.demo@nakhlah.sa',
       email_confirmed_at: new Date().toISOString(),
       phone: '',
       confirmed_at: new Date().toISOString(),
@@ -53,7 +54,7 @@ export function getDevAuthBypassSession() {
         providers: ['email'],
       },
       user_metadata: {
-        full_name: 'مستخدم المعاينة التطويرية',
+        full_name: isCompany ? 'شركة نخلة لحلول التقنية' : 'سارة المحمدي',
         dev_auth_bypass: true,
         preview_role: role,
       },
