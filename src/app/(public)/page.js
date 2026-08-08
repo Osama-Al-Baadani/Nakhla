@@ -31,42 +31,48 @@ import { setDevAuthPreviewRole } from '../../lib/dev-auth'
 const trackOptions = [
   {
     title: 'مسار الباحثين عن عمل',
-    subtitle: 'ابنِ سيرتك الذاتية، قدم على أحدث الوظائف، والتحق ببرامج التأهيل',
+    subtitle: 'ابنِ سيرتك الذاتية، قدم على أحدث الوظائف المعتمدة، والتحق ببرامج التأهيل المهني.',
     icon: UserCheck,
-    tone: 'from-emerald-700 to-teal-600 text-white shadow-emerald-700/20',
+    tone: 'from-emerald-600 via-emerald-700 to-teal-700 text-white shadow-emerald-700/25',
     badge: 'الأفراد والكوادر',
+    badgeClass: 'bg-emerald-50 text-emerald-800 border-emerald-200/80',
+    btnClass: 'bg-emerald-50 text-emerald-950 border-emerald-200/90 hover:bg-emerald-700 hover:text-white hover:border-emerald-700 shadow-xs',
     href: '/register?role=seeker',
     role: 'seeker',
     btnText: 'البدء في مسار الباحثين',
     items: [
-      'تقديم فوري وبسيط بضغط زر واحدة',
-      'خوارزميات توصية ذكية تناسب مهاراتك',
+      'تقديم فوري وبسيط بضغطة زر واحدة',
+      'خوارزميات توصية ذكية تناسب تخصصك',
       'مسارات تدريبية وتأهيلية معتمدة',
-      'إشعارات وتنبيهات فورية للمقابلات',
+      'إشعارات وتنبيهات فورية لمواعيد المقابلات',
     ],
   },
   {
     title: 'مسار قطاع الأعمال والشركات',
-    subtitle: 'استقطب أفضل المهارات الوطنية، أدر وظائفك، واستفد من التعهيد',
+    subtitle: 'استقطب أفضل المهارات الوطنية المؤهلة، أدر وظائفك، واستفد من حلول التعهيد.',
     icon: Building2,
-    tone: 'from-amber-500 to-amber-600 text-white shadow-amber-500/20',
+    tone: 'from-amber-400 via-amber-500 to-amber-600 text-slate-950 shadow-amber-500/25',
     badge: 'الشركات والمنشآت',
+    badgeClass: 'bg-amber-50 text-amber-900 border-amber-200/80',
+    btnClass: 'bg-amber-50 text-amber-950 border-amber-200/90 hover:bg-amber-500 hover:text-slate-950 hover:border-amber-500 shadow-xs',
     href: '/register?role=company',
     role: 'company',
     btnText: 'البدء في مسار الشركات',
     items: [
       'نشر وإدارة الوظائف بمرونة كاملة',
       'فرز ذكي وتقييم دقيق للمتقدمين',
-      'حلول تعهيد وتزود بالكوادر بسرعة',
+      'حلول تعهيد وتزويد بالكوادر بسرعة',
       'متابعة أداء وحضور الكفاءات مباشرة',
     ],
   },
   {
     title: 'حلول التشغيل والتعهيد',
-    subtitle: 'تشغيل الفرق وتوفير الكفاءات الموثوقة بأسلوب مرن ومستدام',
+    subtitle: 'تشغيل الفرق وتوفير الكفاءات الموثوقة بأسلوب مرن ومستدام مع الامتثال الكامل.',
     icon: Layers3,
-    tone: 'from-teal-700 to-emerald-800 text-white shadow-teal-700/20',
+    tone: 'from-teal-700 via-emerald-800 to-slate-900 text-white shadow-teal-700/25',
     badge: 'التشغيل والتعهيد',
+    badgeClass: 'bg-teal-50 text-teal-900 border-teal-200/80',
+    btnClass: 'bg-teal-50 text-teal-950 border-teal-200/90 hover:bg-teal-800 hover:text-white hover:border-teal-800 shadow-xs',
     href: '/for-companies',
     role: 'company',
     btnText: 'استكشاف حلول التعهيد',
@@ -83,7 +89,7 @@ const steps = [
   { title: 'أنشئ حسابك', description: 'سجل خلال دقيقة واحدة وحدد مسارك كباحث أو شركة.', icon: Users },
   { title: 'استكمل بياناتك', description: 'أضف خبراتك أو متطلبات وظائفك للفرز الفوري.', icon: FileCheck },
   { title: 'ابنِ توافقك', description: 'خوارزميات الفرز تضمن ربطاً فائق الدقة بين الطرفين.', icon: Compass },
-  { title: 'ابدأ التعاقد', description: 'مقابلات مباشرة، توقيع إلكتروني، وبداية عمل موثقة.', icon: BadgeCheck },
+  { title: 'ابدأ التوظيف أو العمل', description: 'باشر العمل أو استقطب الكفاءة وابدأ التعاقد مباشرة.', icon: Award },
 ]
 
 const companyReasons = [
@@ -95,35 +101,47 @@ const companyReasons = [
 
 export default function HomePage() {
   return (
-    <div className="space-y-10 sm:space-y-16 animate-slide-up">
+    <div className="space-y-12 sm:space-y-16">
       
       {/* Hero Section */}
-      <section className="relative rounded-3xl border border-slate-200/80 bg-gradient-to-br from-white via-emerald-50/30 to-amber-50/20 p-6 sm:p-10 lg:p-14 shadow-lg overflow-hidden">
-        <div className="pointer-events-none absolute -top-32 -left-32 h-80 w-80 rounded-full bg-emerald-500/10 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-32 -right-32 h-80 w-80 rounded-full bg-amber-500/10 blur-3xl" />
+      <section className="relative overflow-hidden rounded-3xl bg-gradient-to-b from-white via-slate-50/50 to-emerald-50/30 p-6 sm:p-10 lg:p-14 border border-slate-200/80 shadow-xs">
+        
+        {/* Subtle Ambient Background Gradients */}
+        <div className="pointer-events-none absolute -top-24 right-1/4 h-80 w-80 rounded-full bg-emerald-400/10 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-24 left-1/4 h-80 w-80 rounded-full bg-amber-400/10 blur-3xl" />
 
-        <div className="relative z-10 mx-auto max-w-4xl text-center space-y-5 sm:space-y-7">
+        <div className="relative mx-auto max-w-4xl text-center space-y-6">
           
-          {/* Main Headline */}
-          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black text-slate-900 leading-snug sm:leading-tight tracking-tight">
-            مستقبل التوظيف والتأهيل وتعهيد الكوادر بين يديك
+          {/* Saudi Royal Platform Tag */}
+          <div className="inline-flex items-center gap-2 rounded-full border border-emerald-600/20 bg-emerald-50/80 px-4 py-1.5 text-xs font-black text-emerald-900 shadow-2xs">
+            <span className="flex h-2 w-2 rounded-full bg-emerald-600 animate-pulse" />
+            <span>المنصة السعودية الذكية للتوظيف والتأهيل المهني 🇸🇦</span>
+          </div>
+
+          {/* Main Hero Headline */}
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight leading-[1.2]">
+            وجهتك الشاملة نحو{' '}
+            <span className="bg-gradient-to-l from-emerald-800 via-emerald-700 to-teal-700 bg-clip-text text-transparent">
+              مستقبل وظيفي واعد
+            </span>{' '}
+            وكفاءات مهنية موثوقة
           </h1>
 
-          {/* Subtext */}
-          <p className="mx-auto max-w-2xl text-xs sm:text-base leading-relaxed text-slate-600 font-medium">
-            نربط الكفاءات الوطنية بالشركات عبر خوارزميات فرز ذكية، ونقدم برامج تأهيل احترافية وخدمات تشغيل وتعهيد مرنة بأعلى معايير الاعتمادية.
+          {/* Subtitle */}
+          <p className="text-sm sm:text-base lg:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed font-medium">
+            نربط الكفاءات الوطنية الطموحة بأفضل الفرص الوظيفية، ونمكن المنشآت من استقطاب وتعهيد الكوادر عبر تجربة رقمية ذكية.
           </p>
 
-          {/* Quick Search Card */}
-          <div className="mx-auto max-w-2xl rounded-2xl border border-slate-200 bg-white p-3 sm:p-4 shadow-md">
-            <form action="/jobs" method="GET" className="flex flex-col gap-2.5 sm:flex-row sm:items-center">
+          {/* Search Box */}
+          <div className="max-w-2xl mx-auto pt-2">
+            <form action="/jobs" method="GET" className="flex flex-col sm:flex-row items-center gap-2 p-1.5 rounded-2xl bg-white border border-slate-200 shadow-lg shadow-slate-200/50">
               <div className="relative flex-1">
                 <Search size={18} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
                 <Input
                   type="search"
                   name="search"
                   placeholder="ابحث عن مسمى وظيفي، مهارة، أو مدينة..."
-                  className="pr-10 bg-slate-50 border-slate-200 text-xs sm:text-sm h-11 rounded-xl"
+                  className="pr-10 bg-slate-50 border-none text-xs sm:text-sm h-11 rounded-xl focus-visible:ring-0"
                 />
               </div>
               <Button type="submit" size="md" className="h-11 rounded-xl px-6 font-bold shadow-md shadow-emerald-700/20">
@@ -139,44 +157,6 @@ export default function HomePage() {
               <Link href="/jobs?search=تعهيد" className="rounded-lg bg-slate-100 px-2.5 py-1 text-slate-700 hover:bg-amber-50 hover:text-amber-800 transition-colors">عقود تعهيد</Link>
             </div>
           </div>
-
-          {/* Role Register Action Cards - Beautiful & Balanced */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-xl mx-auto pt-2">
-            <Link
-              href="/register?role=seeker"
-              onClick={() => setDevAuthPreviewRole('seeker')}
-              className="group flex items-center justify-between gap-3 rounded-2xl border border-emerald-200/80 bg-gradient-to-r from-emerald-50/50 to-white p-3.5 sm:p-4 text-xs font-black text-emerald-950 shadow-2xs hover:border-emerald-400 hover:shadow-md transition-all active:scale-98"
-            >
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-100/80 text-emerald-800 group-hover:scale-105 transition-transform shrink-0">
-                  <UserCheck size={18} />
-                </div>
-                <div className="text-right">
-                  <span className="block font-black text-xs sm:text-sm text-slate-900">تسجيل كباحث عن عمل</span>
-                  <span className="block text-[10px] text-emerald-700 font-bold mt-0.5">فرص وظيفية وتدريب</span>
-                </div>
-              </div>
-              <ArrowLeft size={16} className="text-emerald-700 group-hover:-translate-x-1 transition-transform shrink-0" />
-            </Link>
-
-            <Link
-              href="/register?role=company"
-              onClick={() => setDevAuthPreviewRole('company')}
-              className="group flex items-center justify-between gap-3 rounded-2xl border border-amber-200/80 bg-gradient-to-r from-amber-50/50 to-white p-3.5 sm:p-4 text-xs font-black text-amber-950 shadow-2xs hover:border-amber-400 hover:shadow-md transition-all active:scale-98"
-            >
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-100/80 text-amber-800 group-hover:scale-105 transition-transform shrink-0">
-                  <Building2 size={18} />
-                </div>
-                <div className="text-right">
-                  <span className="block font-black text-xs sm:text-sm text-slate-900">تسجيل كمنشأة / شركة</span>
-                  <span className="block text-[10px] text-amber-700 font-bold mt-0.5">استقطاب وتعهيد الكفاءات</span>
-                </div>
-              </div>
-              <ArrowLeft size={16} className="text-amber-700 group-hover:-translate-x-1 transition-transform shrink-0" />
-            </Link>
-          </div>
-
         </div>
       </section>
 
@@ -188,53 +168,61 @@ export default function HomePage() {
         <MetricCard number="98.4%" label="نسبة الرضا والاعتمادية" icon={<Award size={20} className="text-amber-600" />} />
       </div>
 
-      {/* Three Tracks */}
+      {/* Three Tracks - Prominent & Luxurious */}
       <section className="space-y-6">
         <div className="text-center space-y-2">
-          <Badge tone="brand">المسارات المعتمدة</Badge>
-          <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
+          <div className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3.5 py-1 text-xs font-black text-emerald-800 border border-emerald-200">
+            <span>المسارات المعتمدة</span>
+          </div>
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight">
             مسارات مهنية مصممة لاحتياجات السوق السعودي
           </h2>
-          <p className="text-xs sm:text-sm text-slate-500 max-w-xl mx-auto font-medium">
-            اختر المسار المناسب لاهتماماتك للبدء فوراً في الاستفادة من حلول المنصة.
+          <p className="text-xs sm:text-sm text-slate-600 max-w-xl mx-auto font-semibold">
+            اختر المسار المناسب لاهتماماتك للبدء فوراً في الاستفادة من حلول المنصة الذكية.
           </p>
         </div>
 
-        <div className="grid gap-5 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-3">
           {trackOptions.map((track) => {
             const Icon = track.icon
 
             return (
               <div
                 key={track.title}
-                className="group relative flex flex-col justify-between rounded-3xl border border-slate-200 bg-white p-5 sm:p-6 shadow-xs hover:shadow-xl hover:border-emerald-300 transition-all duration-300 overflow-hidden"
+                className="group relative flex flex-col justify-between rounded-3xl border border-slate-200/90 bg-white p-6 sm:p-7 shadow-xs hover:shadow-xl hover:border-emerald-400/80 transition-all duration-300 overflow-hidden"
               >
-                <div className="space-y-4">
+                <div className="space-y-5">
                   <div className="flex items-center justify-between">
-                    <div className={`grid h-11 w-11 place-items-center rounded-2xl bg-gradient-to-br ${track.tone} shadow-md`}>
-                      <Icon size={22} />
+                    <div className={`grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br ${track.tone} shadow-md`}>
+                      <Icon size={24} />
                     </div>
-                    <Badge tone="brand">{track.badge}</Badge>
+                    <span className={`rounded-full px-3 py-1 text-[11px] font-black border shadow-2xs ${track.badgeClass}`}>
+                      {track.badge}
+                    </span>
                   </div>
 
-                  <div>
-                    <h3 className="text-lg sm:text-xl font-bold text-slate-900 group-hover:text-emerald-800 transition-colors">
+                  <div className="space-y-1.5">
+                    <h3 className="text-xl sm:text-2xl font-black text-slate-900 group-hover:text-emerald-800 transition-colors leading-snug">
                       {track.title}
                     </h3>
-                    <p className="mt-1 text-xs text-slate-500 leading-relaxed font-medium">{track.subtitle}</p>
+                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-semibold">
+                      {track.subtitle}
+                    </p>
                   </div>
 
-                  <ul className="space-y-2 pt-3 border-t border-slate-100">
+                  <ul className="space-y-2.5 pt-4 border-t border-slate-100">
                     {track.items.map((item) => (
-                      <li key={item} className="flex items-center gap-2 text-xs text-slate-600 font-medium">
-                        <CheckCircle2 size={15} className="text-emerald-600 shrink-0" />
+                      <li key={item} className="flex items-center gap-2.5 text-xs sm:text-sm text-slate-800 font-bold leading-normal">
+                        <div className="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-100/70 text-emerald-700 shrink-0 border border-emerald-300/40">
+                          <CheckCircle2 size={13} className="text-emerald-700" />
+                        </div>
                         <span>{item}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
 
-                <div className="mt-5 pt-4 border-t border-slate-100">
+                <div className="mt-6 pt-5 border-t border-slate-100">
                   <Link
                     href={track.href}
                     onClick={() => {
@@ -242,10 +230,10 @@ export default function HomePage() {
                         setDevAuthPreviewRole(track.role)
                       }
                     }}
-                    className="flex w-full items-center justify-between rounded-xl border border-slate-200/90 bg-slate-50/80 px-4 py-2.5 text-xs font-black text-slate-800 shadow-2xs hover:bg-emerald-50 hover:border-emerald-400 hover:text-emerald-900 active:scale-[0.98] transition-all cursor-pointer group-hover:border-emerald-300 group-hover:bg-emerald-50/60 group-hover:text-emerald-900"
+                    className={`group/btn flex w-full items-center justify-between rounded-xl px-4 py-3 text-xs sm:text-sm font-black transition-all cursor-pointer active:scale-[0.98] ${track.btnClass}`}
                   >
                     <span>{track.btnText}</span>
-                    <ArrowLeft size={15} className="group-hover:-translate-x-1.5 transition-transform" />
+                    <ArrowLeft size={16} className="group-hover/btn:-translate-x-1.5 transition-transform" />
                   </Link>
                 </div>
               </div>
@@ -255,10 +243,12 @@ export default function HomePage() {
       </section>
 
       {/* How it Works (4 Steps) */}
-      <section className="space-y-6 rounded-3xl border border-slate-200 bg-white p-5 sm:p-8 shadow-xs">
+      <section className="space-y-6 rounded-3xl border border-slate-200/90 bg-white p-6 sm:p-9 shadow-xs">
         <div className="text-center space-y-2">
-          <Badge tone="warning">خطوات الانضمام</Badge>
-          <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
+          <div className="inline-flex items-center gap-1.5 rounded-full bg-amber-50 px-3.5 py-1 text-xs font-black text-amber-900 border border-amber-200">
+            <span>خطوات الانضمام</span>
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
             كيف تعمل منصة نخلة؟
           </h2>
           <p className="text-xs sm:text-sm text-slate-500 max-w-xl mx-auto font-medium">
