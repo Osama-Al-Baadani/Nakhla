@@ -62,7 +62,7 @@ export function DashboardLayout({ children }) {
     ]
   }, [role])
 
-  // Floating App Dock Items for Mobile
+  // Mobile Bottom App Dock Items
   const mobileBottomItems = useMemo(() => {
     if (role === 'company') {
       return [
@@ -87,201 +87,249 @@ export function DashboardLayout({ children }) {
     router.push('/login')
   }
 
-  const dashboardLabel = role === 'company' ? 'مساحة الشركة' : 'مساحة الباحث'
+  const roleTitle = role === 'company' ? 'قطاع الأعمال والشركات' : 'الباحث عن عمل والتأهيل'
 
   return (
-    <div className="min-h-screen bg-[var(--app-bg)] text-[var(--text)] pb-24 lg:pb-6">
-      {/* Container Layout */}
-      <div className="mx-auto grid min-h-screen max-w-[1560px] grid-cols-1 gap-4 sm:gap-6 px-3 py-3 sm:px-5 sm:py-5 lg:grid-cols-[280px_1fr]">
-        
-        {/* Desktop Sidebar / Mobile Off-canvas Sheet */}
-        <aside
-          className={cn(
-            'fixed inset-y-0 right-0 z-50 w-80 transform bg-white/96 p-5 shadow-2xl backdrop-blur-2xl transition-transform duration-300 ease-in-out lg:static lg:z-auto lg:w-auto lg:transform-none lg:rounded-[28px] lg:border lg:border-slate-200/80 lg:shadow-2xs',
-            mobileNavOpen ? 'translate-x-0' : 'translate-x-full lg:translate-x-0'
-          )}
-        >
-          {/* Drawer Header */}
-          <div className="flex items-center justify-between border-b border-slate-100/90 pb-4">
-            <Link href="/" className="flex items-center gap-3" onClick={() => setMobileNavOpen(false)}>
-              <div className="grid h-10 w-10 place-items-center rounded-2xl bg-gradient-to-br from-teal-600 to-teal-700 text-white font-bold text-lg shadow-md shadow-teal-600/20">
+    <div className="min-h-screen bg-[#f8fafc] text-slate-800 pb-24 lg:pb-8 font-sans antialiased">
+      
+      {/* Top Application Header Bar */}
+      <header className="sticky top-0 z-40 w-full border-b border-slate-200/80 bg-white/90 backdrop-blur-xl shadow-xs">
+        <div className="mx-auto flex max-w-[1560px] items-center justify-between px-4 py-3 sm:px-6">
+          
+          {/* Right Section: Mobile Menu + Logo & Title */}
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 active:scale-95 transition-all lg:hidden"
+              onClick={() => setMobileNavOpen(true)}
+              aria-label="فتح القائمة الرئيسية"
+            >
+              <Menu size={20} />
+            </button>
+
+            <Link href="/" className="flex items-center gap-2.5 group">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-emerald-800 via-emerald-700 to-teal-600 text-white font-black text-lg shadow-md shadow-emerald-700/20 group-hover:scale-105 transition-transform">
                 ن
               </div>
-              <div>
-                <p className="text-[10px] font-extrabold tracking-[0.2em] text-teal-600 uppercase">منصة نخلة</p>
-                <h1 className="font-serif text-xl font-extrabold text-slate-900 tracking-tight">{dashboardLabel}</h1>
+              <div className="hidden sm:block">
+                <div className="flex items-center gap-1.5">
+                  <span className="font-serif text-lg font-black text-slate-900 leading-tight">منصة نخلة</span>
+                  <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-extrabold text-emerald-800 border border-emerald-200">سعودية 🇸🇦</span>
+                </div>
+                <p className="text-[10px] font-bold text-slate-500">{roleTitle}</p>
               </div>
             </Link>
-            <Button
-              variant="ghost"
-              className="h-9 w-9 rounded-full p-0 text-slate-400 hover:text-slate-800"
-              onClick={() => setMobileNavOpen(false)}
-              aria-label="إغلاق القائمة"
+          </div>
+
+          {/* Center Section: Quick Link Chips (Desktop) */}
+          <div className="hidden md:flex items-center gap-2">
+            <Link
+              href={role === 'company' ? '/company/dashboard' : '/seeker/dashboard'}
+              className="flex items-center gap-1.5 rounded-full bg-slate-100/80 px-3.5 py-1.5 text-xs font-bold text-slate-700 hover:bg-slate-200/80 transition-colors"
             >
-              <X size={20} aria-hidden="true" />
-            </Button>
+              <LayoutGrid size={14} className="text-emerald-700" />
+              <span>الرئيسية</span>
+            </Link>
+
+            <Link
+              href="/jobs"
+              className="flex items-center gap-1.5 rounded-full bg-amber-50 px-3.5 py-1.5 text-xs font-bold text-amber-900 border border-amber-200/80 hover:bg-amber-100/80 transition-colors"
+            >
+              <BriefcaseBusiness size={14} className="text-amber-600" />
+              <span>سوق الوظائف</span>
+            </Link>
+
+            {role === 'company' ? (
+              <Link
+                href="/jobs/create"
+                className="flex items-center gap-1.5 rounded-full bg-emerald-50 px-3.5 py-1.5 text-xs font-bold text-emerald-900 border border-emerald-200/80 hover:bg-emerald-100/80 transition-colors"
+              >
+                <Building2 size={14} className="text-emerald-700" />
+                <span>نشر وظيفة جديدة</span>
+              </Link>
+            ) : (
+              <Link
+                href="/seeker/training"
+                className="flex items-center gap-1.5 rounded-full bg-teal-50 px-3.5 py-1.5 text-xs font-bold text-teal-900 border border-teal-200/80 hover:bg-teal-100/80 transition-colors"
+              >
+                <GraduationCap size={14} className="text-teal-700" />
+                <span>المسار التدريبي</span>
+              </Link>
+            )}
           </div>
 
-          {/* Account Profile Luxury Soft Cream Pill Tile */}
-          <div className="mt-4 luxury-cream-pill p-4 space-y-3">
-            <div className="flex items-center gap-3">
-              <Avatar name={user?.email ?? 'المستخدم'} size="md" />
-              <div className="min-w-0 flex-1">
-                <p className="text-xs font-extrabold text-slate-900 truncate">
-                  {user?.email ? user.email.split('@')[0] : 'المستخدم'}
-                </p>
-                <p className="text-[11px] font-medium text-slate-600 truncate">{user?.email ?? 'حساب معتمد'}</p>
-              </div>
-            </div>
-            
-            <div className="flex items-center justify-between pt-2.5 border-t border-amber-200/60">
-              <Badge tone={role === 'company' ? 'brand' : 'gold'}>
-                {getRoleLabel(role)}
-              </Badge>
-            </div>
-          </div>
+          {/* Left Section: Notifications + User Account Profile */}
+          <div className="flex items-center gap-2.5">
+            <Link
+              href={role === 'company' ? '/company/notifications' : '/interviews'}
+              className="relative flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 hover:text-slate-900 active:scale-95 transition-all shadow-2xs"
+              aria-label="الإشعارات والتنبيهات"
+            >
+              <Bell size={18} />
+              <span className="absolute top-2 left-2 h-2.5 w-2.5 rounded-full bg-amber-500 ring-2 ring-white" />
+            </Link>
 
-          {/* Navigation Items */}
-          <nav className="mt-5 space-y-1.5 overflow-y-auto max-h-[calc(100vh-270px)] lg:max-h-none pr-1">
-            {navigationItems.map((item) => {
-              const Icon = item.icon
-              const isActive = pathname === item.to || pathname.startsWith(item.match)
-
-              return (
-                <Link
-                  key={item.to}
-                  href={item.to}
-                  onClick={() => setMobileNavOpen(false)}
-                  className={cn(
-                    'group flex items-center justify-between rounded-full px-4 py-3 text-xs font-bold transition-all duration-200 active:scale-[0.98]',
-                    isActive
-                      ? 'bg-gradient-to-r from-teal-600 to-teal-700 text-white shadow-md shadow-teal-600/25'
-                      : 'text-slate-600 hover:bg-amber-50/60 hover:text-slate-900'
-                  )}
-                >
-                  <div className="flex items-center gap-3">
-                    <Icon
-                      size={18}
-                      aria-hidden="true"
-                      className={cn(
-                        'transition-transform duration-200 group-hover:scale-110',
-                        isActive ? 'text-white' : 'text-slate-400 group-hover:text-amber-600'
-                      )}
-                    />
-                    <span>{item.label}</span>
-                  </div>
-                  {isActive && (
-                    <span className="h-2 w-2 rounded-full bg-white shadow-xs" />
-                  )}
-                </Link>
-              )
-            })}
-          </nav>
-        </aside>
-
-        {/* Backdrop overlay for mobile drawer */}
-        {mobileNavOpen && (
-          <div
-            className="fixed inset-0 z-40 bg-slate-900/50 backdrop-blur-md lg:hidden transition-opacity"
-            onClick={() => setMobileNavOpen(false)}
-          />
-        )}
-
-        {/* Main Content Area */}
-        <div className="flex flex-col gap-4 sm:gap-6 min-w-0">
-          
-          {/* App Top Header Bar */}
-          <header className="sticky top-2 sm:top-3 z-30 flex items-center justify-between gap-3 rounded-full border border-slate-200/80 bg-white/92 px-4 py-2.5 sm:px-6 sm:py-3 shadow-2xs backdrop-blur-xl">
-            
-            {/* Right Side: Mobile menu drawer trigger & page indicator */}
-            <div className="flex items-center gap-2.5 sm:gap-3">
+            {/* User Dropdown */}
+            <div className="relative">
               <button
                 type="button"
-                className="grid h-10 w-10 place-items-center rounded-full border border-slate-200 bg-slate-50 text-slate-700 active:scale-95 transition-all lg:hidden"
-                onClick={() => setMobileNavOpen(true)}
-                aria-label="فتح القائمة"
+                onClick={() => setUserMenuOpen((prev) => !prev)}
+                className="flex items-center gap-2 rounded-xl border border-slate-200/90 bg-white p-1.5 pl-3 hover:border-slate-300 active:scale-95 transition-all focus:outline-none shadow-2xs"
               >
-                <Menu size={20} aria-hidden="true" />
+                <Avatar name={user?.email ?? 'مستخدم'} size="sm" />
+                <div className="hidden sm:block text-right">
+                  <p className="text-xs font-bold text-slate-800 truncate max-w-[120px]">
+                    {user?.email ? user.email.split('@')[0] : 'المستخدم'}
+                  </p>
+                  <p className="text-[10px] text-slate-500 font-semibold">{getRoleLabel(role)}</p>
+                </div>
+                <ChevronDown size={14} className="text-slate-400" />
               </button>
-              <div>
-                <p className="text-[10px] font-extrabold text-teal-600 tracking-wider uppercase hidden sm:block">منصة نخلة الرقمية</p>
-                <h2 className="font-serif text-base sm:text-xl font-bold text-slate-900 tracking-tight">
-                  {role === 'company' ? 'مساحة قطاع الأعمال' : 'لوحة التوظيف والتأهيل'}
-                </h2>
-              </div>
-            </div>
 
-            {/* Left Side: Actions & Profile */}
-            <div className="flex items-center gap-2">
-              <Link href={role === 'company' ? '/company/notifications' : '/interviews'} className="relative">
-                <button
-                  type="button"
-                  className="grid h-9 w-9 sm:h-10 sm:w-10 place-items-center rounded-full border border-slate-200 bg-slate-50 text-slate-600 hover:bg-white active:scale-95 transition-all"
-                  aria-label="الإشعارات"
-                >
-                  <Bell size={18} aria-hidden="true" />
-                  <span className="absolute top-2 left-2 h-2 w-2 rounded-full bg-amber-500 ring-2 ring-white" />
-                </button>
-              </Link>
-
-              {/* User Dropdown */}
-              <div className="relative">
-                <button
-                  type="button"
-                  onClick={() => setUserMenuOpen((prev) => !prev)}
-                  className="flex items-center gap-2 rounded-full border border-slate-200 bg-white p-1.5 pl-3 active:scale-95 transition-all focus:outline-none shadow-2xs hover:border-amber-300"
-                >
-                  <Avatar name={user?.email ?? 'مستخدم'} size="sm" />
-                  <ChevronDown size={14} className="text-slate-400" />
-                </button>
-
-                {userMenuOpen && (
-                  <div className="absolute left-0 mt-2 w-56 rounded-3xl border border-slate-200 bg-white p-2.5 shadow-xl animate-slide-up z-50">
-                    <div className="border-b border-slate-100 px-3 py-2 text-xs">
-                      <p className="font-extrabold text-slate-900 truncate">{user?.email}</p>
-                      <p className="text-slate-500 font-bold text-[11px] mt-0.5">{getRoleLabel(role)}</p>
+              {userMenuOpen && (
+                <div className="absolute left-0 mt-2 w-60 rounded-2xl border border-slate-200 bg-white p-2.5 shadow-xl animate-slide-up z-50">
+                  <div className="border-b border-slate-100 px-3 py-2.5 text-xs">
+                    <p className="font-extrabold text-slate-900 truncate">{user?.email}</p>
+                    <div className="mt-1 flex items-center justify-between">
+                      <span className="text-[11px] font-bold text-slate-500">{getRoleLabel(role)}</span>
+                      <Badge tone={role === 'company' ? 'brand' : 'gold'}>نشط</Badge>
                     </div>
+                  </div>
 
+                  <div className="py-1 space-y-0.5">
                     <Link
                       href="/profile"
                       onClick={() => setUserMenuOpen(false)}
-                      className="flex items-center gap-2 rounded-2xl px-3 py-2 text-xs font-bold text-slate-700 hover:bg-amber-50/60 hover:text-slate-900 transition-colors mt-1"
+                      className="flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-bold text-slate-700 hover:bg-slate-100 hover:text-slate-900 transition-colors"
                     >
-                      <UserCircle2 size={16} />
-                      الملف الشخصي
+                      <UserCircle2 size={16} className="text-emerald-700" />
+                      <span>الملف الشخصي</span>
                     </Link>
                     <Link
                       href="/settings"
                       onClick={() => setUserMenuOpen(false)}
-                      className="flex items-center gap-2 rounded-2xl px-3 py-2 text-xs font-bold text-slate-700 hover:bg-amber-50/60 hover:text-slate-900 transition-colors"
+                      className="flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-bold text-slate-700 hover:bg-slate-100 hover:text-slate-900 transition-colors"
                     >
-                      <Settings2 size={16} />
-                      الإعدادات
+                      <Settings2 size={16} className="text-slate-500" />
+                      <span>الإعدادات والحساب</span>
                     </Link>
+                  </div>
+
+                  <div className="border-t border-slate-100 pt-1 mt-1">
                     <button
                       onClick={() => {
                         setUserMenuOpen(false)
                         void handleSignOut()
                       }}
-                      className="flex w-full items-center gap-2 rounded-2xl px-3 py-2 text-xs font-bold text-rose-600 hover:bg-rose-50 transition-colors"
+                      className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-xs font-bold text-rose-600 hover:bg-rose-50 transition-colors"
                     >
                       <LogOut size={16} />
-                      تسجيل الخروج
+                      <span>تسجيل الخروج</span>
                     </button>
                   </div>
-                )}
+                </div>
+              )}
+            </div>
+          </div>
+
+        </div>
+      </header>
+
+      {/* Main Workspace Layout (Sidebar + Main Content) */}
+      <div className="mx-auto max-w-[1560px] px-3 py-4 sm:px-6 sm:py-6">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-[270px_1fr]">
+          
+          {/* Desktop Sidebar Navigation */}
+          <aside
+            className={cn(
+              'fixed inset-y-0 right-0 z-50 w-80 transform bg-white p-5 shadow-2xl transition-transform duration-300 ease-in-out lg:static lg:z-auto lg:w-auto lg:transform-none lg:rounded-2xl lg:border lg:border-slate-200/80 lg:shadow-xs lg:p-4',
+              mobileNavOpen ? 'translate-x-0' : 'translate-x-full lg:translate-x-0'
+            )}
+          >
+            {/* Drawer Close Button for Mobile */}
+            <div className="flex items-center justify-between border-b border-slate-100 pb-3 mb-3 lg:hidden">
+              <div className="flex items-center gap-2.5">
+                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-700 text-white font-black">
+                  ن
+                </div>
+                <span className="font-serif text-base font-black text-slate-900">القائمة الرئيسية</span>
+              </div>
+              <Button
+                variant="ghost"
+                className="h-8 w-8 rounded-full p-0 text-slate-400 hover:text-slate-800"
+                onClick={() => setMobileNavOpen(false)}
+                aria-label="إغلاق القائمة"
+              >
+                <X size={20} />
+              </Button>
+            </div>
+
+            {/* User Quick Info Box */}
+            <div className="rounded-xl border border-amber-200/80 bg-gradient-to-br from-[#fffdfa] via-[#fffdf5] to-[#fef9eb] p-3.5 mb-4 shadow-2xs">
+              <div className="flex items-center gap-3">
+                <Avatar name={user?.email ?? 'مستخدم'} size="md" />
+                <div className="min-w-0 flex-1">
+                  <p className="text-xs font-black text-slate-900 truncate">
+                    {user?.email ? user.email.split('@')[0] : 'المستخدم'}
+                  </p>
+                  <p className="text-[11px] font-semibold text-amber-900 mt-0.5">{getRoleLabel(role)}</p>
+                </div>
               </div>
             </div>
-          </header>
 
-          {/* Children Page Content */}
+            {/* Navigation Link Items */}
+            <nav className="space-y-1 overflow-y-auto max-h-[calc(100vh-230px)] lg:max-h-none">
+              {navigationItems.map((item) => {
+                const Icon = item.icon
+                const isActive = pathname === item.to || (item.to !== '/seeker/dashboard' && item.to !== '/company/dashboard' && pathname.startsWith(item.match))
+
+                return (
+                  <Link
+                    key={item.to}
+                    href={item.to}
+                    onClick={() => setMobileNavOpen(false)}
+                    className={cn(
+                      'group flex items-center justify-between rounded-xl px-3.5 py-2.5 text-xs font-bold transition-all duration-150 active:scale-[0.98]',
+                      isActive
+                        ? 'bg-gradient-to-r from-emerald-800 to-emerald-700 text-white shadow-sm shadow-emerald-800/20'
+                        : 'text-slate-600 hover:bg-slate-100/90 hover:text-slate-900'
+                    )}
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <Icon
+                        size={17}
+                        className={cn(
+                          'transition-transform duration-150 group-hover:scale-110',
+                          isActive ? 'text-white' : 'text-slate-400 group-hover:text-emerald-700'
+                        )}
+                      />
+                      <span>{item.label}</span>
+                    </div>
+                    {isActive && (
+                      <span className="h-1.5 w-1.5 rounded-full bg-amber-400 shadow-xs" />
+                    )}
+                  </Link>
+                )
+              })}
+            </nav>
+          </aside>
+
+          {/* Backdrop overlay for mobile drawer */}
+          {mobileNavOpen && (
+            <div
+              className="fixed inset-0 z-40 bg-slate-900/40 backdrop-blur-xs lg:hidden transition-opacity"
+              onClick={() => setMobileNavOpen(false)}
+            />
+          )}
+
+          {/* Main Page Content Body */}
           <main className="min-w-0 flex-1">{children}</main>
         </div>
       </div>
 
-      {/* Floating Island App Dock for Mobile (Ultra-modern iOS style) */}
+      {/* Floating Island Bottom Dock for Mobile */}
       <nav className="fixed bottom-3 left-3 right-3 z-40 lg:hidden">
-        <div className="mx-auto max-w-md rounded-full border border-amber-200/80 bg-white/94 px-3 py-2 shadow-[0_16px_40px_rgba(15,23,42,0.18)] backdrop-blur-2xl">
+        <div className="mx-auto max-w-md rounded-2xl border border-slate-200/90 bg-white/95 px-2 py-1.5 shadow-[0_12px_36px_rgba(15,23,42,0.15)] backdrop-blur-xl">
           <div className="flex items-center justify-around">
             {mobileBottomItems.map((item) => {
               const Icon = item.icon
@@ -292,13 +340,13 @@ export function DashboardLayout({ children }) {
                   key={item.to}
                   href={item.to}
                   className={cn(
-                    'flex flex-col items-center gap-0.5 rounded-full px-3.5 py-1.5 text-[10px] font-extrabold transition-all active:scale-95',
+                    'flex flex-col items-center gap-0.5 rounded-xl px-3 py-1 text-[10px] font-black transition-all active:scale-95',
                     isActive
-                      ? 'bg-gradient-to-r from-teal-600 to-teal-700 text-white shadow-md shadow-teal-600/30'
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-amber-50/60'
+                      ? 'bg-emerald-700 text-white shadow-sm shadow-emerald-700/30'
+                      : 'text-slate-500 hover:text-slate-900 hover:bg-slate-100/60'
                   )}
                 >
-                  <Icon size={19} className={isActive ? 'text-white' : 'text-slate-400'} />
+                  <Icon size={18} className={isActive ? 'text-white' : 'text-slate-400'} />
                   <span className="leading-none mt-0.5">{item.label}</span>
                 </Link>
               )
@@ -306,6 +354,7 @@ export function DashboardLayout({ children }) {
           </div>
         </div>
       </nav>
+
     </div>
   )
 }
