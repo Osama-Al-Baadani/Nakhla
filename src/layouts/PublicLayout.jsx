@@ -2,11 +2,15 @@
 
 import { useState } from 'react'
 import {
+  Briefcase,
   Building2,
+  ChevronRight,
   Globe2,
   Mail,
   MapPin,
   Menu,
+  PhoneCall,
+  ShieldCheck,
   Sparkles,
   UserCheck,
   X,
@@ -32,15 +36,22 @@ export function PublicLayout({ children }) {
   return (
     <div className="min-h-screen bg-[#fafafc] text-slate-800 flex flex-col font-sans antialiased">
       
-      {/* Clean Modern Header */}
+      {/* Modern Header */}
       <header className="sticky top-0 z-40 border-b border-slate-200/80 bg-white/90 backdrop-blur-xl transition-all shadow-xs">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3.5 sm:px-6">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
           
-          {/* Brand Logo - Clean 'نخلة' ready for custom image logo */}
-          <Link href="/" className="inline-flex items-center gap-2 group">
-            <span className="font-serif text-2xl sm:text-3xl font-black text-emerald-800 tracking-tight transition-colors group-hover:text-emerald-700">
-              نخلة
-            </span>
+          {/* Brand Identity */}
+          <Link href="/" className="flex items-center gap-3 group">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-emerald-800 via-emerald-700 to-teal-600 text-white font-black text-xl shadow-md shadow-emerald-700/20 group-hover:scale-105 transition-transform">
+              <span>ن</span>
+            </div>
+            <div>
+              <div className="flex items-center gap-1.5">
+                <h1 className="font-serif text-xl sm:text-2xl font-black text-slate-900 leading-none">نخلة</h1>
+                <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-extrabold text-emerald-800 border border-emerald-200/60">سعودية 🇸🇦</span>
+              </div>
+              <p className="text-[10px] font-extrabold tracking-widest text-emerald-700 uppercase mt-0.5">منصة التوظيف والتأهيل</p>
+            </div>
           </Link>
 
           {/* Desktop Navigation Links */}
@@ -175,31 +186,43 @@ export function PublicLayout({ children }) {
         {children}
       </main>
 
-      {/* Clean, Elegant, Highly-Organized Footer */}
-      <footer className="border-t border-slate-200/90 bg-white text-slate-800 mt-auto pb-28 pt-10 sm:pb-8 sm:pt-14 shadow-2xs">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+      {/* Full-Width Luxury Saudi Footer */}
+      <footer className="w-full border-t border-slate-200/90 bg-gradient-to-b from-white via-slate-50/70 to-emerald-50/20 text-slate-800 mt-auto pb-28 pt-12 sm:pb-10 sm:pt-16 shadow-xs">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           
-          <div className="grid gap-8 sm:gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1.2fr]">
+          <div className="grid gap-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1.2fr]">
             
             {/* Column 1: Brand Info */}
-            <div className="space-y-3">
-              <Link href="/" className="inline-block">
-                <span className="font-serif text-2xl sm:text-3xl font-black text-emerald-800 tracking-tight">
-                  نخلة
-                </span>
-              </Link>
+            <div className="space-y-4">
+              <div className="flex items-center gap-3">
+                <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-tr from-emerald-800 via-emerald-700 to-teal-600 text-white font-black text-xl shadow-md shadow-emerald-700/20">
+                  ن
+                </div>
+                <div>
+                  <div className="flex items-center gap-1.5">
+                    <h2 className="font-serif text-2xl font-black text-slate-900 leading-none">نخلة</h2>
+                    <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-extrabold text-emerald-800 border border-emerald-200/60">سعودية 🇸🇦</span>
+                  </div>
+                  <p className="text-[10px] font-extrabold tracking-widest text-emerald-700 uppercase mt-0.5">المنصة المهنية للتوظيف</p>
+                </div>
+              </div>
 
               <p className="text-xs sm:text-sm leading-relaxed text-slate-600 max-w-sm font-medium">
-                المنصة الرقمية السعودية للتوظيف والتأهيل والعمل عن بُعد والتعهيد المهني.
+                المنصة الرقمية السعودية المبتكرة للتوظيف والتأهيل والعمل عن بُعد والتعهيد المهني وفق أفضل المعايير.
               </p>
+
+              <div className="inline-flex items-center gap-2 rounded-xl bg-emerald-50/90 px-3 py-1.5 border border-emerald-200/80 text-[11px] font-extrabold text-emerald-800 shadow-2xs">
+                <ShieldCheck size={15} className="text-emerald-700" />
+                <span>منصة سعودية مرخصة وموثوقة 🇸🇦</span>
+              </div>
             </div>
 
             {/* Column 2: Dashboard Links */}
-            <div className="space-y-3">
-              <h3 className="text-xs font-black text-slate-900 uppercase tracking-wider border-b border-slate-100 pb-2">
+            <div className="space-y-3.5">
+              <h3 className="text-xs font-black text-slate-900 uppercase tracking-wider border-b border-slate-200/80 pb-2">
                 لوحات التحكم
               </h3>
-              <ul className="space-y-2 text-xs text-slate-600 font-bold">
+              <ul className="space-y-2.5 text-xs text-slate-600 font-bold">
                 <li>
                   <Link href="/seeker/dashboard" onClick={() => setDevAuthPreviewRole('seeker')} className="hover:text-emerald-700 transition-colors block">
                     لوحة الباحث عن عمل
@@ -224,11 +247,11 @@ export function PublicLayout({ children }) {
             </div>
 
             {/* Column 3: Platform Info */}
-            <div className="space-y-3">
-              <h3 className="text-xs font-black text-slate-900 uppercase tracking-wider border-b border-slate-100 pb-2">
+            <div className="space-y-3.5">
+              <h3 className="text-xs font-black text-slate-900 uppercase tracking-wider border-b border-slate-200/80 pb-2">
                 معلومات المنصة
               </h3>
-              <ul className="space-y-2 text-xs text-slate-600 font-bold">
+              <ul className="space-y-2.5 text-xs text-slate-600 font-bold">
                 <li>
                   <Link href="/pricing" className="hover:text-emerald-700 transition-colors block">
                     الأسعار والاشتراكات
@@ -253,21 +276,27 @@ export function PublicLayout({ children }) {
             </div>
 
             {/* Column 4: Contact Info */}
-            <div className="space-y-3">
-              <h3 className="text-xs font-black text-slate-900 uppercase tracking-wider border-b border-slate-100 pb-2">
+            <div className="space-y-3.5">
+              <h3 className="text-xs font-black text-slate-900 uppercase tracking-wider border-b border-slate-200/80 pb-2">
                 التواصل والدعم
               </h3>
-              <div className="space-y-2 text-xs text-slate-600 font-bold">
-                <div className="flex items-center gap-2">
-                  <MapPin size={15} className="text-emerald-700 shrink-0" />
+              <div className="space-y-2.5 text-xs text-slate-600 font-bold">
+                <div className="flex items-center gap-2.5">
+                  <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-50 text-emerald-700">
+                    <MapPin size={15} />
+                  </div>
                   <span>الرياض، المملكة العربية السعودية</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Mail size={15} className="text-amber-600 shrink-0" />
+                <div className="flex items-center gap-2.5">
+                  <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-amber-50 text-amber-600">
+                    <Mail size={15} />
+                  </div>
                   <span>support@nakhlah.sa</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Globe2 size={15} className="text-emerald-700 shrink-0" />
+                <div className="flex items-center gap-2.5">
+                  <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-emerald-50 text-emerald-700">
+                    <Globe2 size={15} />
+                  </div>
                   <span>www.nakhlah.sa</span>
                 </div>
               </div>
@@ -276,11 +305,11 @@ export function PublicLayout({ children }) {
           </div>
 
           {/* Bottom Footer Bar */}
-          <div className="mt-10 pt-5 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-right text-xs text-slate-500 font-medium">
-            <p>جميع الحقوق محفوظة © {new Date().getFullYear()} منصة نخلة</p>
-            <p className="text-[11px] font-bold text-slate-400">
-              المملكة العربية السعودية 🇸🇦
-            </p>
+          <div className="mt-12 pt-6 border-t border-slate-200/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-right text-xs text-slate-500 font-medium">
+            <p>جميع الحقوق محفوظة © {new Date().getFullYear()} منصة نخلة للتوظيف والتأهيل.</p>
+            <span className="text-[11px] font-extrabold text-emerald-800 bg-white px-3.5 py-1 rounded-full border border-slate-200 shadow-2xs">
+              صُنعت بإتقان في المملكة العربية السعودية 🇸🇦
+            </span>
           </div>
 
         </div>
