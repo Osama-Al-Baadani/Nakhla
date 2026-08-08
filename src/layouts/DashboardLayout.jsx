@@ -96,7 +96,7 @@ export function DashboardLayout({ children }) {
       <header className="sticky top-0 z-40 w-full border-b border-slate-200/80 bg-white/90 backdrop-blur-xl shadow-xs">
         <div className="mx-auto flex max-w-[1560px] items-center justify-between px-4 py-3 sm:px-6">
           
-          {/* Right Section: Mobile Menu + Logo & Title */}
+          {/* Right Section: Mobile Menu + Clean 'نخلة' Title */}
           <div className="flex items-center gap-3">
             <button
               type="button"
@@ -107,17 +107,10 @@ export function DashboardLayout({ children }) {
               <Menu size={20} />
             </button>
 
-            <Link href="/" className="flex items-center gap-2.5 group">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-emerald-800 via-emerald-700 to-teal-600 text-white font-black text-lg shadow-md shadow-emerald-700/20 group-hover:scale-105 transition-transform">
-                ن
-              </div>
-              <div className="hidden sm:block">
-                <div className="flex items-center gap-1.5">
-                  <span className="font-serif text-lg font-black text-slate-900 leading-tight">منصة نخلة</span>
-                  <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-extrabold text-emerald-800 border border-emerald-200">سعودية 🇸🇦</span>
-                </div>
-                <p className="text-[10px] font-bold text-slate-500">{roleTitle}</p>
-              </div>
+            <Link href="/" className="inline-flex items-center gap-2 group">
+              <span className="font-serif text-2xl font-black text-emerald-800 tracking-tight transition-colors group-hover:text-emerald-700">
+                نخلة
+              </span>
             </Link>
           </div>
 
@@ -248,12 +241,7 @@ export function DashboardLayout({ children }) {
           >
             {/* Drawer Close Button for Mobile */}
             <div className="flex items-center justify-between border-b border-slate-100 pb-3 mb-3 lg:hidden">
-              <div className="flex items-center gap-2.5">
-                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-700 text-white font-black">
-                  ن
-                </div>
-                <span className="font-serif text-base font-black text-slate-900">القائمة الرئيسية</span>
-              </div>
+              <span className="font-serif text-xl font-black text-emerald-800">نخلة</span>
               <Button
                 variant="ghost"
                 className="h-8 w-8 rounded-full p-0 text-slate-400 hover:text-slate-800"
