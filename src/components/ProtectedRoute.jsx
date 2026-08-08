@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useAuth } from '../hooks/useAuth'
 
 export function ProtectedRoute({ children }) {
+  const router = useRouter()
   const { isLoading, isAuthenticated, isDevAuthBypassEnabled } = useAuth()
   const hasDevPreview = typeof window !== 'undefined' && Boolean(window.sessionStorage.getItem('nakhlah_dev_auth_role'))
   const canAccess = isAuthenticated || isDevAuthBypassEnabled || hasDevPreview
