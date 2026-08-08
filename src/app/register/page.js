@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState, useEffect, Suspense } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { AuthShell } from '../../components/AuthShell'
@@ -11,8 +11,9 @@ import { Input } from '../../components/Input'
 import { Select } from '../../components/Select'
 import { useAuth } from '../../hooks/useAuth'
 import { getUserFacingErrorMessage } from '../../lib/error-messages'
-import { storePendingRole, getDefaultDashboardPath } from '../../lib/roles'
+import { storePendingRole, getDefaultDashboardPath, getRoleLabel } from '../../lib/roles'
 import { authService } from '../../services/auth-service'
+import { LogOut, UserCheck, Building2, ArrowLeft } from 'lucide-react'
 
 function isValidEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
@@ -24,22 +25,42 @@ function RegisterForm() {
   const { isAuthenticated, isLoading, role: userRole } = useAuth()
   
   const queryRole = searchParams.get('role')
-  const initialRole = queryRole === 'company' || queryRole === 'seeker' ? queryRole : ''
+  const validQueryRole = queryRole === 'company' || queryRole === 'seeker' ? queryRole : ''
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
-  const [role, setRole] = useState(initialRole)
+  const [role, setRole] = useState(validQueryRole || 'seeker')
   const [errors, setErrors] = useState({})
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isSigningOut, setIsSigningOut] = useState(false)
   const [submitError, setSubmitError] = useState(null)
   const [successMessage, setSuccessMessage] = useState(null)
 
   useEffect(() => {
-    if (!isLoading && isAuthenticated) {
+    if (validQueryRole) {
+      setRole(validQueryRole)
+    }
+  }, [validQueryRole])
+
+  // If user is already logged in with the SAME role as requested (or no specific role requested)
+  const isAlreadyLoggedInWithSameRole = isAuthenticated && (!validQueryRole || userRole === validQueryRole)
+  const isAlreadyLoggedInWithDifferentRole = isAuthenticated && validQueryRole && userRole !== validQueryRole
+
+  useEffect(() => {
+    if (!isLoading && isAlreadyLoggedInWithSameRole) {
       router.replace(getDefaultDashboardPath(userRole))
     }
-  }, [isAuthenticated, isLoading, userRole, router])
+  }, [isAuthenticated, isLoading, userRole, isAlreadyLoggedInWithSameRole, router])
+
+  async function handleSignOutAndSwitch() {
+    setIsSigningOut(true)
+    await authService.signOut()
+    setIsSigningOut(false)
+    if (validQueryRole) {
+      setRole(validQueryRole)
+    }
+  }
 
   async function handleSubmit(event) {
     event.preventDefault()
@@ -99,11 +120,47 @@ function RegisterForm() {
     setSuccessMessage('تم إنشاء الحساب بنجاح. أكمل التحقق من البريد الإلكتروني إذا كان مفعلًا، ثم سجّل الدخول للمتابعة.')
   }
 
+  if (isAlreadyLoggedInWithDifferentRole) {
+    return (
+      <div className="w-full max-w-md rounded-3xl border border-slate-200 bg-white p-6 sm:p-8 shadow-xl space-y-5 text-center">
+        <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-50 text-amber-600 border border-amber-200">
+          {userRole === 'company' ? <Building2 size={24} /> : <UserCheck size={24} />}
+        </div>
+
+        <div className="space-y-1.5">
+          <h2 className="text-xl font-black text-slate-900">أنت مسجل حالياً</h2>
+          <p className="text-xs sm:text-sm text-slate-500 font-medium">
+            حسابك الحالي مسجل كـ <span className="font-bold text-emerald-800">({getRoleLabel(userRole)})</span>، بينما طلبت التسجيل كـ <span className="font-bold text-amber-700">({getRoleLabel(validQueryRole)})</span>.
+          </p>
+        </div>
+
+        <div className="space-y-2.5 pt-2">
+          <Button
+            onClick={handleSignOutAndSwitch}
+            isLoading={isSigningOut}
+            className="w-full justify-center bg-emerald-800 text-white font-black rounded-xl"
+            leadingIcon={<LogOut size={16} />}
+          >
+            تسجيل الخروج والبدء كـ ({getRoleLabel(validQueryRole)})
+          </Button>
+
+          <Link href={getDefaultDashboardPath(userRole)} className="w-full block">
+            <Button variant="secondary" className="w-full justify-center font-bold rounded-xl text-xs">
+              المتابعة إلى لوحة تحكمك الحالية
+            </Button>
+          </Link>
+        </div>
+      </div>
+    )
+  }
+
+  const roleTitle = role === 'company' ? 'إنشاء حساب شركة / منشأة' : 'إنشاء حساب باحث عن عمل'
+
   return (
     <AuthShell
-      eyebrow="إنشاء حساب"
-      title="ابدأ رحلتك مع نخلة"
-      description="أنشئ حسابًا جديدًا عبر Firebase للوصول إلى الوظائف أو إدارة حساب الشركة ضمن تجربة عربية واضحة."
+      eyebrow="إنشاء حساب جديد"
+      title={roleTitle}
+      description="أنشئ حسابك للوصول إلى كافة المزايا والوظائف المخصصة لمسارك في منصة نخلة."
       footer={
         <div className="flex items-center justify-between gap-3 text-sm">
           <Link className="text-[var(--brand)] font-medium hover:text-[var(--brand-strong)]" href="/login">
@@ -114,6 +171,35 @@ function RegisterForm() {
       }
     >
       <form className="space-y-4" onSubmit={handleSubmit} noValidate>
+        {/* Role Toggle Selector */}
+        <div className="grid grid-cols-2 gap-2 p-1 bg-slate-100/80 rounded-2xl border border-slate-200/80">
+          <button
+            type="button"
+            onClick={() => setRole('seeker')}
+            className={`flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl text-xs font-black transition-all ${
+              role === 'seeker'
+                ? 'bg-white text-emerald-900 shadow-sm border border-slate-200/60'
+                : 'text-slate-600 hover:text-slate-900'
+            }`}
+          >
+            <UserCheck size={16} />
+            <span>باحث عن عمل</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setRole('company')}
+            className={`flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl text-xs font-black transition-all ${
+              role === 'company'
+                ? 'bg-white text-amber-900 shadow-sm border border-slate-200/60'
+                : 'text-slate-600 hover:text-slate-900'
+            }`}
+          >
+            <Building2 size={16} />
+            <span>منشأة / شركة</span>
+          </button>
+        </div>
+
         <Input
           label="البريد الإلكتروني"
           type="email"
@@ -133,18 +219,6 @@ function RegisterForm() {
           hint="استخدم كلمة مرور قوية من 8 أحرف أو أكثر."
           placeholder="********"
         />
-        <Select
-          label="نوع الحساب"
-          value={role}
-          onChange={(event) => setRole(event.target.value)}
-          error={errors.role}
-          hint="سيتم استخدام هذا الاختيار لاحقًا لتحديد مسار الباحث أو الشركة."
-          options={[
-            { label: 'اختر نوع الحساب', value: '' },
-            { label: 'باحث عن عمل', value: 'seeker' },
-            { label: 'شركة', value: 'company' },
-          ]}
-        />
         <Input
           label="تأكيد كلمة المرور"
           type="password"
@@ -163,7 +237,7 @@ function RegisterForm() {
           </div>
         ) : null}
 
-        <Button className="w-full" type="submit" isLoading={isSubmitting}>
+        <Button className="w-full font-black text-sm h-11 rounded-xl" type="submit" isLoading={isSubmitting}>
           إنشاء الحساب
         </Button>
       </form>
@@ -174,7 +248,7 @@ function RegisterForm() {
 export default function RegisterPage() {
   return (
     <div className="min-h-screen bg-[linear-gradient(180deg,_#f8f4ec_0%,_#f4f7f3_32%,_#ffffff_100%)] p-4 sm:p-8 flex items-center justify-center">
-      <Suspense fallback={<div>جارٍ التحميل...</div>}>
+      <Suspense fallback={<div className="text-center p-8 text-sm text-slate-500 font-bold">جارٍ التحميل...</div>}>
         <RegisterForm />
       </Suspense>
     </div>

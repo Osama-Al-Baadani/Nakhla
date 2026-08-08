@@ -36,7 +36,7 @@ export function PublicLayout({ children }) {
 
   const dashboardTarget = isAuthenticated || isDevAuthBypassEnabled
     ? getDefaultDashboardPath(role)
-    : '/seeker/dashboard'
+    : '/login'
 
   return (
     <div className="min-h-screen bg-[#fafafc] text-slate-800 flex flex-col font-sans antialiased">
@@ -97,7 +97,7 @@ export function PublicLayout({ children }) {
 
             <Link href={dashboardTarget}>
               <Button size="md" className="font-bold shadow-md shadow-emerald-700/20" leadingIcon={<Sparkles size={16} />}>
-                دخول المنصة
+                {isAuthenticated ? 'لوحة التحكم' : 'دخول'}
               </Button>
             </Link>
           </div>
@@ -106,7 +106,7 @@ export function PublicLayout({ children }) {
           <div className="flex items-center gap-2 lg:hidden">
             <Link href={dashboardTarget}>
               <Button size="sm" className="h-9 px-3 text-xs font-bold">
-                دخول
+                {isAuthenticated ? 'لوحتي' : 'دخول'}
               </Button>
             </Link>
 
