@@ -15,14 +15,14 @@ export function Select({
   return (
     <label className="block space-y-1.5" htmlFor={selectId}>
       {label ? (
-        <span className="block text-xs sm:text-sm font-semibold text-slate-700">{label}</span>
+        <span className="block text-xs font-bold text-slate-800">{label}</span>
       ) : null}
       <span className="relative block">
         <select
           id={selectId}
           className={cn(
-            'w-full appearance-none rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 pe-11 text-xs sm:text-sm text-slate-800 shadow-sm transition-all duration-200 focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 focus:outline-none hover:border-slate-300',
-            error && 'border-rose-400 focus:border-rose-500 focus:ring-rose-500/20',
+            'w-full appearance-none rounded-full border border-slate-200/90 bg-white px-4 py-2.5 pe-10 text-xs sm:text-sm font-semibold text-slate-900 shadow-2xs transition-all duration-200 focus:border-amber-400 focus:ring-4 focus:ring-amber-500/10 focus:outline-none hover:border-amber-300',
+            error && 'border-rose-400 focus:border-rose-500 focus:ring-rose-500/10',
             className,
           )}
           {...props}
@@ -40,9 +40,9 @@ export function Select({
         />
       </span>
       {error ? (
-        <span className="block text-xs font-medium text-rose-600">{error}</span>
+        <span className="block text-xs font-bold text-rose-600">{error}</span>
       ) : hint ? (
-        <span className="block text-xs text-slate-500">{hint}</span>
+        <span className="block text-xs font-medium text-slate-500">{hint}</span>
       ) : null}
     </label>
   )
