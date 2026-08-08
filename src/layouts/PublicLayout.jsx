@@ -186,7 +186,7 @@ export function PublicLayout({ children }) {
       </main>
 
       {/* Ultra-Luxury Saudi Royal Footer Section */}
-      <footer className="relative w-full bg-[#051c17] text-white mt-auto overflow-hidden">
+      <footer className="relative w-full bg-gradient-to-b from-[#06241e] via-[#041a15] to-[#02100d] text-white mt-auto overflow-hidden border-t border-emerald-600/30 shadow-2xl">
         
         {/* Ambient Glows */}
         <div className="pointer-events-none absolute -top-40 right-1/4 h-96 w-96 rounded-full bg-emerald-600/15 blur-3xl" />
@@ -237,69 +237,71 @@ export function PublicLayout({ children }) {
           </div>
         </div>
 
-        {/* Main Footer: Horizontal Topics Grid on Mobile & Desktop */}
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12 border-t border-emerald-800/40">
+        {/* Main Footer Topics & Brand Row */}
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
           
-          {/* Brand Row on Mobile/Tablet */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 mb-6 border-b border-emerald-800/30">
-            <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-amber-400 to-emerald-400 text-slate-950 font-black text-lg shadow-md shadow-emerald-500/20">
+          {/* Brand Header Row */}
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 pb-8 mb-8 border-b border-emerald-700/50">
+            <div className="flex items-center gap-3.5">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-tr from-amber-400 via-amber-500 to-amber-300 text-slate-950 font-black text-2xl shadow-lg shadow-amber-500/20 border border-amber-300/40">
                 ن
               </div>
-              <div>
-                <div className="flex items-center gap-1.5">
-                  <span className="font-serif text-xl font-black text-white">نخلة</span>
-                  <span className="rounded-full bg-emerald-500/20 px-2 py-0.5 text-[9px] font-black text-emerald-300 border border-emerald-400/30">سعودية 🇸🇦</span>
+              <div className="space-y-0.5">
+                <div className="flex items-center gap-2">
+                  <span className="text-2xl font-black text-white tracking-tight">نخلة</span>
+                  <span className="rounded-full bg-emerald-500/25 px-2.5 py-0.5 text-[10px] font-black text-emerald-300 border border-emerald-400/40 shadow-xs">
+                    سعودية 🇸🇦
+                  </span>
                 </div>
-                <p className="text-[10px] text-emerald-200/70 font-semibold">منصة التوظيف والتأهيل والتعهيد المهني</p>
+                <p className="text-xs text-emerald-200/90 font-medium">منصة التوظيف والتأهيل والتعهيد المهني المعتمدة</p>
               </div>
             </div>
 
-            <div className="flex items-center gap-2">
-              <span className="inline-flex items-center gap-1 rounded-lg bg-emerald-900/60 px-2.5 py-1 text-[10px] font-bold text-emerald-200 border border-emerald-700/50">
-                <ShieldCheck size={13} className="text-amber-400" />
+            <div className="flex flex-wrap items-center gap-2.5">
+              <div className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-900/80 px-3 py-1.5 text-xs font-bold text-emerald-100 border border-emerald-600/60 shadow-sm backdrop-blur-md">
+                <ShieldCheck size={15} className="text-amber-400" />
                 <span>مرخصة وموثقة 🇸🇦</span>
-              </span>
-              <span className="inline-flex items-center gap-1 rounded-lg bg-emerald-900/60 px-2.5 py-1 text-[10px] font-bold text-emerald-200 border border-emerald-700/50">
-                <CheckCircle2 size={13} className="text-emerald-400" />
-                <span>معتمدة</span>
-              </span>
+              </div>
+              <div className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-900/80 px-3 py-1.5 text-xs font-bold text-emerald-100 border border-emerald-600/60 shadow-sm backdrop-blur-md">
+                <CheckCircle2 size={15} className="text-emerald-400" />
+                <span>معتمدة رسمياً</span>
+              </div>
             </div>
           </div>
 
-          {/* Horizontal Topics Grid (2 columns on mobile, 4 columns on desktop) */}
-          <div className="grid grid-cols-2 gap-x-4 gap-y-6 sm:gap-6 lg:grid-cols-4 lg:gap-8">
+          {/* Prominent Topics Grid (2 columns on mobile, 4 columns on desktop) */}
+          <div className="grid grid-cols-2 gap-x-5 gap-y-8 sm:gap-8 lg:grid-cols-4 lg:gap-10">
             
             {/* Topic 1: لوحات التحكم */}
-            <div className="space-y-2.5">
-              <div className="flex items-center gap-1.5 border-b border-emerald-700/40 pb-1.5">
-                <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
-                <h4 className="text-[11px] sm:text-xs font-black uppercase tracking-wider text-amber-300">
+            <div className="space-y-3.5">
+              <div className="flex items-center gap-2 border-b border-emerald-700/60 pb-2">
+                <span className="h-2 w-2 rounded-full bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.8)]" />
+                <h4 className="text-xs sm:text-sm font-black uppercase tracking-wider text-amber-300">
                   لوحات التحكم
                 </h4>
               </div>
-              <ul className="space-y-1.5 text-[11px] sm:text-xs text-emerald-100/80 font-bold">
+              <ul className="space-y-2 text-xs sm:text-sm font-semibold text-slate-100">
                 <li>
-                  <Link href="/seeker/dashboard" onClick={() => setDevAuthPreviewRole('seeker')} className="flex items-center gap-1 hover:text-amber-300 transition-colors py-0.5">
-                    <ChevronLeft size={13} className="text-emerald-500 shrink-0" />
+                  <Link href="/seeker/dashboard" onClick={() => setDevAuthPreviewRole('seeker')} className="group flex items-center gap-1.5 hover:text-amber-300 transition-colors py-0.5">
+                    <ChevronLeft size={15} className="text-emerald-400 group-hover:-translate-x-1 transition-transform shrink-0" />
                     <span>لوحة الباحث</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/company/dashboard" onClick={() => setDevAuthPreviewRole('company')} className="flex items-center gap-1 hover:text-amber-300 transition-colors py-0.5">
-                    <ChevronLeft size={13} className="text-emerald-500 shrink-0" />
+                  <Link href="/company/dashboard" onClick={() => setDevAuthPreviewRole('company')} className="group flex items-center gap-1.5 hover:text-amber-300 transition-colors py-0.5">
+                    <ChevronLeft size={15} className="text-emerald-400 group-hover:-translate-x-1 transition-transform shrink-0" />
                     <span>لوحة الشركات</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/jobs" className="flex items-center gap-1 hover:text-amber-300 transition-colors py-0.5">
-                    <ChevronLeft size={13} className="text-emerald-500 shrink-0" />
+                  <Link href="/jobs" className="group flex items-center gap-1.5 hover:text-amber-300 transition-colors py-0.5">
+                    <ChevronLeft size={15} className="text-emerald-400 group-hover:-translate-x-1 transition-transform shrink-0" />
                     <span>سوق الوظائف</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/seeker/training" className="flex items-center gap-1 hover:text-amber-300 transition-colors py-0.5">
-                    <ChevronLeft size={13} className="text-emerald-500 shrink-0" />
+                  <Link href="/seeker/training" className="group flex items-center gap-1.5 hover:text-amber-300 transition-colors py-0.5">
+                    <ChevronLeft size={15} className="text-emerald-400 group-hover:-translate-x-1 transition-transform shrink-0" />
                     <span>المسار التدريبي</span>
                   </Link>
                 </li>
@@ -307,71 +309,71 @@ export function PublicLayout({ children }) {
             </div>
 
             {/* Topic 2: خدمات المنصة */}
-            <div className="space-y-2.5">
-              <div className="flex items-center gap-1.5 border-b border-emerald-700/40 pb-1.5">
-                <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
-                <h4 className="text-[11px] sm:text-xs font-black uppercase tracking-wider text-amber-300">
+            <div className="space-y-3.5">
+              <div className="flex items-center gap-2 border-b border-emerald-700/60 pb-2">
+                <span className="h-2 w-2 rounded-full bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.8)]" />
+                <h4 className="text-xs sm:text-sm font-black uppercase tracking-wider text-amber-300">
                   خدمات المنصة
                 </h4>
               </div>
-              <ul className="space-y-1.5 text-[11px] sm:text-xs text-emerald-100/80 font-bold">
+              <ul className="space-y-2 text-xs sm:text-sm font-semibold text-slate-100">
                 <li>
-                  <Link href="/pricing" className="flex items-center gap-1 hover:text-amber-300 transition-colors py-0.5">
-                    <ChevronLeft size={13} className="text-emerald-500 shrink-0" />
+                  <Link href="/pricing" className="group flex items-center gap-1.5 hover:text-amber-300 transition-colors py-0.5">
+                    <ChevronLeft size={15} className="text-emerald-400 group-hover:-translate-x-1 transition-transform shrink-0" />
                     <span>باقات الأسعار</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/company/outsourcing-requests" className="flex items-center gap-1 hover:text-amber-300 transition-colors py-0.5">
-                    <ChevronLeft size={13} className="text-emerald-500 shrink-0" />
+                  <Link href="/company/outsourcing-requests" className="group flex items-center gap-1.5 hover:text-amber-300 transition-colors py-0.5">
+                    <ChevronLeft size={15} className="text-emerald-400 group-hover:-translate-x-1 transition-transform shrink-0" />
                     <span>التعهيد المهني</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/faq" className="flex items-center gap-1 hover:text-amber-300 transition-colors py-0.5">
-                    <ChevronLeft size={13} className="text-emerald-500 shrink-0" />
+                  <Link href="/faq" className="group flex items-center gap-1.5 hover:text-amber-300 transition-colors py-0.5">
+                    <ChevronLeft size={15} className="text-emerald-400 group-hover:-translate-x-1 transition-transform shrink-0" />
                     <span>الأسئلة الشائعة</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/interviews" className="flex items-center gap-1 hover:text-amber-300 transition-colors py-0.5">
-                    <ChevronLeft size={13} className="text-emerald-500 shrink-0" />
+                  <Link href="/interviews" className="group flex items-center gap-1.5 hover:text-amber-300 transition-colors py-0.5">
+                    <ChevronLeft size={15} className="text-emerald-400 group-hover:-translate-x-1 transition-transform shrink-0" />
                     <span>المقابلات الذكية</span>
                   </Link>
                 </li>
               </ul>
             </div>
 
-            {/* Topic 3: الشروط والخصوصية */}
-            <div className="space-y-2.5">
-              <div className="flex items-center gap-1.5 border-b border-emerald-700/40 pb-1.5">
-                <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
-                <h4 className="text-[11px] sm:text-xs font-black uppercase tracking-wider text-amber-300">
+            {/* Topic 3: القانونية والأمان */}
+            <div className="space-y-3.5">
+              <div className="flex items-center gap-2 border-b border-emerald-700/60 pb-2">
+                <span className="h-2 w-2 rounded-full bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.8)]" />
+                <h4 className="text-xs sm:text-sm font-black uppercase tracking-wider text-amber-300">
                   القانونية والأمان
                 </h4>
               </div>
-              <ul className="space-y-1.5 text-[11px] sm:text-xs text-emerald-100/80 font-bold">
+              <ul className="space-y-2 text-xs sm:text-sm font-semibold text-slate-100">
                 <li>
-                  <Link href="/legal/privacy" className="flex items-center gap-1 hover:text-amber-300 transition-colors py-0.5">
-                    <ChevronLeft size={13} className="text-emerald-500 shrink-0" />
+                  <Link href="/legal/privacy" className="group flex items-center gap-1.5 hover:text-amber-300 transition-colors py-0.5">
+                    <ChevronLeft size={15} className="text-emerald-400 group-hover:-translate-x-1 transition-transform shrink-0" />
                     <span>سياسة الخصوصية</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/legal/terms" className="flex items-center gap-1 hover:text-amber-300 transition-colors py-0.5">
-                    <ChevronLeft size={13} className="text-emerald-500 shrink-0" />
+                  <Link href="/legal/terms" className="group flex items-center gap-1.5 hover:text-amber-300 transition-colors py-0.5">
+                    <ChevronLeft size={15} className="text-emerald-400 group-hover:-translate-x-1 transition-transform shrink-0" />
                     <span>الشروط والأحكام</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/legal/privacy" className="flex items-center gap-1 hover:text-amber-300 transition-colors py-0.5">
-                    <ChevronLeft size={13} className="text-emerald-500 shrink-0" />
+                  <Link href="/legal/privacy" className="group flex items-center gap-1.5 hover:text-amber-300 transition-colors py-0.5">
+                    <ChevronLeft size={15} className="text-emerald-400 group-hover:-translate-x-1 transition-transform shrink-0" />
                     <span>حماية البيانات</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/faq" className="flex items-center gap-1 hover:text-amber-300 transition-colors py-0.5">
-                    <ChevronLeft size={13} className="text-emerald-500 shrink-0" />
+                  <Link href="/faq" className="group flex items-center gap-1.5 hover:text-amber-300 transition-colors py-0.5">
+                    <ChevronLeft size={15} className="text-emerald-400 group-hover:-translate-x-1 transition-transform shrink-0" />
                     <span>معايير الامتثال</span>
                   </Link>
                 </li>
@@ -379,31 +381,31 @@ export function PublicLayout({ children }) {
             </div>
 
             {/* Topic 4: التواصل والدعم */}
-            <div className="space-y-2.5">
-              <div className="flex items-center gap-1.5 border-b border-emerald-700/40 pb-1.5">
-                <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
-                <h4 className="text-[11px] sm:text-xs font-black uppercase tracking-wider text-amber-300">
+            <div className="space-y-3.5">
+              <div className="flex items-center gap-2 border-b border-emerald-700/60 pb-2">
+                <span className="h-2 w-2 rounded-full bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.8)]" />
+                <h4 className="text-xs sm:text-sm font-black uppercase tracking-wider text-amber-300">
                   التواصل والدعم
                 </h4>
               </div>
-              <ul className="space-y-2 text-[11px] sm:text-xs text-emerald-100/80 font-bold">
-                <li className="flex items-center gap-2">
-                  <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-emerald-800/80 text-amber-300 border border-emerald-700/50 shrink-0">
-                    <MapPin size={12} />
+              <ul className="space-y-2.5 text-xs sm:text-sm font-semibold text-slate-100">
+                <li className="flex items-center gap-2.5">
+                  <div className="flex h-7 w-7 items-center justify-center rounded-xl bg-emerald-900/90 text-amber-300 border border-emerald-600/60 shadow-xs shrink-0">
+                    <MapPin size={14} />
                   </div>
                   <span className="truncate">الرياض، المملكة العربية السعودية</span>
                 </li>
-                <li className="flex items-center gap-2">
-                  <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-emerald-800/80 text-amber-300 border border-emerald-700/50 shrink-0">
-                    <Mail size={12} />
+                <li className="flex items-center gap-2.5">
+                  <div className="flex h-7 w-7 items-center justify-center rounded-xl bg-emerald-900/90 text-amber-300 border border-emerald-600/60 shadow-xs shrink-0">
+                    <Mail size={14} />
                   </div>
-                  <span>support@nakhlah.sa</span>
+                  <span className="font-sans text-xs sm:text-sm tracking-wide">support@nakhlah.sa</span>
                 </li>
-                <li className="flex items-center gap-2">
-                  <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-emerald-800/80 text-emerald-400 border border-emerald-700/50 shrink-0">
-                    <Globe2 size={12} />
+                <li className="flex items-center gap-2.5">
+                  <div className="flex h-7 w-7 items-center justify-center rounded-xl bg-emerald-900/90 text-emerald-300 border border-emerald-600/60 shadow-xs shrink-0">
+                    <Globe2 size={14} />
                   </div>
-                  <span>www.nakhlah.sa</span>
+                  <span className="font-sans text-xs sm:text-sm tracking-wide">www.nakhlah.sa</span>
                 </li>
               </ul>
             </div>
@@ -411,9 +413,9 @@ export function PublicLayout({ children }) {
           </div>
 
           {/* Bottom Copyright and Saudi Flag Ribbon */}
-          <div className="mt-8 pt-5 border-t border-emerald-800/50 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-right text-[11px] text-emerald-200/60 font-medium">
+          <div className="mt-10 pt-6 border-t border-emerald-700/50 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-right text-xs text-emerald-200/80 font-medium">
             <p>جميع الحقوق محفوظة © {new Date().getFullYear()} منصة نخلة للتوظيف والتأهيل المهني.</p>
-            <span className="text-[10px] font-black text-amber-300 bg-emerald-950/80 px-3.5 py-1 rounded-full border border-emerald-700/60 shadow-inner">
+            <span className="text-xs font-black text-amber-300 bg-emerald-950/90 px-4 py-1.5 rounded-full border border-emerald-600/70 shadow-inner">
               المملكة العربية السعودية 🇸🇦
             </span>
           </div>
