@@ -35,6 +35,9 @@ const trackOptions = [
     icon: UserCheck,
     tone: 'from-emerald-700 to-teal-600 text-white shadow-emerald-700/20',
     badge: 'الأفراد والكوادر',
+    href: '/register?role=seeker',
+    role: 'seeker',
+    btnText: 'البدء في مسار الباحثين',
     items: [
       'تقديم فوري وبسيط بضغط زر واحدة',
       'خوارزميات توصية ذكية تناسب مهاراتك',
@@ -48,6 +51,9 @@ const trackOptions = [
     icon: Building2,
     tone: 'from-amber-500 to-amber-600 text-white shadow-amber-500/20',
     badge: 'الشركات والمنشآت',
+    href: '/register?role=company',
+    role: 'company',
+    btnText: 'البدء في مسار الشركات',
     items: [
       'نشر وإدارة الوظائف بمرونة كاملة',
       'فرز ذكي وتقييم دقيق للمتقدمين',
@@ -61,6 +67,9 @@ const trackOptions = [
     icon: Layers3,
     tone: 'from-teal-700 to-emerald-800 text-white shadow-teal-700/20',
     badge: 'التشغيل والتعهيد',
+    href: '/for-companies',
+    role: 'company',
+    btnText: 'استكشاف حلول التعهيد',
     items: [
       'توفير كوادر مؤهلة في وقت قياسي',
       'إدارة العقود والالتزامات النظامية',
@@ -226,11 +235,17 @@ export default function HomePage() {
                 </div>
 
                 <div className="mt-5 pt-4 border-t border-slate-100">
-                  <Link href="/register" className="w-full inline-block">
-                    <Button variant="secondary" className="w-full justify-between rounded-xl group-hover:border-emerald-300 font-bold text-xs">
-                      <span>البدء في هذا المسار</span>
-                      <ArrowLeft size={15} className="group-hover:-translate-x-1 transition-transform" />
-                    </Button>
+                  <Link
+                    href={track.href}
+                    onClick={() => {
+                      if (track.role) {
+                        setDevAuthPreviewRole(track.role)
+                      }
+                    }}
+                    className="flex w-full items-center justify-between rounded-xl border border-slate-200/90 bg-slate-50/80 px-4 py-2.5 text-xs font-black text-slate-800 shadow-2xs hover:bg-emerald-50 hover:border-emerald-400 hover:text-emerald-900 active:scale-[0.98] transition-all cursor-pointer group-hover:border-emerald-300 group-hover:bg-emerald-50/60 group-hover:text-emerald-900"
+                  >
+                    <span>{track.btnText}</span>
+                    <ArrowLeft size={15} className="group-hover:-translate-x-1.5 transition-transform" />
                   </Link>
                 </div>
               </div>
@@ -296,15 +311,18 @@ export default function HomePage() {
             </div>
 
             <div className="pt-2 flex flex-wrap gap-2.5">
-              <Link href="/register?role=company">
-                <Button className="bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 font-black shadow-md rounded-xl text-xs sm:text-sm">
-                  سجل منشأتك الآن
-                </Button>
+              <Link
+                href="/register?role=company"
+                onClick={() => setDevAuthPreviewRole('company')}
+                className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 px-5 py-2.5 text-xs sm:text-sm font-black text-slate-950 shadow-md hover:from-amber-500 hover:to-amber-600 transition-all active:scale-95"
+              >
+                سجل منشأتك الآن
               </Link>
-              <Link href="/for-companies">
-                <Button variant="secondary" className="bg-white/10 border-white/20 text-white hover:bg-white/20 font-bold rounded-xl text-xs sm:text-sm">
-                  استكشف حلول الأعمال
-                </Button>
+              <Link
+                href="/for-companies"
+                className="inline-flex items-center justify-center rounded-xl bg-white/10 border border-white/20 px-5 py-2.5 text-xs sm:text-sm font-bold text-white hover:bg-white/20 transition-all active:scale-95"
+              >
+                استكشف حلول الأعمال
               </Link>
             </div>
           </div>
@@ -325,11 +343,19 @@ export default function HomePage() {
         description="انضم الآن لآلاف الباحثين عن عمل والشركات واستفد من أحدث الحلول الرقمية للتوظيف والتأهيل بالسعودية."
         actions={
           <>
-            <Link href="/register?role=seeker">
-              <Button size="lg" className="font-extrabold rounded-xl shadow-md">تسجيل باحث عن عمل</Button>
+            <Link
+              href="/register?role=seeker"
+              onClick={() => setDevAuthPreviewRole('seeker')}
+              className="inline-flex items-center justify-center rounded-xl bg-emerald-800 px-6 py-3 text-sm font-black text-white shadow-md hover:bg-emerald-900 transition-all active:scale-95"
+            >
+              تسجيل باحث عن عمل
             </Link>
-            <Link href="/register?role=company">
-              <Button size="lg" variant="secondary" className="font-extrabold rounded-xl">تسجيل منشأة / شركة</Button>
+            <Link
+              href="/register?role=company"
+              onClick={() => setDevAuthPreviewRole('company')}
+              className="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-6 py-3 text-sm font-black text-slate-800 hover:bg-amber-50/60 hover:border-amber-300 transition-all active:scale-95"
+            >
+              تسجيل منشأة / شركة
             </Link>
           </>
         }
