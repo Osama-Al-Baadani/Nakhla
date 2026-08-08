@@ -35,8 +35,14 @@ export function DashboardLayout({ children }) {
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
   const [userMenuOpen, setUserMenuOpen] = useState(false)
 
+  const activeRole = useMemo(() => {
+    if (pathname.startsWith('/company')) return 'company'
+    if (pathname.startsWith('/seeker')) return 'seeker'
+    return role === 'company' ? 'company' : 'seeker'
+  }, [pathname, role])
+
   const navigationItems = useMemo(() => {
-    if (role === 'company') {
+    if (activeRole === 'company') {
       return [
         { label: 'لوحة الشركة', icon: LayoutGrid, to: '/company/dashboard', match: '/company/dashboard' },
         { label: 'إدارة الوظائف', icon: Building2, to: '/company/jobs', match: '/company/jobs' },
@@ -60,11 +66,11 @@ export function DashboardLayout({ children }) {
       { label: 'الملف الشخصي', icon: UserCircle2, to: '/profile', match: '/profile' },
       { label: 'الإعدادات', icon: Settings2, to: '/settings', match: '/settings' },
     ]
-  }, [role])
+  }, [activeRole])
 
   // Mobile Bottom App Dock Items
   const mobileBottomItems = useMemo(() => {
-    if (role === 'company') {
+    if (activeRole === 'company') {
       return [
         { label: 'الرئيسية', icon: LayoutGrid, to: '/company/dashboard' },
         { label: 'الوظائف', icon: Building2, to: '/company/jobs' },
@@ -80,14 +86,14 @@ export function DashboardLayout({ children }) {
       { label: 'التدريب', icon: GraduationCap, to: '/seeker/training' },
       { label: 'حسابي', icon: UserCircle2, to: '/profile' },
     ]
-  }, [role])
+  }, [activeRole])
 
   async function handleSignOut() {
     await authService.signOut()
     router.push('/login')
   }
 
-  const roleTitle = role === 'company' ? 'قطاع الأعمال والشركات' : 'الباحث عن عمل والتأهيل'
+  const roleTitle = activeRole === 'company' ? 'قطاع الأعمال والشركات' : 'الباحث عن عمل والتأهيل'
 
   return (
     <div className="min-h-screen bg-[#f8fafc] text-slate-800 pb-24 lg:pb-8 font-sans antialiased">

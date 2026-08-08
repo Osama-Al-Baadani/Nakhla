@@ -74,17 +74,21 @@ export function useAuth() {
 
   const profileRole = getRoleFromProfile(profileState.profile)
   const pendingRole = session?.user?.id ? readPendingRole() : null
-  const resolvedRole = isDevAuthBypassEnabled
+  const hasDevPreview = typeof window !== 'undefined' && Boolean(window.sessionStorage.getItem('nakhlah_dev_auth_role'))
+
+  const resolvedRole = (isDevAuthBypassEnabled || hasDevPreview) && (devRoleState === 'company' || devRoleState === 'seeker')
     ? devRoleState
     : profileRole !== 'unknown'
       ? profileRole
       : pendingRole ?? 'unknown'
 
+  const effectiveUser = session?.user ?? ((isDevAuthBypassEnabled || hasDevPreview) ? getDevAuthBypassSession().user : null)
+
   return {
     session,
-    user: session?.user ?? null,
+    user: effectiveUser,
     isLoading,
-    isAuthenticated: Boolean(session),
+    isAuthenticated: Boolean(session) || isDevAuthBypassEnabled || hasDevPreview,
     authEvent,
     isDevAuthBypassEnabled,
     profile: profileState.profile,

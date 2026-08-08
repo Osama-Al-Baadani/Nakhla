@@ -6,13 +6,14 @@ import { useAuth } from '../hooks/useAuth'
 
 export function ProtectedRoute({ children }) {
   const { isLoading, isAuthenticated, isDevAuthBypassEnabled } = useAuth()
-  const router = useRouter()
+  const hasDevPreview = typeof window !== 'undefined' && Boolean(window.sessionStorage.getItem('nakhlah_dev_auth_role'))
+  const canAccess = isAuthenticated || isDevAuthBypassEnabled || hasDevPreview
 
   useEffect(() => {
-    if (!isLoading && !isAuthenticated && !isDevAuthBypassEnabled) {
+    if (!isLoading && !canAccess) {
       router.replace('/login')
     }
-  }, [isLoading, isAuthenticated, isDevAuthBypassEnabled, router])
+  }, [isLoading, canAccess, router])
 
   if (isLoading) {
     return (
@@ -24,7 +25,7 @@ export function ProtectedRoute({ children }) {
     )
   }
 
-  if (!isAuthenticated && !isDevAuthBypassEnabled) {
+  if (!canAccess) {
     return null
   }
 
