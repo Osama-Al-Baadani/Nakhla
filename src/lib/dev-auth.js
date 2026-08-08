@@ -27,6 +27,7 @@ export function setDevAuthPreviewRole(role) {
   }
 
   window.sessionStorage.setItem(devAuthRoleStorageKey, role)
+  window.dispatchEvent(new CustomEvent('nakhlah-dev-role-change', { detail: { role } }))
 }
 
 export function getDevAuthBypassSession() {
